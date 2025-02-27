@@ -1,4 +1,3 @@
-
 part of 'theme.dart';
 
 ThemeData lightTheme(BuildContext context) {
@@ -58,6 +57,16 @@ ThemeData lightTheme(BuildContext context) {
       ),
       alignLabelWithHint: true,
     ),
-
+    textTheme: TextTheme(
+      bodyMedium: TextStyle(color: AppColors.light.text),
+    ),
+    iconTheme: IconThemeData(
+      color: Colors.black,
+    ),
+    iconButtonTheme: IconButtonThemeData(
+      style: ButtonStyle(
+        iconColor: WidgetStatePropertyAll(AppColors.light.text),
+      )
+    ),
   );
 }

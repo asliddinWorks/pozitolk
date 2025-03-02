@@ -7,6 +7,8 @@ import 'package:provider/provider.dart';
 import 'core/theme/theme.dart';
 
 void main() {
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
   runApp(const MyApp());
 }
 

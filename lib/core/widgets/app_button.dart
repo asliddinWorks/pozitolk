@@ -5,7 +5,7 @@ import '/core/extension/context_extension.dart';
 
 class AppButton extends StatelessWidget {
   const AppButton({super.key,
-    this.elevation = 7,
+    this.elevation = 0,
     this.height = 50,
     this.width,
     required this.onPressed,
@@ -35,51 +35,66 @@ class AppButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AppButtonType.filled == appButtonType ?
-    MaterialButton(
-      onPressed: onPressed,
-      highlightElevation: 0,
-      elevation: elevation,
-      padding: contentPadding == null ? null : EdgeInsets.zero,
-      materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
-      shape: RoundedRectangleBorder(
-        borderRadius: borderRadius ?? BorderRadius.circular(0),
-      ),
-      color: color ?? context.colorScheme.primary,
-      height: contentPadding == null ? height : 0,
-      minWidth: width,
-      child: Padding(
-        padding: contentPadding ?? EdgeInsets.zero,
-        child: FittedBox(
-          child: Text(
-            text,
-            textAlign: TextAlign.center,
-            // style: fillTextStyle ?? context.textStyle.button1.copyWith(
-            //   color: textColor ?? context.color.background1,
-            // ),
+    SizedBox(
+      height: height,
+      width: width,
+      child: MaterialButton(
+        onPressed: onPressed,
+        highlightElevation: 0,
+        elevation: elevation,
+        padding: contentPadding == null ? null : EdgeInsets.zero,
+        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        shape: RoundedRectangleBorder(
+          borderRadius: borderRadius ?? BorderRadius.circular(12),
+        ),
+        color: color ?? context.colorScheme.primary,
+        height: contentPadding == null ? height : 0,
+        minWidth: width,
+        child: Padding(
+          padding: contentPadding ?? EdgeInsets.zero,
+          child: FittedBox(
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+              style: fillTextStyle ?? context.textStyle.s20w600inter.copyWith(
+                color: textColor ?? context.color.background2,
+              ),
+            ),
           ),
         ),
       ),
     ) :
-    MaterialButton(
-      onPressed: onPressed,
-      highlightElevation: 0,
-      elevation: elevation,
-      shape: RoundedRectangleBorder(
-        borderRadius: borderRadius ?? BorderRadius.circular(0),
-        side: BorderSide(
-          width: 1,
-          color: context.colorScheme.primary,
-        ),
-      ),
-      minWidth: width,
+    SizedBox(
       height: height,
-      color: color ?? context.color.background1,
-      child: Text(
-        text,
-        textAlign: TextAlign.center,
-        // style: outlinedTextStyle ?? context.textStyle.button1.copyWith(
-        //   color: textColor ?? context.colorScheme.primary,
-        // ),
+      width: width,
+      child: MaterialButton(
+        onPressed: onPressed,
+        highlightElevation: 0,
+        padding: contentPadding == null ? null : EdgeInsets.zero,
+        elevation: elevation,
+        shape: RoundedRectangleBorder(
+          borderRadius: borderRadius ?? BorderRadius.circular(12),
+          side: BorderSide(
+            width: 1,
+            color: context.colorScheme.primary,
+          ),
+        ),
+        minWidth: width,
+        height: height,
+        color: color ?? context.color.background1,
+        child: FittedBox(
+          child: Padding(
+            padding: contentPadding ?? EdgeInsets.zero,
+            child: Text(
+              text,
+              textAlign: TextAlign.center,
+              style: outlinedTextStyle ?? context.textStyle.s20w400inter.copyWith(
+                fontWeight: FontWeight.w500,
+                color: textColor ?? context.color.text.withAlpha(200),
+              ),
+            ),
+          ),
+        ),
       ),
     );
   }

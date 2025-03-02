@@ -84,8 +84,7 @@ class AdvantagesItem extends StatelessWidget {
           Expanded(
             child: LayoutBuilder(
               builder: (context, constraints) {
-                final textStyle = context.textStyle.s14w400inter.copyWith(
-                  fontWeight: FontWeight.w500,
+                final textStyle = context.textStyle.s16w500inter.copyWith(
                   color: context.color.textGrey2,
                 );
 
@@ -103,7 +102,7 @@ class AdvantagesItem extends StatelessWidget {
                 final lineCount = (textPainter.height / lineHeight).ceil();
 
                 /// Agar matn 8 qatordan ko‘p bo‘lsa, ListView bilan scroll qilamiz
-                return lineCount > 8
+                return lineCount > 7
                     ? ListView(
                   padding: EdgeInsets.zero,
                   children: [

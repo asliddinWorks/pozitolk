@@ -34,4 +34,21 @@ class AppImages{
   static const collaborateItem3 = '${path}collaborate_item3.png';
   static const collaborateItem4 = '${path}collaborate_item4.png';
 
+  // convenience item images
+  static const convenienceItem1 = '${path}convenience_item1.png';
+  static const convenienceItem2 = '${path}convenience_item2.png';
+  static const convenienceItem3 = '${path}convenience_item3.png';
+  static const convenienceItem4 = '${path}convenience_item4.png';
+
+  // subscribe
+  static const subscribe = '${path}subscribe.png';
+
+  static const psychologist = '${path}psychologist.png';
+
+  // Start Psychotherapy images
+  static const startPsychotherapyItem1 = '${path}start_psychotherapy_item1.png';
+  static const startPsychotherapyItem2 = '${path}start_psychotherapy_item2.png';
+  static const startPsychotherapyItem3 = '${path}start_psychotherapy_item3.png';
+  static const startPsychotherapyItem4 = '${path}start_psychotherapy_item4.png';
+
 }

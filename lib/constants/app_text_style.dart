@@ -12,6 +12,7 @@ class AppTextStyle extends ThemeExtension<AppTextStyle> {
     required this.s14w400inter,
     required this.s20w600inter,
     required this.s20w400inter,
+    required this.s20w500inter
   });
 
   final TextStyle s16w400;
@@ -21,6 +22,7 @@ class AppTextStyle extends ThemeExtension<AppTextStyle> {
   final TextStyle s14w400inter;
   final TextStyle s20w600inter;
   final TextStyle s20w400inter;
+  final TextStyle s20w500inter;
 
   /// new text styles
 
@@ -35,7 +37,7 @@ class AppTextStyle extends ThemeExtension<AppTextStyle> {
       fontFamily: 'MV-Crooker',
       fontSize: 32,
       fontWeight: FontWeight.w400,
-      height: 0,
+      height: 1,
       letterSpacing: -0.6,
       color: AppColors.light.text,
     ),
@@ -45,7 +47,7 @@ class AppTextStyle extends ThemeExtension<AppTextStyle> {
       fontWeight: FontWeight.w400,
       color: AppColors.light.text,
       letterSpacing: 0.72,
-      height: 0
+      height: 1
     ),
     s16w500inter: GoogleFonts.inter(
       fontSize: 16,
@@ -71,6 +73,13 @@ class AppTextStyle extends ThemeExtension<AppTextStyle> {
       color: AppColors.light.text,
       letterSpacing: -0.6,
     ),
+    s20w500inter: GoogleFonts.inter(
+      fontSize: 20,
+      fontWeight: FontWeight.w500,
+      color: AppColors.light.text,
+      letterSpacing: -0.6,
+      height: 1.25
+    ),
   );
 
   @override
@@ -82,6 +91,7 @@ class AppTextStyle extends ThemeExtension<AppTextStyle> {
     TextStyle? s14w400inter,
     TextStyle? s20w600inter,
     TextStyle? s20w400inter,
+    TextStyle? s20w500inter,
   }) {
     return AppTextStyle(
       s16w400: s16w400 ?? this.s16w400,
@@ -91,6 +101,7 @@ class AppTextStyle extends ThemeExtension<AppTextStyle> {
       s14w400inter: s14w400inter ?? this.s14w400inter,
       s20w600inter: s20w600inter ?? this.s20w600inter,
       s20w400inter: s20w400inter ?? this.s20w400inter,
+      s20w500inter: s20w500inter ?? this.s20w500inter
     );
   }
 
@@ -108,6 +119,7 @@ class AppTextStyle extends ThemeExtension<AppTextStyle> {
       s14w400inter: TextStyle.lerp(s14w400inter, other.s14w400inter, t)!,
       s20w600inter: TextStyle.lerp(s20w600inter, other.s20w600inter, t)!,
       s20w400inter: TextStyle.lerp(s20w400inter, other.s20w400inter, t)!,
+      s20w500inter: TextStyle.lerp(s20w500inter, other.s20w500inter, t)!,
     );
   }
 }

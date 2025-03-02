@@ -103,52 +103,13 @@ class CollaborateItem extends StatelessWidget {
                           .copyWith(fontSize: 20, height: 1.25),
                     ),
                     8.hGap,
-                    // Text(
-                    //   text,
-                    //   style: context.textStyle.s16w500inter.copyWith(color: context.color.textGrey2),
-                    // ),
                     Expanded(
-                      child: LayoutBuilder(
-                        builder: (context, constraints) {
-                          final textStyle =
-                              context.textStyle.s16w500inter.copyWith(
-                            color: context.color.textGrey2,
-                          );
-
-                          /// Matn balandligini hisoblaymiz
-                          final textSpan =
-                              TextSpan(text: text, style: textStyle);
-                          final textPainter = TextPainter(
-                            text: textSpan,
-                            maxLines: null,
-                            textDirection: TextDirection.ltr,
-                          );
-                          textPainter.layout(maxWidth: constraints.maxWidth);
-
-                          /// Har bir qatorning balandligini hisoblaymiz
-                          final lineHeight = textPainter.preferredLineHeight;
-                          final lineCount =
-                              (textPainter.height / lineHeight).ceil();
-
-                          /// Agar matn 8 qatordan ko‘p bo‘lsa, ListView bilan scroll qilamiz
-                          return lineCount > 3
-                              ? ListView(
-                                  shrinkWrap: true,
-                                  padding: EdgeInsets.zero,
-                                  children: [
-                                    Text(
-                                      text,
-                                      style: textStyle,
-                                      textAlign: TextAlign.left,
-                                    ),
-                                  ],
-                                )
-                              : Text(
-                                  text,
-                                  style: textStyle,
-                                  textAlign: TextAlign.left,
-                                );
-                        },
+                      child: SingleChildScrollView(
+                        physics: const RangeMaintainingScrollPhysics(),
+                        child: Text(
+                          text,
+                          style: context.textStyle.s16w500inter.copyWith(color: context.color.textGrey2),
+                        ),
                       ),
                     ),
                   ],

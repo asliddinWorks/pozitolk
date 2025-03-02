@@ -1,9 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
 import 'package:pozitolk/core/extension/widget_extension.dart';
-
+import 'package:pozitolk/pages/home/pages/items/convenience_item.dart';
 import '../../../../constants/app_images.dart';
-import '../items/advantages_item.dart';
 
 class ConvenienceUi extends StatelessWidget {
   const ConvenienceUi({super.key});
@@ -11,42 +10,50 @@ class ConvenienceUi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 390,
+      height: 450,
       child: ListView(
         scrollDirection:  Axis.horizontal,
         shrinkWrap: true,
         children: [
-          10.wGap,
-          AdvantagesItem(
-            text: 'Позитивная и Транскультуральная Психотерапия (ППТ) научно-доказанный метод',
-            image: AppImages.advantagesItem1,
+          15.wGap,
+          ConvenienceItem(
+            number: 1,
+            padding: EdgeInsets.only(right: 15),
+            title: 'Рекомендуем профессионалов в которых уверены',
+            text: 'Вам не нужно беспокоиться о квалификации специалиста. Мы всё проверили.',
+            image: AppImages.convenienceItem1,
           ),
-          AdvantagesItem(
-            text: 'Возможность краткосрочной помощи 10-15 сессий',
-            image: AppImages.advantagesItem2,
+          ConvenienceItem(
+            number: 2,
+            title: 'Гарантируем понятную фиксированную цену',
+            text: 'У нас понятные цены за сессию, которые зависят от реального опыта  и квалификации специалистов',
           ),
-          AdvantagesItem(
-            text: 'Психологи с высшим образованием и европейским сертификатом',
-            image: AppImages.advantagesItem3,
+          ConvenienceItem(
+            number: 3,
+            title: 'Помогаем найти именно «вашего» специалиста',
+            text: 'Если психолог не подойдёт по любым причинам, мы предложим другого.',
           ),
-          AdvantagesItem(
-            text: 'Наши специалисты работают с любыми запросами',
-            image: AppImages.advantagesItem4,
+          ConvenienceItem(
+            number: 4,
+            title: 'Делаем оплату сессий удобной и безопасной + оплата из любой точки Мира',
+            text: 'Заботьтесь о себе без ограничений ',
+            imageBottom: AppImages.convenienceItem4,
           ),
-          AdvantagesItem(
-            text: 'Позитивная и транскультуральная психотерапия — это метод, когда клиент в процессе терапии опирается на собственные ресурсы, а психолог помогает их найти',
-            image: AppImages.advantagesItem5,
+          ConvenienceItem(
+            number: 5,
+            title: 'Заботимся о результате',
+            text: 'Напоминаем о сессиях, регулярно собираем отзывы и приходим на помощь, если что-то идёт не так.',
+            image: AppImages.convenienceItem2,
           ),
-          AdvantagesItem(
-            text: 'ППТ про реальность, уникальную реальность каждого из нас, неповторимую, сложную. Про веру в то, что каждый человек способен справляться с трудностями на своём пути. Про то, что в жизни есть все: радость и печаль, вдохновение и разочарование, любовь и ненависти и многое другое',
-            image: AppImages.advantagesItem6,
+          ConvenienceItem(
+            padding: EdgeInsets.only(right: 15),
+            number: 6,
+            title: 'Бережём ваше время',
+            text: 'Занимайтесь, где и когда вам удобно. Перенести или отменить сессию можно в личном кабинете в два клика.',
+            image: AppImages.convenienceItem3,
           ),
-          AdvantagesItem(
-            text: 'Позитивная и транскультуральная психотерапия — очень бережный метод, когда психолог смотрит на мир глазами клиента и через призму его ценностей',
-            image: AppImages.advantagesItem7,
-          ),
-          1.wGap
-        ].paddingEach(EdgeInsets.only(right: 10)),
+          10.wGap
+        ].paddingEach(EdgeInsets.only(right: 5)),
       ),
     );
   }

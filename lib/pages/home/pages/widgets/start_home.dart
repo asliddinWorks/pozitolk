@@ -79,10 +79,10 @@ class StartHome extends StatelessWidget {
           padding: EdgeInsets.all(3),
           decoration: BoxDecoration(
             color: context.color.containerBackground2,
-            borderRadius: BorderRadius.circular(16),
+            borderRadius: BorderRadius.circular(19),
           ),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               GestureDetector(
                 onTap: () {
@@ -92,7 +92,7 @@ class StartHome extends StatelessWidget {
                   height: 93,
                   duration: Duration(milliseconds: 200),
                   width:
-                  watch.isLeftSelected ? 0.45.wp(context) : 0.4.wp(context),
+                  watch.isLeftSelected ? 0.46.wp(context) : 0.41.wp(context),
                   padding: EdgeInsets.all(12),
                   decoration: BoxDecoration(
                     color: watch.isLeftSelected
@@ -129,7 +129,8 @@ class StartHome extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(width: 8),
+              // Spacer(),
+              // SizedBox(width: 8),
               GestureDetector(
                 onTap: () {
                   read.onLeftSelected(false);
@@ -138,14 +139,14 @@ class StartHome extends StatelessWidget {
                   height: 93,
                   duration: Duration(milliseconds: 200),
                   width: !watch.isLeftSelected
-                      ? 0.45.wp(context)
-                      : 0.4.wp(context),
+                      ? 0.46.wp(context)
+                      : 0.41.wp(context),
                   padding: EdgeInsets.all(12),
                   decoration: BoxDecoration(
                     color: !watch.isLeftSelected
                         ? context.color.background2
                         : context.color.containerBackground2,
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(16),
                     // boxShadow: !isLeftSelected
                     //     ? [
                     //         BoxShadow(

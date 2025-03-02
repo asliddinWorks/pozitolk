@@ -6,6 +6,9 @@ import 'package:pozitolk/core/extension/num_extension.dart';
 import 'package:pozitolk/core/extension/widget_extension.dart';
 import 'package:pozitolk/pages/home/pages/widgets/advantages_ui.dart';
 import 'package:pozitolk/pages/home/pages/widgets/collaborate_ui.dart';
+import 'package:pozitolk/pages/home/pages/widgets/convenience_ui.dart';
+import 'package:pozitolk/pages/home/pages/widgets/middle_home.dart';
+import 'package:pozitolk/pages/home/pages/widgets/start_psychotherapy.dart';
 import 'package:pozitolk/pages/home/pages/widgets/to_help.dart';
 import 'package:pozitolk/pages/home/pages/widgets/app_drawer.dart';
 import 'package:pozitolk/pages/home/pages/widgets/start_home.dart';
@@ -19,7 +22,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final GlobalKey<ScaffoldState> _key = GlobalKey();
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -87,8 +89,17 @@ class _HomePageState extends State<HomePage> {
                   'ПозиТолк делает психотерапию удобной и доступной',
                   style: context.textStyle.s24w400,
                 ).padding(EdgeInsets.symmetric(horizontal: 20, vertical: 40)),
-                AdvantagesUi(),
-                60.hGap,
+                ConvenienceUi(),
+                10.hGap,
+                MiddleHome(),
+                100.hGap,
+                Text(
+                  'как начать психотерапию',
+                  style: context.textStyle.s24w400,
+                ).padding(EdgeInsets.symmetric(horizontal: 20)),
+                20.hGap,
+                StartPsychotherapy(),
+                260.hGap,
               ],
             ),
           ),

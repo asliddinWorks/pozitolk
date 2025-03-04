@@ -9,6 +9,7 @@ class AppTextStyle extends ThemeExtension<AppTextStyle> {
     required this.s32w400,
     required this.s24w400,
     required this.s16w500inter,
+    required this.s16w400inter,
     required this.s14w400inter,
     required this.s20w600inter,
     required this.s20w400inter,
@@ -19,6 +20,7 @@ class AppTextStyle extends ThemeExtension<AppTextStyle> {
   final TextStyle s32w400;
   final TextStyle s24w400;
   final TextStyle s16w500inter;
+  final TextStyle s16w400inter;
   final TextStyle s14w400inter;
   final TextStyle s20w600inter;
   final TextStyle s20w400inter;
@@ -29,7 +31,7 @@ class AppTextStyle extends ThemeExtension<AppTextStyle> {
   static AppTextStyle light = AppTextStyle(
     s16w400: TextStyle(
       fontFamily: 'MV-Crooker',
-      fontSize: 16.5,
+      fontSize: 16,
       fontWeight: FontWeight.w400,
       color: AppColors.light.primary,
     ),
@@ -54,6 +56,13 @@ class AppTextStyle extends ThemeExtension<AppTextStyle> {
       height: 1.56,
       fontWeight: FontWeight.w500,
       color: AppColors.light.text,
+      letterSpacing: -0.32,
+    ),
+    s16w400inter: GoogleFonts.inter(
+      fontSize: 16,
+      fontWeight: FontWeight.w400,
+      color: AppColors.light.textGrey2,
+      height: 1.25,
       letterSpacing: -0.32,
     ),
     s14w400inter: GoogleFonts.inter(
@@ -88,6 +97,7 @@ class AppTextStyle extends ThemeExtension<AppTextStyle> {
     TextStyle? s32w400,
     TextStyle? s24w400,
     TextStyle? s16w500inter,
+    TextStyle? s16w400inter,
     TextStyle? s14w400inter,
     TextStyle? s20w600inter,
     TextStyle? s20w400inter,
@@ -98,6 +108,7 @@ class AppTextStyle extends ThemeExtension<AppTextStyle> {
       s32w400: s32w400 ?? this.s32w400,
       s24w400: s24w400 ?? this.s24w400,
       s16w500inter: s16w500inter ?? this.s16w500inter,
+      s16w400inter: s16w400inter ?? this.s16w400inter,
       s14w400inter: s14w400inter ?? this.s14w400inter,
       s20w600inter: s20w600inter ?? this.s20w600inter,
       s20w400inter: s20w400inter ?? this.s20w400inter,
@@ -116,6 +127,7 @@ class AppTextStyle extends ThemeExtension<AppTextStyle> {
       s32w400: TextStyle.lerp(s32w400, other.s32w400, t)!,
       s24w400: TextStyle.lerp(s24w400, other.s24w400, t)!,
       s16w500inter: TextStyle.lerp(s16w500inter, other.s16w500inter, t)!,
+      s16w400inter: TextStyle.lerp(s16w400inter, other.s16w400inter, t)!,
       s14w400inter: TextStyle.lerp(s14w400inter, other.s14w400inter, t)!,
       s20w600inter: TextStyle.lerp(s20w600inter, other.s20w600inter, t)!,
       s20w400inter: TextStyle.lerp(s20w400inter, other.s20w400inter, t)!,

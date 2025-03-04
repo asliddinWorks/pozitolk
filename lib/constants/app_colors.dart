@@ -28,6 +28,7 @@ class AppColors extends ThemeExtension<AppColors> {
     required this.text,
     required this.textGrey,
     required this.textGrey2,
+    required this.dividerColor,
     required this.facebook,
     required this.twitter,
     required this.accent1,
@@ -52,6 +53,7 @@ class AppColors extends ThemeExtension<AppColors> {
   final Color text;
   final Color textGrey;
   final Color textGrey2;
+  final Color dividerColor;
   final Color facebook;
   final Color twitter;
   final Color accent1;
@@ -77,6 +79,7 @@ class AppColors extends ThemeExtension<AppColors> {
     text: const Color(0xFF191919),
     textGrey: const Color(0xFF666666),
     textGrey2: const Color(0xFF4D4D4D),
+    dividerColor: const Color(0xFFDCDCDC),
     facebook: const Color(0xFF1877F2),
     twitter: const Color(0xFF55ACEE),
     accent1: const Color(0xFFC4C4C4),
@@ -103,6 +106,7 @@ class AppColors extends ThemeExtension<AppColors> {
     Color? text,
     Color? textGrey,
     Color? textGrey2,
+    Color? dividerColor,
     Color? facebook,
     Color? twitter,
     Color? accent1,
@@ -127,6 +131,7 @@ class AppColors extends ThemeExtension<AppColors> {
       text: text ?? this.text,
       textGrey: textGrey ?? this.textGrey,
       textGrey2: textGrey2 ?? this.textGrey2,
+      dividerColor: dividerColor ?? this.dividerColor,
       facebook: facebook ?? this.facebook,
       twitter: twitter ?? this.twitter,
       accent1: accent1 ?? this.accent1,
@@ -158,6 +163,7 @@ class AppColors extends ThemeExtension<AppColors> {
       text: Color.lerp(text, other.text, t)!,
       textGrey: Color.lerp(textGrey, other.textGrey, t)!,
       textGrey2: Color.lerp(textGrey2, other.textGrey2, t)!,
+      dividerColor: Color.lerp(dividerColor, other.dividerColor, t)!,
       facebook: Color.lerp(facebook, other.facebook, t)!,
       twitter: Color.lerp(twitter, other.twitter, t)!,
       accent1: Color.lerp(accent1, other.accent1, t)!,

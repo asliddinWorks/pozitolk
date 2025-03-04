@@ -51,4 +51,7 @@ class AppImages{
   static const startPsychotherapyItem3 = '${path}start_psychotherapy_item3.png';
   static const startPsychotherapyItem4 = '${path}start_psychotherapy_item4.png';
 
+  // Find psychologist images
+  static const findPsychologist = '${path}find_psychologist.png';
+
 }

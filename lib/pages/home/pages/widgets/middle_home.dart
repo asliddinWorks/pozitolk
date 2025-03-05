@@ -4,6 +4,7 @@ import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
 import 'package:pozitolk/core/extension/widget_extension.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../../constants/app_icons.dart';
 import '../../../../constants/app_images.dart';
@@ -58,7 +59,9 @@ class MiddleHome extends StatelessWidget {
               AppButton(
                 width: double.infinity,
                 height: 45,
-                onPressed: () {},
+                onPressed: () {
+                  launchUrlString('https://xn--g1acgdmcd1a.xn--p1ai/docs/polz-sogl.pdf');
+                },
                 text: 'Купить подписку',
               ),
             ],

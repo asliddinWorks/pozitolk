@@ -16,6 +16,7 @@ import 'package:pozitolk/pages/home/pages/widgets/start_psychotherapy.dart';
 import 'package:pozitolk/pages/home/pages/widgets/to_help.dart';
 import 'package:pozitolk/pages/home/pages/widgets/app_drawer.dart';
 import 'package:pozitolk/pages/home/pages/widgets/start_home.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import '../../../constants/app_images.dart';
 
@@ -195,7 +196,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                     20.hGap,
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        launchUrlString("tel://+7 495 989-50-50");
+                      },
                       child: Text(
                         '+7 495 989-50-50',
                         style: context.textStyle.s20w500inter.copyWith(
@@ -212,7 +215,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                     16.hGap,
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        launchUrlString("tel://+7 499 173-09-09");
+                      },
                       child: Text(
                         '+7 499 173-09-09',
                         style: context.textStyle.s20w500inter.copyWith(
@@ -229,7 +234,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                     16.hGap,
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        launchUrlString("tel://+7 495 625-06-20");
+                      },
                       child: Text(
                         '+7 495 625-06-20',
                         style: context.textStyle.s20w500inter.copyWith(
@@ -246,7 +253,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                     16.hGap,
                     GestureDetector(
-                      onTap: () {},
+                      onTap: () {
+                        launchUrlString("tel://+7 800 200-01-22");
+                      },
                       child: Text(
                         '+7 800 200-01-22',
                         style: context.textStyle.s20w500inter.copyWith(
@@ -383,6 +392,7 @@ class _HomePageState extends State<HomePage> {
                           decoration: TextDecoration.underline
                         ),
                         recognizer: TapGestureRecognizer()..onTap = () {
+                          launchUrlString('https://xn--g1acgdmcd1a.xn--p1ai/docs/pol-conf.pdf');
                         }
                       ),
                     ],

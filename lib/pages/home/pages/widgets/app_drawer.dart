@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
 import 'package:pozitolk/core/extension/widget_extension.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 import '../../../../constants/app_icons.dart';
 import '../../../../core/widgets/app_button.dart';
 import '../../../../core/widgets/app_text_button.dart';
@@ -41,44 +42,64 @@ class AppDrawer extends StatelessWidget {
                   44.hGap,
                   AppTextButton(
                     text: 'Для психологов',
-                    onTap: () {},
+                    onTap: () {
+                      launchUrlString('https://xn--g1acgdmcd1a.xn--p1ai/for-psycho');
+                    },
                   ),
                   AppTextButton(
                     text: 'Для бизнеса',
-                    onTap: () {},
+                    onTap: () {
+                    },
                   ),
                   AppTextButton(
                     text: 'Подарок близким',
-                    onTap: () {},
+                    onTap: () {
+                      launchUrlString('https://xn--g1acgdmcd1a.xn--p1ai/gift');
+                    },
                   ),
                   AppTextButton(
                     text: 'Тесты',
-                    onTap: () {},
+                    onTap: () {
+                      launchUrlString('https://xn--g1acgdmcd1a.xn--p1ai/tests');
+                    },
                   ),
                   AppTextButton(
                     text: 'База знаний',
-                    onTap: () {},
+                    onTap: () {
+                      launchUrlString('https://xn--g1acgdmcd1a.xn--p1ai/blog');
+                    },
                   ),
                   28.hGap,
                   AppTextButton(
                     text: 'Чат с позитолк',
-                    onTap: () {},
+                    onTap: () {
+                      // launchUrlString('');
+                    },
                   ),
                   AppTextButton(
                     text: 'Канал в Telegram',
-                    onTap: () {},
+                    onTap: () {
+                      launchUrlString('https://t.me/pozi_tolk');
+                    },
                   ),
                   AppTextButton(
                     text: 'Группа ВКонтакте',
-                    onTap: () {},
+                    onTap: () {
+                      launchUrlString('https://vk.com/club226735405');
+                    },
+
                   ),
                   AppTextButton(
                     text: 'Канал на YouTube',
-                    onTap: () {},
+                    onTap: () {
+                      launchUrlString('https://www.youtube.com/@%D0%9F%D0%BE%D0%B7%D0%B8%D0%A2%D0%BE%D0%BB%D0%BA');
+                    },
                   ),
                   AppTextButton(
                     text: 'Яндекс Дзен',
-                    onTap: () {},
+                    onTap: () {
+                      launchUrlString('https://dzen.ru/pozi_tolk');
+                    },
                   ),
                 ],
               ),
@@ -89,7 +110,9 @@ class AppDrawer extends StatelessWidget {
                     appButtonType: AppButtonType.outlined,
                     height: 45,
                     width: double.infinity,
-                    onPressed: () {},
+                    onPressed: () {
+                      launchUrlString('https://xn--g1acgdmcd1a.xn--p1ai/account/client/onboard');
+                    },
                     text: 'Войти',
                   ),
                   6.hGap,

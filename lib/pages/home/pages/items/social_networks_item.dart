@@ -4,9 +4,10 @@ import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
 
 class SocialNetworksItem extends StatelessWidget {
-  const SocialNetworksItem({super.key, required this.title, required this.image});
+  const SocialNetworksItem({super.key, required this.title, required this.image, required this.onTap});
   final String title;
   final String image;
+  final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +28,9 @@ class SocialNetworksItem extends StatelessWidget {
         Text(title, style: context.textStyle.s20w500inter,textAlign: TextAlign.center,),
         12.hGap,
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            onTap();
+          },
           child: Text(
             'Перейти',
             style: context.textStyle.s20w500inter

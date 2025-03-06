@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:pozitolk/constants/app_icons.dart';
 import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
@@ -66,7 +67,8 @@ class _HomePageState extends State<HomePage> {
             Column(
               children: [
                 2.hGap,
-                Text('позитолк', style: context.textStyle.s16w400,),
+                Text('позитолк  Everyone', style: context.textStyle.s16w400,),
+                // Text('Психотерапия brbhr', style: GoogleFonts.leckerliOne(color: context.color.primary)),
               ],
             ),
           ],

@@ -55,8 +55,11 @@ flutter:
   fonts:
     - family: MV-Crooker
       fonts:
-        - asset: assets/fonts/MV-Crooker.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
+#        - asset: assets/fonts/MV-Crooker.ttf
+        - asset: assets/fonts/crooker.otf
+#    - family: okk
+#      fonts:
+#        - asset: fonts/McLaren-Regular.ttf
   #         style: italic
   #   - family: Trajan Pro
   #     fonts:

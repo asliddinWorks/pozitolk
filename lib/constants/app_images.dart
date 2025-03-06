@@ -54,4 +54,8 @@ class AppImages{
   // Find psychologist images
   static const findPsychologist = '${path}find_psychologist.png';
 
+  // Background Logo
+
+  static const backgroundLogo = '${path}background_logo.png';
+
 }

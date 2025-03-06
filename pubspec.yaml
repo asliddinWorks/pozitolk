@@ -51,12 +51,6 @@ flutter:
     - assets/fonts/
 
 
-flutter_launcher_icons:
-  android: true
-  ios: true
-  image_path: "assets/icons/pozitolk_icon.png"
-
-
 
   fonts:
     - family: MV-Crooker
@@ -67,3 +61,8 @@ flutter_launcher_icons:
   #   - family: Trajan Pro
   #     fonts:
   #       - asset: fonts/TrajanPro.ttf
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/pozitolk_icon.png"

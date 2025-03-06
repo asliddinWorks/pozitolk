@@ -58,10 +58,17 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
         title: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+
           children: [
             SvgPicture.asset(AppIcons.icLogo),
             5.wGap,
-            Text('позитолк', style: context.textStyle.s16w400),
+            Column(
+              children: [
+                2.hGap,
+                Text('позитолк', style: context.textStyle.s16w400,),
+              ],
+            ),
           ],
         ),
       ),
@@ -383,18 +390,19 @@ class _HomePageState extends State<HomePage> {
                   text: TextSpan(
                     children: <TextSpan>[
                       TextSpan(
-                        text: 'заходя на сайт, вы даёте согласие на использование файлов cookie и иных данных в соответствии c ',
+                        text:
+                            'заходя на сайт, вы даёте согласие на использование файлов cookie и иных данных в соответствии c ',
                         style: context.textStyle.s16w400inter,
                       ),
                       TextSpan(
-                        text: 'условиями использования',
-                        style: context.textStyle.s16w400inter.copyWith(
-                          decoration: TextDecoration.underline
-                        ),
-                        recognizer: TapGestureRecognizer()..onTap = () {
-                          launchUrlString('https://xn--g1acgdmcd1a.xn--p1ai/docs/pol-conf.pdf');
-                        }
-                      ),
+                          text: 'условиями использования',
+                          style: context.textStyle.s16w400inter
+                              .copyWith(decoration: TextDecoration.underline),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              launchUrlString(
+                                  'https://xn--g1acgdmcd1a.xn--p1ai/docs/pol-conf.pdf');
+                            }),
                     ],
                   ),
                 ).padding(EdgeInsets.symmetric(horizontal: 20)),
@@ -402,7 +410,10 @@ class _HomePageState extends State<HomePage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text('© позитолк 2024', style: context.textStyle.s16w400inter,),
+                    Text(
+                      '© позитолк 2024',
+                      style: context.textStyle.s16w400inter,
+                    ),
                   ],
                 ),
                 100.hGap,

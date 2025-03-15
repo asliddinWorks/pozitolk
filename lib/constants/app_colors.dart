@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 
 /// standard colors
 const colorLightScheme = ColorScheme.light(
-  primary: Color(0xffFB812C),
+  primary: Color(0xFFFF6900),
   secondary: Color(0xffFAAB19),
   surface: Color(0xFFFFFFFF),
-  onSurface: Color(0xFFEBEFF2),
+  // surface: Color(0xFF000000),
+  // onSurface: Color(0xFFEBEFF2),
+  onSurface: Colors.black,
   error: Color(0xFFEB4335),
 );
 
@@ -20,8 +22,10 @@ class AppColors extends ThemeExtension<AppColors> {
     required this.background2,
     required this.containerBackground,
     required this.containerBackground2,
+    required this.containerBackgroundF3,
+    required this.containerBackgroundF4,
     required this.secondary,
-    required this.secondaryVar1,
+    required this.secondary200,
     required this.secondaryVar2,
     required this.googlePart,
     required this.iconColorGrey,
@@ -36,6 +40,9 @@ class AppColors extends ThemeExtension<AppColors> {
     required this.error,
     required this.warningAlert,
     required this.inactiveFBA,
+    required this.textA4,
+    required this.textBA,
+    required this.base03,
   });
 
   final Color primary;
@@ -45,8 +52,10 @@ class AppColors extends ThemeExtension<AppColors> {
   final Color background2;
   final Color containerBackground;
   final Color containerBackground2;
+  final Color containerBackgroundF3;
+  final Color containerBackgroundF4;
   final Color secondary;
-  final Color secondaryVar1;
+  final Color secondary200;
   final Color secondaryVar2;
   final Color googlePart;
   final Color iconColorGrey;
@@ -61,6 +70,9 @@ class AppColors extends ThemeExtension<AppColors> {
   final Color error;
   final Color warningAlert;
   final Color inactiveFBA;
+  final Color textA4;
+  final Color textBA;
+  final Color base03;
 
 
   static AppColors light = AppColors(
@@ -71,14 +83,18 @@ class AppColors extends ThemeExtension<AppColors> {
     background2: const Color(0xFFFFFFFF),
     containerBackground: const Color(0xFFEEEEEE),
     containerBackground2: const Color(0xFFF2F2F2),
+    containerBackgroundF3: const Color(0xFFF3F3F3),
+    containerBackgroundF4: const Color(0xFFF4F4F4),
     secondary: const Color(0xFFFAAB1A),
-    secondaryVar1: const Color(0x80FFAB11),
+    secondary200: const Color(0xFFABD29B),
     secondaryVar2: const Color(0x4DFFAB11),
     googlePart: const Color(0xFF4285F4),
     iconColorGrey: const Color(0xFFDDDDDD),
     text: const Color(0xFF191919),
     textGrey: const Color(0xFF666666),
     textGrey2: const Color(0xFF4D4D4D),
+    textA4: const Color(0xFFA4A4A4),
+    textBA: const Color(0xFFA4A4A4),
     dividerColor: const Color(0xFFDCDCDC),
     facebook: const Color(0xFF1877F2),
     twitter: const Color(0xFF55ACEE),
@@ -87,6 +103,7 @@ class AppColors extends ThemeExtension<AppColors> {
     error: const Color(0xFFEB4335),
     warningAlert: const Color(0xFFFF0000),
     inactiveFBA: const Color(0x4DFFAB11),
+    base03: const Color(0xFFF6F7F4),
   );
 
   @override
@@ -98,8 +115,10 @@ class AppColors extends ThemeExtension<AppColors> {
     Color? background2,
     Color? containerBackground,
     Color? containerBackground2,
+    Color? containerBackgroundF3,
+    Color? containerBackgroundF4,
     Color? secondary,
-    Color? secondaryVar1,
+    Color? secondary200,
     Color? secondaryVar2,
     Color? googlePart,
     Color? iconColorGrey,
@@ -113,7 +132,10 @@ class AppColors extends ThemeExtension<AppColors> {
     Color? activeChat,
     Color? error,
     Color? warningAlert,
-    Color? inactiveFBA
+    Color? inactiveFBA,
+    Color? textA4,
+    Color? textBA,
+    Color? base03,
   }) {
     return AppColors(
       primary: primary ?? this.primary,
@@ -123,8 +145,10 @@ class AppColors extends ThemeExtension<AppColors> {
       background2: background2 ?? this.background2,
       containerBackground: containerBackground ?? this.containerBackground,
       containerBackground2: containerBackground2 ?? this.containerBackground2,
+      containerBackgroundF3: containerBackgroundF3 ?? this.containerBackgroundF3,
+      containerBackgroundF4: containerBackgroundF4 ?? this.containerBackgroundF4,
       secondary: secondary ?? this.secondary,
-      secondaryVar1: secondaryVar1 ?? this.secondaryVar1,
+      secondary200: secondary200 ?? this.secondary200,
       secondaryVar2: secondaryVar2 ?? this.secondaryVar2,
       googlePart: googlePart ?? this.googlePart,
       iconColorGrey: iconColorGrey ?? this.iconColorGrey,
@@ -138,7 +162,11 @@ class AppColors extends ThemeExtension<AppColors> {
       activeChat: activeChat ?? this.activeChat,
       error: error ?? this.error,
       warningAlert: warningAlert ?? this.warningAlert,
-      inactiveFBA: inactiveFBA ?? this.inactiveFBA
+      inactiveFBA: inactiveFBA ?? this.inactiveFBA,
+      textA4: textA4 ?? this.textA4,
+      textBA: textBA ?? this.textBA,
+      base03: base03 ?? this.base03,
+
     );
   }
 
@@ -155,8 +183,10 @@ class AppColors extends ThemeExtension<AppColors> {
       background2: Color.lerp(background2, other.background2, t)!,
       containerBackground: Color.lerp(containerBackground, other.containerBackground, t)!,
       containerBackground2: Color.lerp(containerBackground2, other.containerBackground2, t)!,
+      containerBackgroundF3: Color.lerp(containerBackgroundF3, other.containerBackgroundF3, t)!,
+      containerBackgroundF4: Color.lerp(containerBackgroundF4, other.containerBackgroundF4, t)!,
       secondary: Color.lerp(secondary, other.secondary, t)!,
-      secondaryVar1: Color.lerp(secondaryVar1, other.secondaryVar1, t)!,
+      secondary200: Color.lerp(secondary200, other.secondary200, t)!,
       secondaryVar2: Color.lerp(secondaryVar2, other.secondaryVar2, t)!,
       googlePart: Color.lerp(googlePart, other.googlePart, t)!,
       iconColorGrey: Color.lerp(iconColorGrey, other.iconColorGrey, t)!,
@@ -170,7 +200,10 @@ class AppColors extends ThemeExtension<AppColors> {
       activeChat: Color.lerp(activeChat, other.activeChat, t)!,
       error: Color.lerp(error, other.error, t)!,
       warningAlert: Color.lerp(warningAlert, other.warningAlert, t)!,
-      inactiveFBA: Color.lerp(inactiveFBA, other.inactiveFBA, t)!
+      inactiveFBA: Color.lerp(inactiveFBA, other.inactiveFBA, t)!,
+      textA4: Color.lerp(textA4, other.textA4, t)!,
+      textBA: Color.lerp(textBA, other.textBA, t)!,
+      base03: Color.lerp(base03, other.base03, t)!,
     );
   }
 }

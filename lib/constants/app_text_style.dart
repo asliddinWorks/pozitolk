@@ -13,7 +13,13 @@ class AppTextStyle extends ThemeExtension<AppTextStyle> {
     required this.s14w400inter,
     required this.s20w600inter,
     required this.s20w400inter,
-    required this.s20w500inter
+    required this.s20w500inter,
+    required this.s16w600Manrope,
+    required this.s16w500Manrope,
+    required this.s13w500Inter,
+    required this.s22w600Manrope,
+    required this.s14w400Manrope,
+
   });
 
   final TextStyle s16w400;
@@ -25,6 +31,11 @@ class AppTextStyle extends ThemeExtension<AppTextStyle> {
   final TextStyle s20w600inter;
   final TextStyle s20w400inter;
   final TextStyle s20w500inter;
+  final TextStyle s16w600Manrope;
+  final TextStyle s16w500Manrope;
+  final TextStyle s22w600Manrope;
+  final TextStyle s14w400Manrope;
+  final TextStyle s13w500Inter;
 
   /// new text styles
 
@@ -89,6 +100,41 @@ class AppTextStyle extends ThemeExtension<AppTextStyle> {
       letterSpacing: -0.6,
       height: 1.25
     ),
+    s16w600Manrope: GoogleFonts.manrope(
+      fontSize: 16,
+      height: 1.25,
+      letterSpacing: 0.16,
+      fontWeight: FontWeight.w600,
+      color: AppColors.light.text,
+    ),
+    s16w500Manrope: GoogleFonts.manrope(
+      fontSize: 16,
+      height: 1.25,
+      letterSpacing: 0.16,
+      fontWeight: FontWeight.w500,
+      color: AppColors.light.text,
+    ),
+    s14w400Manrope: GoogleFonts.manrope(
+      fontSize: 14,
+      height: 1.25,
+      letterSpacing: 0.14,
+      fontWeight: FontWeight.w400,
+      color: AppColors.light.text,
+    ),
+    s22w600Manrope: GoogleFonts.manrope(
+      fontSize: 22,
+      height: 1.25,
+      letterSpacing: 0.22,
+      fontWeight: FontWeight.w600,
+      color: AppColors.light.text,
+    ),
+    s13w500Inter: GoogleFonts.inter(
+      fontSize: 13,
+      height: 1.25,
+      fontWeight: FontWeight.w500,
+      color: AppColors.light.textBA,
+      letterSpacing: -0.26,
+    ),
   );
 
   @override
@@ -102,6 +148,11 @@ class AppTextStyle extends ThemeExtension<AppTextStyle> {
     TextStyle? s20w600inter,
     TextStyle? s20w400inter,
     TextStyle? s20w500inter,
+    TextStyle? s16w600Manrope,
+    TextStyle? s16w500Manrope,
+    TextStyle? s22w600Manrope,
+    TextStyle? s14w400Manrope,
+    TextStyle? s13w500Inter,
   }) {
     return AppTextStyle(
       s16w400: s16w400 ?? this.s16w400,
@@ -112,7 +163,12 @@ class AppTextStyle extends ThemeExtension<AppTextStyle> {
       s14w400inter: s14w400inter ?? this.s14w400inter,
       s20w600inter: s20w600inter ?? this.s20w600inter,
       s20w400inter: s20w400inter ?? this.s20w400inter,
-      s20w500inter: s20w500inter ?? this.s20w500inter
+      s20w500inter: s20w500inter ?? this.s20w500inter,
+      s16w600Manrope: s16w600Manrope ?? this.s16w600Manrope,
+      s16w500Manrope: s16w500Manrope ?? this.s16w500Manrope,
+      s22w600Manrope: s22w600Manrope ?? this.s22w600Manrope,
+      s14w400Manrope: s14w400Manrope ?? this.s14w400Manrope,
+      s13w500Inter: s13w500Inter ?? this.s13w500Inter,
     );
   }
 
@@ -132,6 +188,11 @@ class AppTextStyle extends ThemeExtension<AppTextStyle> {
       s20w600inter: TextStyle.lerp(s20w600inter, other.s20w600inter, t)!,
       s20w400inter: TextStyle.lerp(s20w400inter, other.s20w400inter, t)!,
       s20w500inter: TextStyle.lerp(s20w500inter, other.s20w500inter, t)!,
+      s16w600Manrope: TextStyle.lerp(s16w600Manrope, other.s16w600Manrope, t)!,
+      s16w500Manrope: TextStyle.lerp(s16w500Manrope, other.s16w500Manrope, t)!,
+      s22w600Manrope: TextStyle.lerp(s22w600Manrope, other.s22w600Manrope, t)!,
+      s14w400Manrope: TextStyle.lerp(s14w400Manrope, other.s14w400Manrope, t)!,
+      s13w500Inter: TextStyle.lerp(s13w500Inter, other.s13w500Inter, t)!,
     );
   }
 }

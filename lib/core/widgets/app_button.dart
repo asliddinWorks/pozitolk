@@ -6,7 +6,7 @@ import '/core/extension/context_extension.dart';
 class AppButton extends StatelessWidget {
   const AppButton({super.key,
     this.elevation = 0,
-    this.height = 50,
+    this.height = 45,
     this.width,
     required this.onPressed,
     required this.text,

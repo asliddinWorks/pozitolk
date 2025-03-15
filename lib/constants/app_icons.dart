@@ -17,6 +17,23 @@ class AppIcons {
   static const icTelegram = '${path}ic_telegram.svg';
   static const icVkontakte = '${path}ic_vkontakte.svg';
   static const icYandexZen = '${path}ic_yandex_zen.svg';
+  static const icHelp = '${path}ic_help.svg';
+  static const icDrawer = '${path}ic_drawer.svg';
+  static const icDrawerChat = '${path}ic_drawer_chat.svg';
+  static const iEvents = '${path}ic_events.svg';
+  static const icHelp2 = '${path}ic_help2.svg';
+  static const icMyCes = '${path}ic_my_ces.svg';
+  static const icPayment = '${path}ic_payment.svg';
+  static const icPersonAdd = '${path}ic_person_add.svg';
+  static const icSettings = '${path}ic_settings.svg';
+  static const icDecoration = '${path}ic_decoration.svg';
+  static const icExit = '${path}ic_exit.svg';
+  static const icCalendar = '${path}ic_calendar.svg';
+  static const icNavigationChat = '${path}ic_navigation_chat.svg';
+  static const icNavigationCalendar = '${path}ic_navigation_calendar.svg';
+  static const icUser = '${path}ic_user.svg';
+  static const icWhiteLogo = '${path}ic_white_logo.svg';
+  static const icHome = '${path}ic_home.svg';
 
 
 }

@@ -4,6 +4,8 @@ part of 'router.dart';
 sealed class RouteNames {
   static const splash = '/';
   static const home = '/home';
+  static const login = '/login';
+  static const consultation = '/consultation';
 
 }
 
@@ -34,6 +36,18 @@ GoRouter router = GoRouter(
       path: RouteNames.home,
       builder: (context, state) {
         return const HomePage();
+      },
+    ),
+    GoRoute(
+      path: RouteNames.login,
+      builder: (context, state) {
+        return const LoginPage();
+      },
+    ),
+    GoRoute(
+      path: RouteNames.consultation,
+      builder: (context, state) {
+        return const ConsultationPage();
       },
     ),
   ],

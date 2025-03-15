@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
 import 'package:pozitolk/core/extension/widget_extension.dart';
+import 'package:pozitolk/router/router.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 import '../../../../constants/app_icons.dart';
 import '../../../../core/widgets/app_button.dart';
@@ -111,7 +112,7 @@ class AppDrawer extends StatelessWidget {
                     height: 45,
                     width: double.infinity,
                     onPressed: () {
-                      launchUrlString('https://xn--g1acgdmcd1a.xn--p1ai/account/client/onboard');
+                      context.push(RouteNames.login);
                     },
                     text: 'Войти',
                   ),

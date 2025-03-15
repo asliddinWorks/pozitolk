@@ -1,9 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
 import '/core/extension/context_extension.dart';
-
-import '../../constants/app_icons.dart';
 
 class AppLikeButton extends StatefulWidget {
   const AppLikeButton({super.key,

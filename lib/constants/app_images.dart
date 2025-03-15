@@ -58,4 +58,6 @@ class AppImages{
 
   static const backgroundLogo = '${path}background_logo.png';
 
+  static const defaultImage = '${path}default_image.png';
+
 }

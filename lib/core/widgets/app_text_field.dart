@@ -2,8 +2,6 @@
 
 import 'package:flutter/material.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
-import '/core/extension/context_extension.dart';
-
 class AppTextField extends StatelessWidget {
   const AppTextField({super.key,
     this.controller,

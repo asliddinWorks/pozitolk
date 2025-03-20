@@ -50,5 +50,11 @@ GoRouter router = GoRouter(
         return const ConsultationPage();
       },
     ),
+    GoRoute(
+      path: RouteNames.splash,
+      builder: (context, state) {
+        return const SplashPage();
+      },
+    ),
   ],
 );

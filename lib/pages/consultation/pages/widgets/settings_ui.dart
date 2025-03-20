@@ -8,14 +8,10 @@ import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
 import 'package:pozitolk/core/utils/calendar_day.dart';
 import 'package:pozitolk/core/widgets/app_button.dart';
-import 'package:pozitolk/core/widgets/app_drop_down.dart';
 import 'package:pozitolk/core/widgets/app_text_field2.dart';
 import 'package:pozitolk/core/widgets/drop_down_with_title.dart';
 import 'package:pozitolk/core/widgets/text_field_with_title.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher_string.dart';
-
-import '../../../../core/utils/calendar.dart';
 import '../../view_model/consultation_view_model.dart';
 
 class SettingsUi extends StatelessWidget {

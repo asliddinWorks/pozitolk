@@ -20,12 +20,13 @@ class AppIcons {
   static const icHelp = '${path}ic_help.svg';
   static const icDrawer = '${path}ic_drawer.svg';
   static const icDrawerChat = '${path}ic_drawer_chat.svg';
-  static const iEvents = '${path}ic_events.svg';
+  static const icEvents = '${path}ic_events.svg';
   static const icHelp2 = '${path}ic_help2.svg';
   static const icMyCes = '${path}ic_my_ces.svg';
   static const icPayment = '${path}ic_payment.svg';
   static const icPersonAdd = '${path}ic_person_add.svg';
   static const icSettings = '${path}ic_settings.svg';
+  static const icSetting1 = '${path}ic_setting1.svg';
   static const icDecoration = '${path}ic_decoration.svg';
   static const icExit = '${path}ic_exit.svg';
   static const icCalendar = '${path}ic_calendar.svg';
@@ -34,6 +35,9 @@ class AppIcons {
   static const icUser = '${path}ic_user.svg';
   static const icWhiteLogo = '${path}ic_white_logo.svg';
   static const icHome = '${path}ic_home.svg';
+  static const icSchedule = '${path}ic_schedule.svg';
+  static const icStatistics = '${path}ic_statistics.svg';
+  static const icUsers = '${path}ic_users.svg';
 
 
 }

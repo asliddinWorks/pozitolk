@@ -15,6 +15,7 @@ class AppButton extends StatelessWidget {
     this.fillTextStyle,
     this.outlinedTextStyle,
     this.color,
+    this.borderColor,
     this.borderRadius,
     this.contentPadding,
   });
@@ -29,6 +30,7 @@ class AppButton extends StatelessWidget {
   final TextStyle? fillTextStyle;           // button fill text style
   final TextStyle? outlinedTextStyle;       // button outline text style
   final Color? color;                       // button color
+  final Color? borderColor;                       // button color
   final BorderRadiusGeometry? borderRadius; // button border radius
   final EdgeInsets? contentPadding;         // button content padding
 
@@ -76,7 +78,7 @@ class AppButton extends StatelessWidget {
           borderRadius: borderRadius ?? BorderRadius.circular(12),
           side: BorderSide(
             width: 1,
-            color: context.colorScheme.primary,
+            color: borderColor ?? context.colorScheme.primary,
           ),
         ),
         minWidth: width,

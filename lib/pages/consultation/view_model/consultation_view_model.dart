@@ -3,32 +3,39 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:motion_tab_bar_v2/motion-tab-controller.dart';
 import 'package:pozitolk/constants/app_icons.dart';
+import 'package:pozitolk/core/data/data_source/local/app_local_data.dart';
+
+import '../../../router/router.dart';
 
 class ConsultationViewModel extends ChangeNotifier {
   final GlobalKey<ScaffoldState> key = GlobalKey();
   MotionTabBarController? motionTabBarController;
+
+  bool isLoading = false;
 
   bool isChecked1 = false;
   bool isChecked2 = false;
   bool isChecked3 = false;
 
   TextEditingController dateController = TextEditingController();
-  List<bool> drawerItem = List.generate(7, (index) => index == 0);
+  List<bool> drawerItem = List.generate(8, (index) => index == 0);
   List<String> drawerText = [
-    'Мои Сессии',
+    'Расписание',
     'Чаты',
+    'Клиенты',
+    'Оплата',
+    'Статистика',
     'События',
-    'Платежи',
-    'Приглашения',
     'Помощь',
   ];
 
   List<String> drawerIcon = [
-    AppIcons.icMyCes,
+    AppIcons.icSchedule,
     AppIcons.icDrawerChat,
-    AppIcons.iEvents,
+    AppIcons.icUsers,
     AppIcons.icPayment,
-    AppIcons.icPersonAdd,
+    AppIcons.icStatistics,
+    AppIcons.icEvents,
     AppIcons.icHelp2,
   ];
 
@@ -71,6 +78,14 @@ class ConsultationViewModel extends ChangeNotifier {
 
   ];
 
+  List<bool> profileItem = List.generate(6, (index) => index == 0);
+
+  void onProfileItemSelected(int index) {
+    profileItem = List.generate(profileItem.length, (index) => false);
+    profileItem[index] = true;
+    notifyListeners();
+  }
+
   void onDrawerSelected(BuildContext context, int index) {
     drawerItem = List.generate(drawerItem.length, (index) => false);
     drawerItem[index] = true;
@@ -89,12 +104,24 @@ class ConsultationViewModel extends ChangeNotifier {
   }
 
   void onSettings(){
-    drawerItem = List.generate(7, (index) => false);
-    drawerItem[6] = true;
+    drawerItem = List.generate(8, (index) => false);
+    drawerItem[7] = true;
     notifyListeners();
   }
 
   void onSetState(){
     notifyListeners();
  }
+
+  List<TextEditingController> educationPlaceController = [];
+  List<TextEditingController> educationYearController = [];
+
+  void onExit(BuildContext context)async{
+    isLoading = true;
+    notifyListeners();
+    await AppLocalData.removeAll();
+    context.go(RouteNames.login);
+    isLoading = false;
+    notifyListeners();
+  }
 }

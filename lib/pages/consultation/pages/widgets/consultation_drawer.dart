@@ -55,7 +55,7 @@ class ConsultationDrawer extends StatelessWidget {
                     scale: 0.55,
                     child: SvgPicture.asset(
                       colorFilter: ColorFilter.mode(
-                        watch.drawerItem[6] ? context.color.primary : context.color.textBA,
+                        watch.drawerItem[7] ? context.color.primary : context.color.textBA,
                         BlendMode.srcIn,
                       ),
                       AppIcons.icSettings,
@@ -134,7 +134,7 @@ class ConsultationDrawer extends StatelessWidget {
                   ).padding(EdgeInsets.symmetric(horizontal: 20)),
                 ),
               ),
-              itemCount: 6,
+              itemCount: 7,
             ),
           ),
         ],

@@ -112,7 +112,8 @@ class AppDrawer extends StatelessWidget {
                     height: 45,
                     width: double.infinity,
                     onPressed: () {
-                      context.push(RouteNames.login);
+                      context.push(RouteNames.splash);
+                      // context.push(RouteNames.login);
                     },
                     text: 'Войти',
                   ),

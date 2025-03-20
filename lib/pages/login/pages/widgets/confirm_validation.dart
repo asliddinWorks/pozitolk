@@ -16,9 +16,9 @@ class ConfirmPage extends StatefulWidget {
 class _ConfirmPageState extends State<ConfirmPage> {
   late LoginViewModel loginViewModel;
   final List<TextEditingController> _controllers =
-  List.generate(6, (index) => TextEditingController());
+      List.generate(6, (index) => TextEditingController());
   final List<FocusNode> _focusNodes = List.generate(6, (index) => FocusNode());
-   List<bool> isFocus = List.generate(6, (index) => false);
+  List<bool> isFocus = List.generate(6, (index) => false);
 
   @override
   void initState() {
@@ -43,7 +43,12 @@ class _ConfirmPageState extends State<ConfirmPage> {
     bool hasEmpty = _controllers.any((controller) => controller.text.isEmpty);
 
     if (!hasEmpty) {
-      loginViewModel.onValidation(context);
+      String code = '';
+      for (var i = 0; i < 6; i++) {
+        code += _controllers[i].text;
+        loginViewModel.confirmCode = code.toString();
+      }
+      loginViewModel.confirm(context);
     }
 
     setState(() {});
@@ -51,11 +56,11 @@ class _ConfirmPageState extends State<ConfirmPage> {
     if (value.isEmpty && index > 0) {
       _focusNodes[index - 1].requestFocus();
       isFocus = List.generate(6, (index) => false);
-      isFocus[index-1] = true;
+      isFocus[index - 1] = true;
     } else if (value.length == 1 && index < _controllers.length - 1) {
       _focusNodes[index + 1].requestFocus();
       isFocus = List.generate(6, (index) => false);
-      isFocus[index+1] = true;
+      isFocus[index + 1] = true;
     }
     if (value.length != 1) {
       if (value.length == 7) _controllers[index].text = '';
@@ -91,6 +96,7 @@ class _ConfirmPageState extends State<ConfirmPage> {
 
   @override
   Widget build(BuildContext context) {
+    final watch = context.watch<LoginViewModel>();
     return Scaffold(
       backgroundColor: Colors.transparent,
       // appBar: AppBar(
@@ -111,8 +117,7 @@ class _ConfirmPageState extends State<ConfirmPage> {
                 for (int i = 0; i < _focusNodes.length; i++) {
                   if (_focusNodes[i].hasFocus) {
                     if (_controllers[i].text.isEmpty && i != 0) {
-                      FocusScope.of(context).requestFocus(_focusNodes[i -
-                          1]);
+                      FocusScope.of(context).requestFocus(_focusNodes[i - 1]);
                     }
                   }
                 }
@@ -140,12 +145,10 @@ class _ConfirmPageState extends State<ConfirmPage> {
                       height: 50,
                       child: TextField(
                         textAlign: TextAlign.center,
-                        onTap: (){
+                        onTap: () {
                           isFocus = List.generate(6, (index) => false);
                           isFocus[index] = true;
-                          setState(() {
-
-                          });
+                          setState(() {});
                         },
                         onChanged: (value) {
                           _onChanged(value, index);
@@ -156,15 +159,32 @@ class _ConfirmPageState extends State<ConfirmPage> {
                         style: context.textStyle.s20w500inter.copyWith(
                           color: context.color.textGrey2,
                         ),
-
                         focusNode: _focusNodes[index],
                         controller: _controllers[index],
                         keyboardType: TextInputType.number,
                         decoration: InputDecoration(
                           fillColor: Colors.transparent,
-                          border: InputBorder.none,
-                          enabledBorder: InputBorder.none,
-                          focusedBorder: InputBorder.none,
+                          border: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: watch.isConfirmError ? context.color.error : Colors.transparent,
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          enabledBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: watch.isConfirmError ? context.color.error : Colors.transparent,
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderSide: BorderSide(
+                              color: watch.isConfirmError ? context.color.error : Colors.transparent,
+                              width: 2,
+                            ),
+                            borderRadius: BorderRadius.circular(16),
+                          ),
                           hintText: isFocus[index] ? '' : '•',
                           hintStyle: const TextStyle(
                             color: Color(0xFFBABABA),
@@ -175,7 +195,9 @@ class _ConfirmPageState extends State<ConfirmPage> {
                         ),
                       ),
                     ),
-                    SizedBox(width: 0.02.wp(context),)
+                    SizedBox(
+                      width: 0.02.wp(context),
+                    )
                   ],
                 );
               },

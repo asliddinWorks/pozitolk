@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl_phone_field/country_picker_dialog.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
@@ -198,163 +198,202 @@ class _LoginPageState extends State<LoginPage> {
                         ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                                Text(
-                                  'Введите номер телефона',
-                                  style:
-                                      context.textStyle.s20w500inter.copyWith(
-                                    fontSize: 24,
-                                    color: context.color.textGrey2,
-                                  ),
+                              Text(
+                                'Введите номер телефона',
+                                style: context.textStyle.s20w500inter.copyWith(
+                                  fontSize: 24,
+                                  color: context.color.textGrey2,
                                 ),
-                                20.hGap,
-                                Text(
-                                  'Мы отправим код в SMS',
-                                  style: context.textStyle.s16w500inter
-                                      .copyWith(color: context.color.textGrey2),
-                                ),
-                                16.hGap,
-                                IntlPhoneField(
-                                  decoration: InputDecoration(
-                                    filled: true,
-                                    fillColor:
-                                        Colors.grey[200], // Orqa fon kulrang
-                                    // hintText: '+7 999 999 99 99', // Telefon raqami uchun placeholder
-                                    hintStyle: TextStyle(
-                                        color: Colors.grey,
-                                        fontSize: 16), // Shaffof rang
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          16), // Burchaklarni yumshatish (16)
-                                      borderSide: BorderSide
-                                          .none, // Chegarani olib tashlash
+                              ),
+                              20.hGap,
+                              Text(
+                                'Мы отправим код в SMS',
+                                style: context.textStyle.s16w500inter
+                                    .copyWith(color: context.color.textGrey2),
+                              ),
+                              16.hGap,
+                              Form(
+                                key: read.formKey,
+                                child: Theme(
+                                  data: Theme.of(context).copyWith(
+                                    dialogBackgroundColor: Colors
+                                        .white, // 🔥 Davlat tanlash oynasining orqa fonini oq qilish
+                                    inputDecorationTheme: InputDecorationTheme(
+                                      filled: true,
+                                      fillColor: Colors
+                                          .white, // 🔥 Qidiruv maydoni oq fon
+                                      hintStyle: TextStyle(color: Colors.grey),
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(8),
+                                        borderSide:
+                                            BorderSide(color: Colors.grey),
+                                      ),
                                     ),
-                                    enabledBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(16),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    errorBorder: OutlineInputBorder(
-                                      // ❗ Xato bo‘lganda border ham 16px bo‘lsin
-                                      borderRadius: BorderRadius.circular(16),
-                                      borderSide: BorderSide(
-                                          color: Colors.red), // Qizil border
-                                    ),
-                                    focusedErrorBorder: OutlineInputBorder(
-                                      // ❗ Xato + aktiv holatda ham 16px bo‘lsin
-                                      borderRadius: BorderRadius.circular(16),
-                                      borderSide: BorderSide(color: Colors.red),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(16),
-                                      borderSide: BorderSide.none,
-                                    ),
-                                    contentPadding: EdgeInsets.symmetric(
-                                        vertical: 15,
-                                        horizontal: 10), // Ichki oraliq
                                   ),
-                                  initialCountryCode: 'RU', // Standart Rossiya
-                                  dropdownIconPosition: IconPosition
-                                      .leading, // Bayroqni chapga olish
-                                  // flagsButtonPadding: EdgeInsets.only(right: 10), // Bayroqdan keyin bo‘sh joy qo‘shish
-                                  // textStyle: TextStyle(fontSize: 18, color: Colors.black), // Telefon raqami uchun shrift
-                                  dropdownTextStyle: TextStyle(
+                                  child: IntlPhoneField(
+                                    pickerDialogStyle: PickerDialogStyle(
+                                      backgroundColor: Colors
+                                          .white,
+                                      searchFieldInputDecoration: InputDecoration(
+                                        hintText: 'поиск',
+                                      ), // 🔥 Davlat tanlash oynasining orqa fonini oq qilish
+                                    ),
+                                    controller: read.phoneController,
+                                    decoration: InputDecoration(
+                                      filled: true,
+                                      fillColor:
+                                          Colors.grey[200], // Orqa fon kulrang
+                                      // hintText: '+7 999 999 99 99', // Telefon raqami uchun placeholder
+                                      hintStyle: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 16), // Shaffof rang
+                                      border: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(
+                                            16), // Burchaklarni yumshatish (16)
+                                        borderSide: BorderSide
+                                            .none, // Chegarani olib tashlash
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(16),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                      errorBorder: OutlineInputBorder(
+                                        // ❗ Xato bo‘lganda border ham 16px bo‘lsin
+                                        borderRadius: BorderRadius.circular(16),
+                                        borderSide: BorderSide(
+                                            color: Colors.red), // Qizil border
+                                      ),
+                                      focusedErrorBorder: OutlineInputBorder(
+                                        // ❗ Xato + aktiv holatda ham 16px bo‘lsin
+                                        borderRadius: BorderRadius.circular(16),
+                                        borderSide:
+                                            BorderSide(color: Colors.red),
+                                      ),
+                                      focusedBorder: OutlineInputBorder(
+                                        borderRadius: BorderRadius.circular(16),
+                                        borderSide: BorderSide.none,
+                                      ),
+                                      contentPadding: EdgeInsets.symmetric(
+                                          vertical: 15,
+                                          horizontal: 10), // Ichki oraliq
+                                    ),
+                                    onCountryChanged: (value) {
+                                      read.selectedCountryCode = value.code;
+                                    },
+                                    initialCountryCode: watch
+                                        .selectedCountryCode, // Standart Rossiya
+                                    dropdownIconPosition: IconPosition
+                                        .leading, // Bayroqni chapga olish
+                                    // flagsButtonPadding: EdgeInsets.only(right: 10), // Bayroqdan keyin bo‘sh joy qo‘shish
+                                    // textStyle: TextStyle(fontSize: 18, color: Colors.black), // Telefon raqami uchun shrift
+                                    dropdownTextStyle: TextStyle(
                                       fontSize: 18,
-                                      color: Colors
-                                          .black), // Bayroq qismidagi matn stili
-                                  disableLengthCheck:
-                                      false, // Raqam uzunligini tekshirishni yoqish
-                                  onChanged: (phone) {
-                                    print(phone.completeNumber);
-                                  },
+                                      color: Colors.black,
+                                    ), // Bayroq qismidagi matn stili
+                                    disableLengthCheck:
+                                        false, // Raqam uzunligini tekshirishni yoqish
+                                    onChanged: (phone) {
+                                      if (read.formKey.currentState!
+                                          .validate()) {
+                                        read.phoneNumber = phone.completeNumber;
+                                        print(phone.completeNumber);
+                                      } else {
+                                        read.phoneNumber = '';
+                                      }
+                                    },
+                                  ),
                                 ),
-                                // Row(
-                                //   children: [
-                                //     // Bayroq va dropdown
-                                //     Container(
-                                //       alignment: Alignment.center,
-                                //       height: 50,
-                                //       width: 85,
-                                //       decoration: BoxDecoration(
-                                //         color: Colors.grey.shade200,
-                                //         borderRadius: BorderRadius.circular(16),
-                                //       ),
-                                //       padding:
-                                //           EdgeInsets.symmetric(horizontal: 12),
-                                //       child: Row(
-                                //         mainAxisAlignment:
-                                //             MainAxisAlignment.center,
-                                //         children: [
-                                //           SizedBox(
-                                //             width: 24,
-                                //             height: 16,
-                                //             child: Image.network(
-                                //               'https://upload.wikimedia.org/wikipedia/commons/d/d4/Flag_of_Russia.png',
-                                //               width: 29,
-                                //               height: 20,
-                                //             ),
-                                //           ),
-                                //           SizedBox(width: 4),
-                                //           Icon(Icons.arrow_drop_down,
-                                //               color: Colors.black),
-                                //         ],
-                                //       ),
-                                //     ),
-                                //     SizedBox(width: 6),
-                                //     // Telefon kodi
-                                //     Expanded(
-                                //       child: Container(
-                                //         alignment: Alignment.center,
-                                //         height: 50,
-                                //         padding: EdgeInsets.symmetric(
-                                //             horizontal: 12),
-                                //         decoration: BoxDecoration(
-                                //           color: Colors.grey.shade200,
-                                //           borderRadius:
-                                //               BorderRadius.circular(16),
-                                //         ),
-                                //         child: Row(
-                                //           children: [
-                                //             Text(
-                                //               "+7",
-                                //               style: context
-                                //                   .textStyle.s20w500inter,
-                                //             ),
-                                //             Expanded(
-                                //               child: TextField(
-                                //                 keyboardType:
-                                //                     TextInputType.number,
-                                //                 inputFormatters: [
-                                //                   FilteringTextInputFormatter
-                                //                       .digitsOnly,
-                                //                   LengthLimitingTextInputFormatter(
-                                //                       10),
-                                //                 ],
-                                //                 decoration: InputDecoration(
-                                //                   fillColor: Colors.transparent,
-                                //                   border: InputBorder
-                                //                       .none, // Chegarani olib tashlash
-                                //                   enabledBorder: InputBorder
-                                //                       .none, // Fokuslanmagan holatda ham chegara yo‘q
-                                //                   focusedBorder:
-                                //                       InputBorder.none,
-                                //                   hintText: "999 999 99 99",
-                                //                   hintStyle: TextStyle(
-                                //                       color:
-                                //                           context.color.textA4,
-                                //                       fontSize: 18),
-                                //                 ),
-                                //                 style: context
-                                //                     .textStyle.s20w500inter,
-                                //               ),
-                                //             ),
-                                //           ],
-                                //         ),
-                                //       ),
-                                //     ),
-                                //     SizedBox(width: 8),
-                                //     // Telefon raqami kiritish maydoni
-                                //   ],
-                                // ),
-                              ])
+                              ),
+                              // Row(
+                              //   children: [
+                              //     // Bayroq va dropdown
+                              //     Container(
+                              //       alignment: Alignment.center,
+                              //       height: 50,
+                              //       width: 85,
+                              //       decoration: BoxDecoration(
+                              //         color: Colors.grey.shade200,
+                              //         borderRadius: BorderRadius.circular(16),
+                              //       ),
+                              //       padding:
+                              //           EdgeInsets.symmetric(horizontal: 12),
+                              //       child: Row(
+                              //         mainAxisAlignment:
+                              //             MainAxisAlignment.center,
+                              //         children: [
+                              //           SizedBox(
+                              //             width: 24,
+                              //             height: 16,
+                              //             child: Image.network(
+                              //               'https://upload.wikimedia.org/wikipedia/commons/d/d4/Flag_of_Russia.png',
+                              //               width: 29,
+                              //               height: 20,
+                              //             ),
+                              //           ),
+                              //           SizedBox(width: 4),
+                              //           Icon(Icons.arrow_drop_down,
+                              //               color: Colors.black),
+                              //         ],
+                              //       ),
+                              //     ),
+                              //     SizedBox(width: 6),
+                              //     // Telefon kodi
+                              //     Expanded(
+                              //       child: Container(
+                              //         alignment: Alignment.center,
+                              //         height: 50,
+                              //         padding: EdgeInsets.symmetric(
+                              //             horizontal: 12),
+                              //         decoration: BoxDecoration(
+                              //           color: Colors.grey.shade200,
+                              //           borderRadius:
+                              //               BorderRadius.circular(16),
+                              //         ),
+                              //         child: Row(
+                              //           children: [
+                              //             Text(
+                              //               "+7",
+                              //               style: context
+                              //                   .textStyle.s20w500inter,
+                              //             ),
+                              //             Expanded(
+                              //               child: TextField(
+                              //                 keyboardType:
+                              //                     TextInputType.number,
+                              //                 inputFormatters: [
+                              //                   FilteringTextInputFormatter
+                              //                       .digitsOnly,
+                              //                   LengthLimitingTextInputFormatter(
+                              //                       10),
+                              //                 ],
+                              //                 decoration: InputDecoration(
+                              //                   fillColor: Colors.transparent,
+                              //                   border: InputBorder
+                              //                       .none, // Chegarani olib tashlash
+                              //                   enabledBorder: InputBorder
+                              //                       .none, // Fokuslanmagan holatda ham chegara yo‘q
+                              //                   focusedBorder:
+                              //                       InputBorder.none,
+                              //                   hintText: "999 999 99 99",
+                              //                   hintStyle: TextStyle(
+                              //                       color:
+                              //                           context.color.textA4,
+                              //                       fontSize: 18),
+                              //                 ),
+                              //                 style: context
+                              //                     .textStyle.s20w500inter,
+                              //               ),
+                              //             ),
+                              //           ],
+                              //         ),
+                              //       ),
+                              //     ),
+                              //     SizedBox(width: 8),
+                              //     // Telefon raqami kiritish maydoni
+                              //   ],
+                              // ),
+                            ],
+                          )
                         : Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -367,9 +406,10 @@ class _LoginPageState extends State<LoginPage> {
                               ),
                               20.hGap,
                               Text(
-                                'Код отправлен на +7 999 999 99 99',
-                                style: context.textStyle.s16w500inter
-                                    .copyWith(color: context.color.textGrey2),
+                                'Код отправлен на ${read.phoneNumber}',
+                                style: context.textStyle.s16w500inter.copyWith(
+                                  color: context.color.textGrey2,
+                                ),
                               ),
                               10.hGap,
                               SizedBox(
@@ -377,11 +417,31 @@ class _LoginPageState extends State<LoginPage> {
                                 child: ConfirmPage(),
                               ),
                               16.hGap,
-                              Text(
-                                'Повторный код через 45 сек',
-                                style: context.textStyle.s16w500inter.copyWith(
-                                  color: context.color.textBA,
-                                ),
+                              !watch.finishCount
+                                  ? Text(
+                                      'Повторный код через ${watch.count} сек',
+                                      style: context.textStyle.s16w500inter
+                                          .copyWith(
+                                        color: context.color.textBA,
+                                      ),
+                                    )
+                                  : TextButton(
+                                      onPressed: () {
+                                        read.register(context);
+                                      },
+                                      child: Text(
+                                        'Повторный код',
+                                        style: context.textStyle.s16w500inter
+                                            .copyWith(
+                                          color: context.color.primary,
+                                        ),
+                                      ),
+                                    ),
+                              Column(
+                                children: [
+                                  8.hGap,
+                                  Text(read.confirmNumber.toString()),
+                                ],
                               ),
                             ],
                           ),
@@ -547,7 +607,7 @@ class _LoginPageState extends State<LoginPage> {
                       AppButton(
                         width: double.infinity,
                         onPressed: () {
-                          read.onConfirm();
+                          read.register(context);
                         },
                         text: 'Получить код по SMS',
                       ),
@@ -606,6 +666,6 @@ class _LoginPageState extends State<LoginPage> {
                 ),
         ],
       ),
-    );
+    ).loadingView(watch.isLoading);
   }
 }

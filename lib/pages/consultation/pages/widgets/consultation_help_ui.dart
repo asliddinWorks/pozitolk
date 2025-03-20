@@ -112,7 +112,6 @@ import 'package:pozitolk/core/widgets/app_button.dart';
 import 'package:pozitolk/pages/consultation/pages/items/consultation_help_item.dart';
 import 'package:pozitolk/pages/consultation/view_model/consultation_view_model.dart';
 import 'package:provider/provider.dart';
-import 'package:url_launcher/url_launcher_string.dart';
 
 class ConsultationHelpUi extends StatelessWidget {
   const ConsultationHelpUi({super.key});

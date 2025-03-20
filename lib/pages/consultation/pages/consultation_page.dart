@@ -5,8 +5,10 @@ import 'package:motion_tab_bar_v2/motion-tab-bar.dart';
 import 'package:motion_tab_bar_v2/motion-tab-controller.dart';
 import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
+import 'package:pozitolk/core/extension/widget_extension.dart';
 import 'package:pozitolk/pages/consultation/pages/widgets/consultation_drawer.dart';
 import 'package:pozitolk/pages/consultation/pages/widgets/consultation_help_ui.dart';
+import 'package:pozitolk/pages/consultation/pages/widgets/psychologist_settings_ui.dart';
 import 'package:pozitolk/pages/consultation/pages/widgets/settings_ui.dart';
 import 'package:pozitolk/pages/consultation/view_model/consultation_view_model.dart';
 import 'package:provider/provider.dart';
@@ -77,7 +79,7 @@ class _ConsultationPageState extends State<ConsultationPage>with SingleTickerPro
                 scale: 0.55,
                 child: SvgPicture.asset(
                   colorFilter: ColorFilter.mode(
-                    watch.drawerItem[6] ? context.color.primary : context.color.textBA,
+                    watch.drawerItem[7] ? context.color.primary : context.color.textBA,
                     BlendMode.srcIn,
                   ),
                   AppIcons.icSettings,
@@ -116,7 +118,7 @@ class _ConsultationPageState extends State<ConsultationPage>with SingleTickerPro
       endDrawer: Align(
         alignment: Alignment.topCenter,
         child: SizedBox(
-          height: 400,
+          height: 450,
           child: Drawer(
             shape: ContinuousRectangleBorder(),
             backgroundColor: context.color.background2,
@@ -127,8 +129,8 @@ class _ConsultationPageState extends State<ConsultationPage>with SingleTickerPro
       ),
       body: ListView(
         children: [
-          watch.drawerItem[5] ? ConsultationHelpUi(): SizedBox.shrink(),
-          watch.drawerItem[6] ? SettingsUi() : SizedBox.shrink(),
+          watch.drawerItem[6] ? ConsultationHelpUi(): SizedBox.shrink(),
+          watch.drawerItem[7] ? PsychologistSettingsUi() : SizedBox.shrink(),
         ],
       ),
       bottomNavigationBar: MotionTabBar(
@@ -209,6 +211,6 @@ class _ConsultationPageState extends State<ConsultationPage>with SingleTickerPro
           });
         },
       ),
-    );
+    ).loadingView(watch.isLoading);
   }
 }

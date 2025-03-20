@@ -9,7 +9,6 @@ import 'package:pozitolk/core/extension/widget_extension.dart';
 import 'package:pozitolk/pages/consultation/pages/widgets/consultation_drawer.dart';
 import 'package:pozitolk/pages/consultation/pages/widgets/consultation_help_ui.dart';
 import 'package:pozitolk/pages/consultation/pages/widgets/psychologist_settings_ui.dart';
-import 'package:pozitolk/pages/consultation/pages/widgets/settings_ui.dart';
 import 'package:pozitolk/pages/consultation/view_model/consultation_view_model.dart';
 import 'package:provider/provider.dart';
 import '../../../constants/app_icons.dart';

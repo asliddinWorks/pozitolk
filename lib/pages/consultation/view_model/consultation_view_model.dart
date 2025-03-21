@@ -1,13 +1,21 @@
 
+import 'dart:io';
+
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:motion_tab_bar_v2/motion-tab-controller.dart';
 import 'package:pozitolk/constants/app_icons.dart';
 import 'package:pozitolk/core/data/data_source/local/app_local_data.dart';
-
+import 'package:pozitolk/pages/consultation/data/consultation_repo/consultation_repo.dart';
+import 'package:pozitolk/pages/login/model/user_model.dart';
+import '../../../core/tools/toast_bar.dart';
 import '../../../router/router.dart';
 
 class ConsultationViewModel extends ChangeNotifier {
+  final ConsultationRepo consultationRepo;
+  ConsultationViewModel(this.consultationRepo);
+
   final GlobalKey<ScaffoldState> key = GlobalKey();
   MotionTabBarController? motionTabBarController;
 
@@ -123,5 +131,100 @@ class ConsultationViewModel extends ChangeNotifier {
     context.go(RouteNames.login);
     isLoading = false;
     notifyListeners();
+  }
+
+  File? selectedImageFile;
+  String? imageUrl;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  String? selectSex;
+  String selectLanguage = 'Русский';
+  List<String> sexItem = ['Мужской', 'Женский'];
+
+  Future<void> patchPersonalData(BuildContext context) async {
+    try {
+      if (
+      nameController.text.isEmpty ||
+      phoneController.text.isEmpty ||
+      dateController.text.isEmpty ||
+          selectSex!.isEmpty ||
+          selectSex == null ||
+         selectLanguage.isEmpty
+      ) {
+        showToast(context,'Пожалуйста, Заполните все поля');
+        return;
+      }
+
+      MultipartFile? multipartFile;
+      if(selectedImageFile != null){
+        multipartFile = await MultipartFile.fromFile(
+            selectedImageFile!.path);
+      }
+      final UserModel userModel = UserModel(
+        name: nameController.text,
+        dateOfBirth: dateController.text,
+        sex: selectSex == 'Мужской' ? 'man' : 'woman',
+        language: selectLanguage,
+        phoneNumber: phoneController.text,
+        imageFile: multipartFile,
+      );
+      isLoading = true;
+      notifyListeners();
+      await consultationRepo.patchPersonalData(context, userModel);
+      isLoading = false;
+      notifyListeners();
+
+      // if (vinController.text.contains('@')) {
+      //   showToast('Пожалуйста, введите действительный адрес электронной почты');
+      //   return;
+      // }
+          {}
+    } catch (_) {
+      isLoading = false;
+    }
+  }
+
+  Future<void> patchContact(BuildContext context) async {
+    try {
+      if (
+      emailController.text.isEmpty ||
+      phoneController.text.isEmpty
+      ) {
+        showToast(context,'Пожалуйста, Заполните все поля');
+        return;
+      }
+
+      bool isValidEmail(String email) {
+        String pattern =
+            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+        RegExp regex = RegExp(pattern);
+        return regex.hasMatch(email);
+      }
+
+      if (!isValidEmail(emailController.text)) {
+        showToast(context,'Пожалуйста, введите действительный адрес электронной почты');
+        return;
+      }
+
+      final UserModel userModel = UserModel(
+        phoneNumber: phoneController.text,
+        email: emailController.text,
+        notificationsPhone: isChecked2,
+        notificationsEmail: isChecked3,
+      );
+      isLoading = true;
+      notifyListeners();
+      await consultationRepo.patchContact(context, userModel);
+      isLoading = false;
+      notifyListeners();
+
+      // if (vinController.text.contains('@')) {
+      //   showToast('Пожалуйста, введите действительный адрес электронной почты');
+      //   return;
+      // }
+    } catch (_) {
+      isLoading = false;
+    }
   }
 }

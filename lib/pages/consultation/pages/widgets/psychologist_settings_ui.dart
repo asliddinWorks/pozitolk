@@ -7,10 +7,9 @@ import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
 import 'package:pozitolk/core/extension/widget_extension.dart';
 import 'package:pozitolk/core/widgets/app_button.dart';
+import 'package:pozitolk/core/widgets/upload_image_square.dart';
 import 'package:pozitolk/pages/consultation/view_model/consultation_view_model.dart';
 import 'package:provider/provider.dart';
-
-import '../../../../constants/app_images.dart';
 import '../../../../core/utils/calendar_day.dart';
 import '../../../../core/widgets/app_text_field2.dart';
 import '../../../../core/widgets/drop_down_with_title.dart';
@@ -290,41 +289,51 @@ class PsychologistSettingsUi extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           24.hGap,
-                          Container(
-                            padding: EdgeInsets.all(8),
-                            height: 82,
-                            decoration: BoxDecoration(
-                              color: context.color.base03,
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Container(
-                                  clipBehavior: Clip.hardEdge,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(6),
-                                  ),
-                                  child: Image(
-                                    image: AssetImage(AppImages.defaultImage),
-                                  ),
-                                ),
-                                GestureDetector(
-                                  onTap: () {},
-                                  child: Text(
-                                    'Заменить',
-                                    style: context.textStyle.s14w400Manrope
-                                        .copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      color: context.color.primary,
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
+                          // Container(
+                          //   padding: EdgeInsets.all(8),
+                          //   height: 82,
+                          //   decoration: BoxDecoration(
+                          //     color: context.color.base03,
+                          //     borderRadius: BorderRadius.circular(10),
+                          //   ),
+                          //   child: Row(
+                          //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //     children: [
+                          //       Container(
+                          //         clipBehavior: Clip.hardEdge,
+                          //         decoration: BoxDecoration(
+                          //           borderRadius: BorderRadius.circular(6),
+                          //         ),
+                          //         child: Image(
+                          //           image: AssetImage(AppImages.defaultImage),
+                          //         ),
+                          //       ),
+                          //       GestureDetector(
+                          //         onTap: (){
+                          //         },
+                          //         child: Text(
+                          //           'Заменить',
+                          //           style: context.textStyle.s14w400Manrope
+                          //               .copyWith(
+                          //             fontWeight: FontWeight.w500,
+                          //             color: context.color.primary,
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     ],
+                          //   ),
+                          // ),
+                          UploadImageSquare(image: watch.imageUrl,
+                            onTap: (image) {
+                              read.selectedImageFile = image;
+                             read.onSetState();
+                            },
+
+                            imageFile: read.selectedImageFile,
                           ),
                           24.hGap,
                           TextFieldWithTitle(
+                            controller: read.nameController,
                             title: 'Имя/Псевдоним',
                           ),
                           24.hGap,
@@ -339,16 +348,38 @@ class PsychologistSettingsUi extends StatelessWidget {
                                 icon: SvgPicture.asset(AppIcons.icCalendar)),
                           ),
                           24.hGap,
-                          DropDownWithTitle(
-                            icon: Icon(
+
+                          Text('Пол', style: context.textStyle.s16w500Manrope,),
+                          5.hGap,
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: context.color.base03,
+                            ),
+                            child: DropdownButton<String>(
+                              icon: Icon(
                               CupertinoIcons.chevron_down,
                               size: 16,
                               color: context.color.text,
                             ),
-                            title: 'Пол',
-                            onChanged: (_) {},
-                            dropdownValue: '',
-                            items: ['Мужской', 'Женский'],
+                              underline: const SizedBox.shrink(),
+                              borderRadius: BorderRadius.circular(5),
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              style: context.textStyle.s16w500Manrope,
+                              value: read.selectSex, // Agar `null` bo‘lsa, hint chiqadi
+                              hint: Text("выбирать"), // Foydalanuvchi hali tanlamagan bo‘lsa, ko‘rinadi
+                              isExpanded: true,
+                              items: read.sexItem.map((String item) {
+                                return DropdownMenuItem<String>(
+                                  value: item,
+                                  child: Text(item),
+                                );
+                              }).toList(),
+                              onChanged: (String? newValue) {
+                                read.selectSex = newValue;
+                                read.onSetState();
+                              },
+                            ),
                           ),
                           24.hGap,
                           DropDownWithTitle(
@@ -358,8 +389,11 @@ class PsychologistSettingsUi extends StatelessWidget {
                               color: context.color.text,
                             ),
                             title: 'Язык',
-                            onChanged: (_) {},
-                            dropdownValue: '',
+                            onChanged: (newValue) {
+                              read.selectLanguage = newValue;
+                              read.onSetState();
+                            },
+                            dropdownValue: watch.selectLanguage.toString(),
                             items: ['Русский', 'Английский'],
                           ),
                           24.hGap,
@@ -379,6 +413,16 @@ class PsychologistSettingsUi extends StatelessWidget {
                               style: context.textStyle.s14w400Manrope,
                             ),
                           ),
+                          25.hGap,
+                          AppButton(
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 50, vertical: 7),
+                            width: double.infinity,
+                            onPressed: () {
+                              read.patchPersonalData(context);
+                            },
+                            text: 'Сохранить изменения',
+                          ),
                           60.hGap,
                         ],
                       ),
@@ -390,6 +434,7 @@ class PsychologistSettingsUi extends StatelessWidget {
                         children: [
                           24.hGap,
                           TextFieldWithTitle(
+                            controller: read.phoneController,
                             keyboardType: TextInputType.phone,
                             title: 'Телефон',
                           ),
@@ -453,6 +498,7 @@ class PsychologistSettingsUi extends StatelessWidget {
                           ),
                           24.hGap,
                           TextFieldWithTitle(
+                            controller: read.emailController,
                             title: 'Электроная почта',
                             keyboardType: TextInputType.emailAddress,
                           ),
@@ -500,7 +546,9 @@ class PsychologistSettingsUi extends StatelessWidget {
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 50, vertical: 7),
                             width: double.infinity,
-                            onPressed: () {},
+                            onPressed: () {
+                              read.patchContact(context);
+                            },
                             text: 'Сохранить изменения',
                           ),
                           20.hGap

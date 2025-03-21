@@ -63,7 +63,7 @@ Future<void> selectDate(BuildContext context, TextEditingController dateControll
       );
 
       // Formatlash: kun/oy/yil va soat:daqiqa
-      String formattedDateTime = DateFormat('dd.MM.yyyy').format(combinedDateTime);
+      String formattedDateTime = DateFormat('yyyy-MM-dd').format(combinedDateTime);
       dateController.text = formattedDateTime; // Natijani controllerga yuborish
     }
 }

@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:pozitolk/pages/consultation/data/consultation_repo/consultation_repo.dart';
 import 'package:pozitolk/pages/login/data/login_repo/login_repo.dart';
 
 var getIt = GetIt.instance;
@@ -16,7 +17,7 @@ final header = {
 Map<String, dynamic> headerWithAuth(String? token) => {
   'Accept' : 'application/json',
   'Content-Type' : 'application/json',
-  "Authorization": "Bearer $token",
+  "Authorization": "Token $token",
 };
 
 Future<void> init() async {
@@ -54,7 +55,8 @@ void getItInit() async {
     )
 
   /// Repository
-    ..registerLazySingleton<RegisterRepo>(() => RegisterRepoImpl(getIt()));
+    ..registerLazySingleton<RegisterRepo>(() => RegisterRepoImpl(getIt()))
+    ..registerLazySingleton<ConsultationRepo>(() => ConsultationImpl(getIt()));
     // ..registerLazySingleton<ProfileRepo>(() => ProfileRepoImpl(getIt()))
     // ..registerLazySingleton<AddCarRepo>(() => AddCarRepoImpl(getIt()))
     // ..registerLazySingleton<GasRepo>(() => GasRepoImpl(getIt()))

@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
           create: (context) => LoginViewModel(getIt()),
         ),
         ChangeNotifierProvider(
-          create: (context) => ConsultationViewModel(),
+          create: (context) => ConsultationViewModel(getIt()),
         ),
       ],
       builder: (context, viewModel) => MaterialApp.router(

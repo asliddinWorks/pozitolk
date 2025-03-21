@@ -16,6 +16,7 @@ class DropDownWithTitle extends StatelessWidget {
     this.borderRadius,
     required this.items,
     this.icon,
+    this.hint,
   });
 
   final String title;
@@ -26,15 +27,16 @@ class DropDownWithTitle extends StatelessWidget {
   final double spaceBetweenTitleAndButton;
   final void Function(dynamic value) onChanged;
   final Function()? onTap;
-  final Object dropdownValue;
+  final Object? dropdownValue;
   final BorderRadius? borderRadius;
   final List items;
   final Widget? icon;
+  final String? hint;
 
   @override
   Widget build(BuildContext context) {
 
-    Object value = dropdownValue;
+    Object value = dropdownValue!;
     if (!items.contains(dropdownValue)) {
       value = items.first;
     }
@@ -54,6 +56,7 @@ class DropDownWithTitle extends StatelessWidget {
               color: context.color.base03,
             ),
             child: DropdownButton(
+              hint: Text(hint ?? 'выбирать'),
               onChanged: onChanged,
               onTap: onTap,
               value: value,

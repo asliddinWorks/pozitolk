@@ -190,24 +190,20 @@ class UserModel {
 }
 
 class EducationPsychologist {
-  final int id;
-  final int year;
-  final String text;
-  final String diploma;
+  final int? id;
+  final int? year;
+  final String? text;
+  final String? diploma;
 
   EducationPsychologist({
-    required this.id,
-    required this.year,
-    required this.text,
-    required this.diploma,
+    this.id,
+    this.year,
+    this.text,
+    this.diploma,
   });
 
-  Map<String, dynamic> toJson() {
-    return {
-      "id": id,
-      "year": year,
-      "text": text,
-      "diploma": diploma,
-    };
-  }
+  FormData get toJson => FormData.fromMap({
+    'year': year,
+    'text': text,
+  });
 }

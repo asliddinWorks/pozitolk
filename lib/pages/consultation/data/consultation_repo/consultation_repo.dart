@@ -8,6 +8,7 @@ abstract class ConsultationRepo {
   Future<bool> patchPersonalData(BuildContext context, UserModel userModel);
   Future<bool> patchContact(BuildContext context, UserModel userModel);
   Future<bool> patchSpecialization(BuildContext context, UserModel userModel);
+  Future<bool> patchEducation(BuildContext context, EducationPsychologist educationPsychologist);
   Future<UserModel> getUser();
 }
 
@@ -19,7 +20,7 @@ class ConsultationImpl extends ConsultationRepo {
   Future<bool> patchPersonalData(BuildContext context, UserModel userModel) async {
     try {
       final token = await AppLocalData.getUserToken;
-      Response response = await dio.put(
+      Response response = await dio.patch(
         'cabinet/change-self-psychologist/',
         options: Options(
           headers: headerWithAuth(token),
@@ -44,7 +45,7 @@ class ConsultationImpl extends ConsultationRepo {
   Future<bool> patchContact(BuildContext context, UserModel userModel) async {
     try {
       final token = await AppLocalData.getUserToken;
-      Response response = await dio.put(
+      Response response = await dio.patch(
         'cabinet/change-self-psychologist/',
         options: Options(
           headers: headerWithAuth(token),
@@ -65,12 +66,32 @@ class ConsultationImpl extends ConsultationRepo {
   Future<bool> patchSpecialization(BuildContext context, UserModel userModel) async {
     try {
       final token = await AppLocalData.getUserToken;
-      Response response = await dio.put(
+      Response response = await dio.patch(
         'cabinet/change-self-psychologist/',
         options: Options(
           headers: headerWithAuth(token),
         ),
         data: userModel.toJsonSpecialization(),
+      );
+      if ((response.statusCode == 200) || (response.statusCode == 201)) {
+        return true;
+      }
+      return false;
+    } on DioException catch (_) {
+    }
+    return false;
+  }
+
+  @override
+  Future<bool> patchEducation(BuildContext context, EducationPsychologist educationPsychologist) async {
+    try {
+      final token = await AppLocalData.getUserToken;
+      Response response = await dio.post(
+        'cabinet/psychologist_education/',
+        options: Options(
+          headers: headerWithAuth(token),
+        ),
+        data: educationPsychologist.toJson,
       );
       if ((response.statusCode == 200) || (response.statusCode == 201)) {
         return true;

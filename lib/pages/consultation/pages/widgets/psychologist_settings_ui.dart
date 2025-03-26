@@ -776,7 +776,9 @@ class PsychologistSettingsUi extends StatelessWidget {
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 50, vertical: 7),
                             width: double.infinity,
-                            onPressed: () {},
+                            onPressed: () {
+                              read.patchEducation(context);
+                            },
                             text: 'Сохранить изменения',
                           ),
                           20.hGap,

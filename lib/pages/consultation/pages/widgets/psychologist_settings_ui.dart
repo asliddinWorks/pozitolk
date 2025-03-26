@@ -341,7 +341,7 @@ class PsychologistSettingsUi extends StatelessWidget {
                           AppTextField2(
                             readOnly: true,
                             controller: read.dateController,
-                            title: 'Дата и время  выезда',
+                            title: 'Дата рождения',
                             icon: IconButton(
                                 onPressed: () {
                                   selectDate(context, read.dateController);

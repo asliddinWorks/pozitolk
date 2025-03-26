@@ -590,6 +590,7 @@ class PsychologistSettingsUi extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(24),
                                 onPressed: () {
                                   read.clientAge = !read.clientAge;
+                                  print('kkkaaaaaa   ${read.clientAge}');
                                   read.onSetState();
                                 },
                                 text: '16+',
@@ -603,6 +604,7 @@ class PsychologistSettingsUi extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(24),
                                 onPressed: () {
                                   read.clientAge = !read.clientAge;
+                                  print('kkkaaaaaa   ${read.clientAge}');
                                   read.onSetState();
                                 },
                                 text: '18+',

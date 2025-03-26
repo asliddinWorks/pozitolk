@@ -7,6 +7,8 @@ import '../../../../di_service.dart';
 abstract class ConsultationRepo {
   Future<bool> patchPersonalData(BuildContext context, UserModel userModel);
   Future<bool> patchContact(BuildContext context, UserModel userModel);
+  Future<bool> patchSpecialization(BuildContext context, UserModel userModel);
+  Future<UserModel> getUser();
 }
 
 class ConsultationImpl extends ConsultationRepo {
@@ -58,5 +60,47 @@ class ConsultationImpl extends ConsultationRepo {
       // print(e);
     }
     return false;
+  }
+  @override
+  Future<bool> patchSpecialization(BuildContext context, UserModel userModel) async {
+    try {
+      final token = await AppLocalData.getUserToken;
+      Response response = await dio.put(
+        'cabinet/change-self-psychologist/',
+        options: Options(
+          headers: headerWithAuth(token),
+        ),
+        data: userModel.toJsonSpecialization(),
+      );
+      if ((response.statusCode == 200) || (response.statusCode == 201)) {
+        return true;
+      }
+      return false;
+    } on DioException catch (_) {
+      // print('AAAAAAAAAAAAAAA');
+      // print(e);
+    }
+    return false;
+  }
+
+  @override
+  Future<UserModel> getUser() async {
+    try {
+      final token = await AppLocalData.getUserToken;
+      Response response = await dio.get(
+        'cabinet/self-psychologist/',
+        options: Options(
+          headers: headerWithAuth(token),
+        ),
+      );
+      if ((response.statusCode == 200) || (response.statusCode == 201)) {
+        return UserModel.fromJson(response.data);
+      }
+      return UserModel.fromJson(response.data);
+    } on DioException catch (_) {
+      // print('AAAAAAAAAAAAAAA');
+      // print(e);
+    }
+    return UserModel.fromJson({});
   }
 }

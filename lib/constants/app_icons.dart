@@ -38,6 +38,8 @@ class AppIcons {
   static const icSchedule = '${path}ic_schedule.svg';
   static const icStatistics = '${path}ic_statistics.svg';
   static const icUsers = '${path}ic_users.svg';
+  static const icContract1 = '${path}ic_contract1.svg';
+  static const icContract2 = '${path}ic_contract2.svg';
 
 
 }

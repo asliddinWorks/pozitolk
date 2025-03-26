@@ -24,6 +24,7 @@ class AppColors extends ThemeExtension<AppColors> {
     required this.containerBackground2,
     required this.containerBackgroundF3,
     required this.containerBackgroundF4,
+    required this.containerGreen,
     required this.secondary,
     required this.secondary200,
     required this.secondaryVar2,
@@ -55,6 +56,7 @@ class AppColors extends ThemeExtension<AppColors> {
   final Color containerBackground2;
   final Color containerBackgroundF3;
   final Color containerBackgroundF4;
+  final Color containerGreen;
   final Color secondary;
   final Color secondary200;
   final Color secondaryVar2;
@@ -87,6 +89,7 @@ class AppColors extends ThemeExtension<AppColors> {
     containerBackground2: const Color(0xFFF2F2F2),
     containerBackgroundF3: const Color(0xFFF3F3F3),
     containerBackgroundF4: const Color(0xFFF4F4F4),
+    containerGreen: const Color(0xFF2E4F24),
     secondary: const Color(0xFFFAAB1A),
     secondary200: const Color(0xFFABD29B),
     secondaryVar2: const Color(0x4DFFAB11),
@@ -120,6 +123,7 @@ class AppColors extends ThemeExtension<AppColors> {
     Color? containerBackground2,
     Color? containerBackgroundF3,
     Color? containerBackgroundF4,
+    Color? containerGreen,
     Color? secondary,
     Color? secondary200,
     Color? secondaryVar2,
@@ -151,6 +155,7 @@ class AppColors extends ThemeExtension<AppColors> {
       containerBackground2: containerBackground2 ?? this.containerBackground2,
       containerBackgroundF3: containerBackgroundF3 ?? this.containerBackgroundF3,
       containerBackgroundF4: containerBackgroundF4 ?? this.containerBackgroundF4,
+      containerGreen: containerGreen ?? this.containerGreen,
       secondary: secondary ?? this.secondary,
       secondary200: secondary200 ?? this.secondary200,
       secondaryVar2: secondaryVar2 ?? this.secondaryVar2,
@@ -190,6 +195,7 @@ class AppColors extends ThemeExtension<AppColors> {
       containerBackground2: Color.lerp(containerBackground2, other.containerBackground2, t)!,
       containerBackgroundF3: Color.lerp(containerBackgroundF3, other.containerBackgroundF3, t)!,
       containerBackgroundF4: Color.lerp(containerBackgroundF4, other.containerBackgroundF4, t)!,
+      containerGreen: Color.lerp(containerGreen, other.containerGreen, t)!,
       secondary: Color.lerp(secondary, other.secondary, t)!,
       secondary200: Color.lerp(secondary200, other.secondary200, t)!,
       secondaryVar2: Color.lerp(secondaryVar2, other.secondaryVar2, t)!,

@@ -30,6 +30,9 @@ class _ConsultationPageState extends State<ConsultationPage>with SingleTickerPro
       length: 5,
       vsync: this,
     );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<ConsultationViewModel>().getUser();
+    });
     super.initState();
   }
   @override

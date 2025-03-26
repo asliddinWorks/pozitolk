@@ -33,6 +33,7 @@ class PsychologistSettingsUi extends StatelessWidget {
           child: Column(
             children: [
               GestureDetector(
+                onTap: () => read.getUser(),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -73,7 +74,7 @@ class PsychologistSettingsUi extends StatelessWidget {
                         context.textStyle.s22w600Manrope.copyWith(fontSize: 20),
                   ),
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       read.onExit(context);
                     },
                     child: Container(
@@ -323,12 +324,12 @@ class PsychologistSettingsUi extends StatelessWidget {
                           //     ],
                           //   ),
                           // ),
-                          UploadImageSquare(image: watch.imageUrl,
+                          UploadImageSquare(
+                            image: watch.imageUrl,
                             onTap: (image) {
                               read.selectedImageFile = image;
-                             read.onSetState();
+                              read.onSetState();
                             },
-
                             imageFile: read.selectedImageFile,
                           ),
                           24.hGap,
@@ -349,7 +350,10 @@ class PsychologistSettingsUi extends StatelessWidget {
                           ),
                           24.hGap,
 
-                          Text('Пол', style: context.textStyle.s16w500Manrope,),
+                          Text(
+                            'Пол',
+                            style: context.textStyle.s16w500Manrope,
+                          ),
                           5.hGap,
                           Container(
                             decoration: BoxDecoration(
@@ -358,16 +362,19 @@ class PsychologistSettingsUi extends StatelessWidget {
                             ),
                             child: DropdownButton<String>(
                               icon: Icon(
-                              CupertinoIcons.chevron_down,
-                              size: 16,
-                              color: context.color.text,
-                            ),
+                                CupertinoIcons.chevron_down,
+                                size: 16,
+                                color: context.color.text,
+                              ),
                               underline: const SizedBox.shrink(),
                               borderRadius: BorderRadius.circular(5),
-                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              padding:
+                                  const EdgeInsets.symmetric(horizontal: 16),
                               style: context.textStyle.s16w500Manrope,
-                              value: read.selectSex, // Agar `null` bo‘lsa, hint chiqadi
-                              hint: Text("выбирать"), // Foydalanuvchi hali tanlamagan bo‘lsa, ko‘rinadi
+                              value: read
+                                  .selectSex, // Agar `null` bo‘lsa, hint chiqadi
+                              hint: Text(
+                                  "выбирать"), // Foydalanuvchi hali tanlamagan bo‘lsa, ko‘rinadi
                               isExpanded: true,
                               items: read.sexItem.map((String item) {
                                 return DropdownMenuItem<String>(
@@ -576,20 +583,28 @@ class PsychologistSettingsUi extends StatelessWidget {
                           Row(
                             children: [
                               AppButton(
+                                borderColor: context.color.background1,
+                                appButtonType: watch.clientAge ? AppButtonType.outlined : AppButtonType.filled,
                                 height: 40,
                                 width: 62,
                                 borderRadius: BorderRadius.circular(24),
-                                onPressed: () {},
+                                onPressed: () {
+                                  read.clientAge = !read.clientAge;
+                                  read.onSetState();
+                                },
                                 text: '16+',
                               ),
                               12.wGap,
                               AppButton(
                                 borderColor: context.color.background1,
-                                appButtonType: AppButtonType.outlined,
+                                appButtonType: watch.clientAge ? AppButtonType.filled : AppButtonType.outlined,
                                 height: 40,
                                 width: 62,
                                 borderRadius: BorderRadius.circular(24),
-                                onPressed: () {},
+                                onPressed: () {
+                                  read.clientAge = !read.clientAge;
+                                  read.onSetState();
+                                },
                                 text: '18+',
                               ),
                             ],
@@ -609,21 +624,29 @@ class PsychologistSettingsUi extends StatelessWidget {
                           Row(
                             children: [
                               AppButton(
+                                appButtonType:  read.experienceWithIdentitySearch ? AppButtonType.outlined : AppButtonType.filled,
+                                borderColor: context.color.background1,
                                 contentPadding: EdgeInsets.all(8),
                                 height: 40,
                                 width: 62,
                                 borderRadius: BorderRadius.circular(24),
-                                onPressed: () {},
+                                onPressed: () {
+                                  read.experienceWithIdentitySearch = !read.experienceWithIdentitySearch;
+                                  read.onSetState();
+                                },
                                 text: 'Да',
                               ),
                               12.wGap,
                               AppButton(
                                 borderColor: context.color.background1,
-                                appButtonType: AppButtonType.outlined,
+                                appButtonType: read.experienceWithIdentitySearch ? AppButtonType.filled : AppButtonType.outlined,
                                 height: 40,
                                 width: 62,
                                 borderRadius: BorderRadius.circular(24),
-                                onPressed: () {},
+                                onPressed: () {
+                                  read.experienceWithIdentitySearch = !read.experienceWithIdentitySearch;
+                                  read.onSetState();
+                                },
                                 text: 'Нет',
                               ),
                             ],
@@ -643,21 +666,29 @@ class PsychologistSettingsUi extends StatelessWidget {
                           Row(
                             children: [
                               AppButton(
+                                appButtonType: watch.coupleTherapy ? AppButtonType.outlined : AppButtonType.filled,
+                                borderColor: context.color.background1,
                                 contentPadding: EdgeInsets.all(8),
                                 height: 40,
                                 width: 62,
                                 borderRadius: BorderRadius.circular(24),
-                                onPressed: () {},
+                                onPressed: () {
+                                  read.coupleTherapy = !read.coupleTherapy;
+                                  read.onSetState();
+                                },
                                 text: 'Да',
                               ),
                               12.wGap,
                               AppButton(
                                 borderColor: context.color.background1,
-                                appButtonType: AppButtonType.outlined,
+                                appButtonType: watch.coupleTherapy ? AppButtonType.filled : AppButtonType.outlined,
                                 height: 40,
                                 width: 62,
                                 borderRadius: BorderRadius.circular(24),
-                                onPressed: () {},
+                                onPressed: () {
+                                  read.coupleTherapy = !read.coupleTherapy;
+                                  read.onSetState();
+                                },
                                 text: 'Нет',
                               ),
                             ],
@@ -677,6 +708,74 @@ class PsychologistSettingsUi extends StatelessWidget {
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 50, vertical: 7),
                             width: double.infinity,
+                            onPressed: () {
+                              read.patchSpecialization(context);
+                            },
+                            text: 'Сохранить изменения',
+                          ),
+                          20.hGap,
+                        ],
+                      ),
+                    )
+                  : SizedBox.shrink(),
+              watch.profileItem[3]
+                  ? SizedBox(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          24.hGap,
+                          ListView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: read.educationPlaceController.length,
+                            itemBuilder: (context, index) => Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                SizedBox(
+                                  width: 0.62.wp(context),
+                                  child: TextFieldWithTitle(
+                                    titleStyle:
+                                        context.textStyle.s14w500Manrope,
+                                    controller:
+                                        read.educationPlaceController[index],
+                                    title: 'Место получения',
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 0.25.wp(context),
+                                  child: TextFieldWithTitle(
+                                    titleStyle:
+                                        context.textStyle.s14w500Manrope,
+                                    controller:
+                                        read.educationYearController[index],
+                                    keyboardType: TextInputType.number,
+                                    mask: '####',
+                                    title: 'Год',
+                                  ),
+                                ),
+                              ],
+                            ).padding(EdgeInsets.only(bottom: 20)),
+                          ),
+                          AppButton(
+                            borderColor: context.color.background1,
+                            appButtonType: AppButtonType.outlined,
+                            height: 40,
+                            width: 105,
+                            borderRadius: BorderRadius.circular(16),
+                            onPressed: () {
+                              read.educationPlaceController
+                                  .add(TextEditingController());
+                              read.educationYearController
+                                  .add(TextEditingController());
+                              read.onSetState();
+                            },
+                            text: 'Добавить',
+                          ),
+                          24.hGap,
+                          AppButton(
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 50, vertical: 7),
+                            width: double.infinity,
                             onPressed: () {},
                             text: 'Сохранить изменения',
                           ),
@@ -685,64 +784,286 @@ class PsychologistSettingsUi extends StatelessWidget {
                       ),
                     )
                   : SizedBox.shrink(),
-              watch.profileItem[3] ? SizedBox(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    24.hGap,
-                    ListView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: read.educationPlaceController.length,
-                      itemBuilder: (context, index) => Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              watch.profileItem[4]
+                  ? SizedBox(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
+                          24.hGap,
+                          DropDownWithTitle(
+                            title: 'Часовой пояс',
+                            onChanged: (_) {},
+                            dropdownValue: 'МСК (+3 GMT)',
+                            items: ['МСК (+3 GMT)', 'МСК (+4 GMT]'],
+                          ),
+                          24.hGap,
+                          DropDownWithTitle(
+                            title: 'Часовой пояс',
+                            onChanged: (_) {},
+                            dropdownValue: '1',
+                            items: ['1', '2'],
+                          ),
+                          24.hGap,
+                          Text(
+                            'Свободные слоты для записи клиентов',
+                            style: context.textStyle.s16w600Manrope,
+                          ),
+                          20.hGap,
                           SizedBox(
-                            width: 0.62.wp(context),
-                            child: TextFieldWithTitle(
-                              titleStyle: context.textStyle.s14w500Manrope,
-                              controller: read.educationPlaceController[index],
-                              title: 'Место получения',
+                            width: context.width * 0.9,
+                            height: 38,
+                            child: ListView.builder(
+                              physics: NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              scrollDirection: Axis.horizontal,
+                              itemCount: 7,
+                              itemBuilder: (context, index) {
+                                return GestureDetector(
+                                  onTap: (){
+                                    read.onWeekdaySelected(index);
+                                  },
+                                  child: Container(
+                                    clipBehavior: Clip.hardEdge,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(32),
+                                      color: watch.weekdays[index] ? context.color.containerGreen : context.color.base03,
+                                    ),
+                                    padding: EdgeInsets.only(bottom: 2),
+                                    width: context.width * 0.118,
+                                    height: 38,
+                                    margin: EdgeInsets.only(
+                                      right: index == 6 ? 0 : context.width * 0.012,
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        read.weekdaysItem[index],
+                                        style: context.textStyle.s14w400Manrope.copyWith(
+                                          color: watch.weekdays[index] ? context.color.background2 : context.color.text,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                           ),
-                          SizedBox(
-                            width: 0.25.wp(context),
-                            child: TextFieldWithTitle(
-                              titleStyle: context.textStyle.s14w500Manrope,
-                              controller: read.educationYearController[index],
-                              keyboardType: TextInputType.number,
-                              mask: '####',
-                              title: 'Год',
-                            ),
+                          24.hGap,
+                          Text(
+                            'Время', style: context.textStyle.s16w600Manrope,
                           ),
+                          14.hGap,
+                          GridView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 4, // 4 ustun
+                              crossAxisSpacing: 8,
+                              mainAxisSpacing: 8,
+                              childAspectRatio: 1.7, // Containerning o'lchamini moslashtirish
+                            ),
+                            itemCount: read.times.length,
+                            itemBuilder: (context, index) {
+                              Color bgColor;
+                              if (read.orangeIndexes.contains(index)) {
+                                bgColor = context.color.primary;
+                              } else if (read.grayIndexes.contains(index)) {
+                                bgColor = context.color.background2;
+                              } else {
+                                bgColor = Color(0xFFDAF9DA);
+                              }
+
+                              return Container(
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  color: bgColor,
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                child: Text(
+                                  read.times[index],
+                                  style: context.textStyle.s14w400Manrope.copyWith(
+                                    color: read.orangeIndexes.contains(index)
+                                        ?  context.color.background2 : read.grayIndexes.contains(index) ? context.color.textGrey3
+                                        : context.color.text,
+                                  ),
+                                  // style: TextStyle(
+                                  //   fontSize: 18,
+                                  //   fontWeight: FontWeight.bold,
+                                  //   color: read.grayIndexes.contains(index) ? Colors.grey.shade600 : Colors.black,
+                                  // ),
+                                ),
+                              );
+                            },
+                          ),
+                          24.hGap,
+                          AppButton(
+                            contentPadding: EdgeInsets.symmetric(
+                                horizontal: 50, vertical: 7),
+                            width: double.infinity,
+                            onPressed: () {},
+                            text: 'Сохранить изменения',
+                          ),
+                          20.hGap,
                         ],
-                      ).padding(EdgeInsets.only(bottom: 20)),
-                    ),
-                    AppButton(
-                      borderColor: context.color.background1,
-                      appButtonType: AppButtonType.outlined,
-                      height: 40,
-                      width: 105,
-                      borderRadius: BorderRadius.circular(16),
-                      onPressed: () {
-                        read.educationPlaceController.add(TextEditingController());
-                        read.educationYearController.add(TextEditingController());
-                        read.onSetState();
-                      },
-                      text: 'Добавить',
-                    ),
-                    24.hGap,
-                    AppButton(
-                      contentPadding:
-                          EdgeInsets.symmetric(horizontal: 50, vertical: 7),
-                      width: double.infinity,
-                      onPressed: () {},
-                      text: 'Сохранить изменения',
-                    ),
-                    20.hGap,
-                  ],
-                ),
-              ) : SizedBox.shrink(),
+                      ),
+                    )
+                  : SizedBox.shrink(),
+              watch.profileItem[5]
+                  ? SizedBox(
+                      width: context.width,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          24.hGap,
+                          Text(
+                            'Имя',
+                            style: context.textStyle.s14w500Manrope,
+                          ),
+                          8.hGap,
+                          Text(
+                            watch.nameController.text,
+                            style: context.textStyle.s16w600Manrope,
+                          ),
+                          20.hGap,
+                          Text(
+                            'Фамилия',
+                            style: context.textStyle.s14w500Manrope,
+                          ),
+                          8.hGap,
+                          Text(
+                            '',
+                            style: context.textStyle.s16w600Manrope,
+                          ),
+                          20.hGap,
+                          Text(
+                            'Налоговый статус',
+                            style: context.textStyle.s14w500Manrope,
+                          ),
+                          8.hGap,
+                          Text(
+                            '',
+                            style: context.textStyle.s16w600Manrope,
+                          ),
+                          20.hGap,
+                          Text(
+                            'Статус',
+                            style: context.textStyle.s14w500Manrope,
+                          ),
+                          8.hGap,
+                          Text(
+                            '',
+                            style: context.textStyle.s16w600Manrope,
+                          ),
+                          20.hGap,
+                          Text(
+                            'Гражданство ',
+                            style: context.textStyle.s14w500Manrope,
+                          ),
+                          8.hGap,
+                          Text(
+                            '',
+                            style: context.textStyle.s16w600Manrope,
+                          ),
+                          20.hGap,
+                          Text(
+                            'Адрес',
+                            style: context.textStyle.s14w500Manrope,
+                          ),
+                          8.hGap,
+                          Text(
+                            '',
+                            style: context.textStyle.s16w600Manrope,
+                          ),
+                          20.hGap,
+                          Text(
+                            'ИНН',
+                            style: context.textStyle.s14w500Manrope,
+                          ),
+                          8.hGap,
+                          Text(
+                            '',
+                            style: context.textStyle.s16w600Manrope,
+                          ),
+                          20.hGap,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              AppButton(
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 10),
+                                fillTextStyle: context.textStyle.s16w500inter,
+                                borderColor: context.color.background1,
+                                appButtonType: AppButtonType.outlined,
+                                height: 45,
+                                width: context.width * .44,
+                                borderRadius: BorderRadius.circular(16),
+                                onPressed: () {
+                                  read.educationPlaceController
+                                      .add(TextEditingController());
+                                  read.educationYearController
+                                      .add(TextEditingController());
+                                  read.onSetState();
+                                },
+                                text: 'Паспорт',
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 10),
+                                  child: SvgPicture.asset(
+                                    AppIcons.icContract1,
+                                    height: 20,
+                                    width: 20,
+                                  ),
+                                ),
+                              ),
+                              AppButton(
+                                contentPadding:
+                                    EdgeInsets.symmetric(vertical: 10),
+                                fillTextStyle: context.textStyle.s16w500inter,
+                                borderColor: context.color.background1,
+                                appButtonType: AppButtonType.outlined,
+                                height: 45,
+                                width: context.width * .44,
+                                borderRadius: BorderRadius.circular(16),
+                                onPressed: () {
+                                  read.educationPlaceController
+                                      .add(TextEditingController());
+                                  read.educationYearController
+                                      .add(TextEditingController());
+                                  read.onSetState();
+                                },
+                                text: 'Регистрация',
+                              ),
+                            ],
+                          ),
+                          20.hGap,
+                          AppButton(
+                            contentPadding: EdgeInsets.symmetric(vertical: 10),
+                            fillTextStyle: context.textStyle.s16w500inter,
+                            borderColor: context.color.background1,
+                            appButtonType: AppButtonType.outlined,
+                            height: 45,
+                            width: context.width * .90,
+                            borderRadius: BorderRadius.circular(16),
+                            onPressed: () {
+                              read.educationPlaceController
+                                  .add(TextEditingController());
+                              read.educationYearController
+                                  .add(TextEditingController());
+                              read.onSetState();
+                            },
+                            text: 'Договор',
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: SvgPicture.asset(
+                                AppIcons.icContract2,
+                                height: 20,
+                                width: 20,
+                              ),
+                            ),
+                          ),
+                          20.hGap,
+                        ],
+                      ),
+                    )
+                  : SizedBox.shrink(),
             ],
           ),
         ),

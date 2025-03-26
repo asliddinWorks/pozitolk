@@ -18,6 +18,7 @@ class AppButton extends StatelessWidget {
     this.borderColor,
     this.borderRadius,
     this.contentPadding,
+    this.child,
   });
 
   final double elevation;                   // button shadow
@@ -33,6 +34,7 @@ class AppButton extends StatelessWidget {
   final Color? borderColor;                       // button color
   final BorderRadiusGeometry? borderRadius; // button border radius
   final EdgeInsets? contentPadding;         // button content padding
+  final Widget? child;                      // button wid
 
   @override
   Widget build(BuildContext context) {
@@ -55,12 +57,17 @@ class AppButton extends StatelessWidget {
         child: Padding(
           padding: contentPadding ?? EdgeInsets.zero,
           child: FittedBox(
-            child: Text(
-              text,
-              textAlign: TextAlign.center,
-              style: fillTextStyle ?? context.textStyle.s20w600inter.copyWith(
-                color: textColor ?? context.color.background2,
-              ),
+            child: Row(
+              children: [
+                child ?? SizedBox.shrink(),
+                Text(
+                  text,
+                  textAlign: TextAlign.center,
+                  style: fillTextStyle ?? context.textStyle.s20w600inter.copyWith(
+                    color: textColor ?? context.color.background2,
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -87,13 +94,18 @@ class AppButton extends StatelessWidget {
         child: FittedBox(
           child: Padding(
             padding: contentPadding ?? EdgeInsets.zero,
-            child: Text(
-              text,
-              textAlign: TextAlign.center,
-              style: outlinedTextStyle ?? context.textStyle.s20w400inter.copyWith(
-                fontWeight: FontWeight.w500,
-                color: textColor ?? context.color.text.withAlpha(200),
-              ),
+            child: Row(
+              children: [
+                child ?? SizedBox.shrink(),
+                Text(
+                  text,
+                  textAlign: TextAlign.center,
+                  style: outlinedTextStyle ?? context.textStyle.s20w400inter.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: textColor ?? context.color.text.withAlpha(200),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

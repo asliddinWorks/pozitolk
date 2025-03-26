@@ -89,6 +89,7 @@ class UserModel {
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
+      phone: json['phone'],
       psychoTopics: json['psycho_topics'],
       education: json['education_psychologist_write'],
       phoneNumber: json['phone_number'],
@@ -163,7 +164,7 @@ class UserModel {
 
   FormData get toJsonPersonalData => FormData.fromMap({
         'name': name,
-        'language': language,
+        // 'language': language,
         'phone_number': phoneNumber,
         'sex': sex,
         'date_of_birth': dateOfBirth,
@@ -176,6 +177,37 @@ class UserModel {
       'email': email,
       'notificationsPhone': notificationsPhone,
       'notificationsEmail': notificationsEmail,
+    };
+  }
+  Map<String, dynamic> toJsonSpecialization() {
+    return {
+      'phone_number': phoneNumber,
+      'clientAge': clientAge,
+      'coupleTherapy': coupleTherapy,
+      'experienceWithIdentitySearch': experienceWithIdentitySearch,
+    };
+  }
+}
+
+class EducationPsychologist {
+  final int id;
+  final int year;
+  final String text;
+  final String diploma;
+
+  EducationPsychologist({
+    required this.id,
+    required this.year,
+    required this.text,
+    required this.diploma,
+  });
+
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "year": year,
+      "text": text,
+      "diploma": diploma,
     };
   }
 }

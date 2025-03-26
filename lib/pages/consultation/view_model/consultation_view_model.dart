@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:dio/dio.dart';
@@ -14,6 +13,7 @@ import '../../../router/router.dart';
 
 class ConsultationViewModel extends ChangeNotifier {
   final ConsultationRepo consultationRepo;
+
   ConsultationViewModel(this.consultationRepo);
 
   final GlobalKey<ScaffoldState> key = GlobalKey();
@@ -56,7 +56,7 @@ class ConsultationViewModel extends ChangeNotifier {
     'Что если клиент просит перенести сессию, а кнопки нет?',
     'Профиль и настройки',
   ];
-  List <String> faqText = [
+  List<String> faqText = [
     'Друзья, привет! Добро пожаловать в профессиональное сообщество сервиса '
         'онлайн-психотерапии “ПозиТолк”. Мы рады, что вы стали частью нашего '
         'терапевтического пространства, потому что чем больше хороших специалистов '
@@ -83,7 +83,6 @@ class ConsultationViewModel extends ChangeNotifier {
     '',
     '',
     '',
-
   ];
 
   List<bool> profileItem = List.generate(6, (index) => index == 0);
@@ -102,29 +101,91 @@ class ConsultationViewModel extends ChangeNotifier {
   }
 
   void onOpen(int index) {
-    if (isOpen[index] == true){
+    if (isOpen[index] == true) {
       isOpen[index] = false;
-    }else{
+    } else {
       isOpen = List.generate(isOpen.length, (index) => false);
       isOpen[index] = true;
     }
     notifyListeners();
   }
 
-  void onSettings(){
+  void onSettings() {
     drawerItem = List.generate(8, (index) => false);
     drawerItem[7] = true;
     notifyListeners();
   }
 
-  void onSetState(){
+  void onSetState() {
     notifyListeners();
- }
+  }
 
   List<TextEditingController> educationPlaceController = [];
   List<TextEditingController> educationYearController = [];
 
-  void onExit(BuildContext context)async{
+  List<EducationPsychologist> educationList = [];
+
+  // Future<void> patchEducation(BuildContext context) async {
+  //   try {
+  //     if (emailController.text.isEmpty || phoneController.text.isEmpty) {
+  //       showToast(context, 'Пожалуйста, Заполните все поля');
+  //       return;
+  //     }
+  //
+  //     bool isValidEmail(String email) {
+  //       String pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+  //       RegExp regex = RegExp(pattern);
+  //       return regex.hasMatch(email);
+  //     }
+  //
+  //     if (!isValidEmail(emailController.text)) {
+  //       showToast(context,
+  //           'Пожалуйста, введите действительный адрес электронной почты');
+  //       return;
+  //     }
+  //
+  //     final UserModel userModel = UserModel(
+  //       phoneNumber: phoneController.text,
+  //       email: emailController.text,
+  //       notificationsPhone: isChecked2,
+  //       notificationsEmail: isChecked3,
+  //     );
+  //     isLoading = true;
+  //     notifyListeners();
+  //     await consultationRepo.patchContact(context, userModel);
+  //     isLoading = false;
+  //     notifyListeners();
+  //
+  //     // if (vinController.text.contains('@')) {
+  //     //   showToast('Пожалуйста, введите действительный адрес электронной почты');
+  //     //   return;
+  //     // }
+  //   } catch (_) {
+  //     isLoading = false;
+  //   }
+  // }
+
+  // Future<void> sendEducationData(List<TextEditingController> placeControllers,
+  //     List<TextEditingController> yearControllers) async {
+  //   Dio dio = Dio();
+
+  // List<EducationPsychologist> educationList = [];
+  //
+  // for (int i = 0; i < placeControllers.length; i++) {
+  //   String place = placeControllers[i].text;
+  //   String yearText = yearControllers[i].text;
+  //
+  //   if (place.isNotEmpty && yearText.isNotEmpty) {
+  //     int year = int.tryParse(yearText) ?? 0; // Agar son bo‘lmasa, 0 bo‘ladi
+  //
+  //     educationList.add(
+  //       EducationPsychologist(
+  //           id: i, year: year, text: place, diploma: "string"),
+  //     );
+  //   }
+  // }
+
+  void onExit(BuildContext context) async {
     isLoading = true;
     notifyListeners();
     await AppLocalData.removeAll();
@@ -144,28 +205,24 @@ class ConsultationViewModel extends ChangeNotifier {
 
   Future<void> patchPersonalData(BuildContext context) async {
     try {
-      if (
-      nameController.text.isEmpty ||
-      phoneController.text.isEmpty ||
-      dateController.text.isEmpty ||
+      if (nameController.text.isEmpty ||
+          phoneController.text.isEmpty ||
+          dateController.text.isEmpty ||
           selectSex!.isEmpty ||
-          selectSex == null ||
-         selectLanguage.isEmpty
-      ) {
-        showToast(context,'Пожалуйста, Заполните все поля');
+          selectSex == null) {
+        showToast(context, 'Пожалуйста, Заполните все поля');
         return;
       }
 
       MultipartFile? multipartFile;
-      if(selectedImageFile != null){
-        multipartFile = await MultipartFile.fromFile(
-            selectedImageFile!.path);
+      if (selectedImageFile != null) {
+        multipartFile = await MultipartFile.fromFile(selectedImageFile!.path);
       }
       final UserModel userModel = UserModel(
         name: nameController.text,
         dateOfBirth: dateController.text,
         sex: selectSex == 'Мужской' ? 'man' : 'woman',
-        language: selectLanguage,
+        // language: selectLanguage,
         phoneNumber: phoneController.text,
         imageFile: multipartFile,
       );
@@ -179,7 +236,7 @@ class ConsultationViewModel extends ChangeNotifier {
       //   showToast('Пожалуйста, введите действительный адрес электронной почты');
       //   return;
       // }
-          {}
+      {}
     } catch (_) {
       isLoading = false;
     }
@@ -187,23 +244,20 @@ class ConsultationViewModel extends ChangeNotifier {
 
   Future<void> patchContact(BuildContext context) async {
     try {
-      if (
-      emailController.text.isEmpty ||
-      phoneController.text.isEmpty
-      ) {
-        showToast(context,'Пожалуйста, Заполните все поля');
+      if (emailController.text.isEmpty || phoneController.text.isEmpty) {
+        showToast(context, 'Пожалуйста, Заполните все поля');
         return;
       }
 
       bool isValidEmail(String email) {
-        String pattern =
-            r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
+        String pattern = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$';
         RegExp regex = RegExp(pattern);
         return regex.hasMatch(email);
       }
 
       if (!isValidEmail(emailController.text)) {
-        showToast(context,'Пожалуйста, введите действительный адрес электронной почты');
+        showToast(context,
+            'Пожалуйста, введите действительный адрес электронной почты');
         return;
       }
 
@@ -227,4 +281,75 @@ class ConsultationViewModel extends ChangeNotifier {
       isLoading = false;
     }
   }
+
+  Future<void> patchSpecialization(BuildContext context) async {
+    try {
+      if (phoneController.text.isEmpty) {
+        showToast(context, 'Пожалуйста, Заполните все поля');
+        return;
+      }
+
+      final UserModel userModel = UserModel(
+        phoneNumber: phoneController.text,
+        clientAge: clientAge ? '18+' : '16+',
+        coupleTherapy: coupleTherapy,
+        experienceWithIdentitySearch: experienceWithIdentitySearch,
+      );
+      isLoading = true;
+      notifyListeners();
+      await consultationRepo.patchSpecialization(context, userModel);
+      isLoading = false;
+      notifyListeners();
+    } catch (_) {
+      isLoading = false;
+    }
+  }
+
+  UserModel userModel = UserModel();
+
+  Future<void> getUser() async {
+    isLoading = true;
+    notifyListeners();
+
+    try {
+      userModel = await consultationRepo.getUser(); // Malumotlarni kutamiz
+      nameController.text = userModel.name ?? '';
+      dateController.text = userModel.dateOfBirth ?? '';
+      selectLanguage = userModel.language ?? '';
+      phoneController.text = userModel.phone ?? '';
+      emailController.text = userModel.email ?? '';
+      selectSex = userModel.sex == 'man' ? 'Мужской' : 'Женский';
+      imageUrl = userModel.photo;
+      clientAge = userModel.clientAge == '18+' ? true : false;
+      experienceWithIdentitySearch =
+          userModel.experienceWithIdentitySearch ?? false;
+      coupleTherapy = userModel.coupleTherapy ?? false;
+      isChecked2 = userModel.notificationsPhone ?? false;
+      isChecked3 = userModel.notificationsEmail ?? false;
+      notifyListeners();
+    } catch (e) {
+      print('Xatolik yuz berdi: $e');
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  List<String> weekdaysItem = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+  List<bool> weekdays = List.generate(7, (index) => index == 0);
+
+  void onWeekdaySelected(int index) {
+    weekdays = List.generate(7, (index) => false);
+    weekdays[index] = true;
+    notifyListeners();
+  }
+
+  final List<String> times = List.generate(24, (index) => '$index:00');
+
+  final List<int> orangeIndexes = [1, 2, 3, 12, 14, 21];
+  final List<int> grayIndexes = [5, 6, 13, 15, 17, 18, 22];
+
+  bool clientAge = false;
+  bool experienceWithIdentitySearch = false;
+  bool coupleTherapy = false;
 }

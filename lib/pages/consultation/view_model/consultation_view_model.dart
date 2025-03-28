@@ -123,7 +123,7 @@ class ConsultationViewModel extends ChangeNotifier {
   List<TextEditingController> educationPlaceController = [];
   List<TextEditingController> educationYearController = [];
 
-  List<EducationPsychologist> educationList = [];
+  List educationList = [];
 
   Future<void> patchEducation(BuildContext context) async {
     try {
@@ -131,7 +131,8 @@ class ConsultationViewModel extends ChangeNotifier {
         showToast(context, 'Пожалуйста, Заполните все поля');
         return;
       }
-
+      // EducationPsychologist educationPsychologist = EducationPsychologist();
+      FormData formData = FormData();
       for (int i = 0; i < educationPlaceController.length; i++) {
         String place = educationPlaceController[i].text;
         String yearText = educationYearController[i].text;
@@ -140,21 +141,13 @@ class ConsultationViewModel extends ChangeNotifier {
           return;
         }
 
-        isLoading = true;
-        notifyListeners();
-
-        if (place.isNotEmpty && yearText.isNotEmpty) {
-          int year = int.tryParse(yearText) ?? 0; // Agar son bo‘lmasa, 0 bo‘ladi
-          EducationPsychologist education = EducationPsychologist(
-            // id: i, // ID backend tomonidan generatsiya qilinishi mumkin
-            year: year,
-            text: place,
-            // diploma: "string",
-          );
-          await consultationRepo.patchEducation(context, education);
-
-        }
+        formData.fields.addAll([
+          MapEntry("education[$i][text]", place),
+          MapEntry("education[$i][year]", yearText),
+        ]);
       }
+
+      await consultationRepo.patchEducation(context, formData);
 
       isLoading = false;
       notifyListeners();
@@ -178,6 +171,7 @@ class ConsultationViewModel extends ChangeNotifier {
   TextEditingController nameController = TextEditingController();
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
+  TextEditingController workingMethodController = TextEditingController();
   String? selectSex;
   String selectLanguage = 'Русский';
   List<String> sexItem = ['Мужской', 'Женский'];
@@ -263,12 +257,13 @@ class ConsultationViewModel extends ChangeNotifier {
 
   Future<void> patchSpecialization(BuildContext context) async {
     try {
-      if (phoneController.text.isEmpty) {
-        showToast(context, 'Пожалуйста, Заполните все поля');
-        return;
-      }
+      // if (phoneController.text.isEmpty) {
+      //   showToast(context, 'Пожалуйста, Заполните все поля');
+      //   return;
+      // }
 
       final UserModel userModel = UserModel(
+        workingMethods: workingMethodController.text,
         phoneNumber: phoneController.text,
         clientAge: clientAge ? '18+' : '16+',
         coupleTherapy: coupleTherapy,
@@ -291,7 +286,7 @@ class ConsultationViewModel extends ChangeNotifier {
     notifyListeners();
 
     try {
-      userModel = await consultationRepo.getUser(); // Malumotlarni kutamiz
+      userModel = await consultationRepo.getUser(); // Malumotlarni kutamiz\
       nameController.text = userModel.name ?? '';
       dateController.text = userModel.dateOfBirth ?? '';
       selectLanguage = userModel.language ?? '';
@@ -299,13 +294,22 @@ class ConsultationViewModel extends ChangeNotifier {
       emailController.text = userModel.email ?? '';
       selectSex = userModel.sex == 'man' ? 'Мужской' : 'Женский';
       imageUrl = userModel.photo;
+      workingMethodController.text = userModel.workingMethods ?? '';
       clientAge = userModel.clientAge == '18+' ? true : false;
       experienceWithIdentitySearch =
           userModel.experienceWithIdentitySearch ?? false;
       coupleTherapy = userModel.coupleTherapy ?? false;
       isChecked2 = userModel.notificationsPhone ?? false;
       isChecked3 = userModel.notificationsEmail ?? false;
+      educationList = userModel.educationPsychologist ?? [];
+      educationPlaceController.clear();
+      educationYearController.clear();
+      for (var education in educationList) {
+        educationPlaceController.add(TextEditingController(text: education['text']));
+        educationYearController.add(TextEditingController(text: education['year'].toString()));
+      }
       notifyListeners();
+
     } catch (e) {
       print('Xatolik yuz berdi: $e');
     } finally {

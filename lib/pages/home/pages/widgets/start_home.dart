@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pozitolk/constants/app_images.dart';
 import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
@@ -8,6 +9,7 @@ import 'package:provider/provider.dart';
 
 import '../../../../constants/app_icons.dart';
 import '../../../../core/widgets/app_button.dart';
+import '../../../../router/router.dart';
 import '../../view_model/home_view_model.dart';
 import '../items/container_with_text.dart';
 
@@ -206,6 +208,17 @@ class StartHome extends StatelessWidget {
               width: double.infinity,
               onPressed: () {},
               text: 'Подписка «Самопомощь»',
+            ),
+            20.hGap,
+            AppButton(
+              contentPadding: EdgeInsets.symmetric(horizontal: 50),
+              height: 45,
+              width: double.infinity,
+              onPressed: () {
+                context.push(RouteNames.splash);
+                // context.push(RouteNames.login);
+              },
+              text: 'Войти',
             ),
           ],
         ).padding(EdgeInsets.symmetric(horizontal: 20)),

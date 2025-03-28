@@ -17,6 +17,7 @@ class TextFieldWithTitle extends StatelessWidget {
     this.maxLines = 1,
     this.keyboardType,
     this.mask,
+    this.readOnly,
 
   });
 
@@ -32,6 +33,7 @@ class TextFieldWithTitle extends StatelessWidget {
   final int? maxLines;
   final TextInputType? keyboardType;
   final String? mask;
+  final bool? readOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -43,6 +45,7 @@ class TextFieldWithTitle extends StatelessWidget {
           Text(title, style: titleStyle ?? context.textStyle.s16w500Manrope,),
           SizedBox(height: spaceBetweenTitleAndField),
           TextField(
+            readOnly: readOnly ?? false,
             style: hintStyle ?? context.textStyle.s16w600Manrope,
             onChanged: onChanged,
             controller: controller,

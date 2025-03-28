@@ -38,6 +38,7 @@ class UserModel {
     this.innFile,
     this.retirementCertificate,
     this.imageFile,
+    this.educationPsychologist,
   });
   String? phone;
   String? code;
@@ -76,6 +77,7 @@ class UserModel {
   String? innFile;
   String? retirementCertificate;
   MultipartFile? imageFile;
+  List? educationPsychologist;
 
   Map<String, dynamic> get toJsonRegister => {
         'phone': phone,
@@ -89,6 +91,7 @@ class UserModel {
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
+      educationPsychologist: json['education_psychologist'],
       phone: json['phone'],
       psychoTopics: json['psycho_topics'],
       education: json['education_psychologist_write'],
@@ -165,7 +168,6 @@ class UserModel {
   FormData get toJsonPersonalData => FormData.fromMap({
         'name': name,
         // 'language': language,
-        'phone_number': phoneNumber,
         'sex': sex,
         'date_of_birth': dateOfBirth,
         if (imageFile != null) 'photo': imageFile,
@@ -173,18 +175,17 @@ class UserModel {
 
   Map<String, dynamic> toJsonContact() {
     return {
-      'phone_number': phoneNumber,
       'email': email,
-      'notificationsPhone': notificationsPhone,
-      'notificationsEmail': notificationsEmail,
+      'notifications_phone': notificationsPhone,
+      'notifications_email': notificationsEmail,
     };
   }
   Map<String, dynamic> toJsonSpecialization() {
     return {
-      'phone_number': phoneNumber,
-      'clientAge': clientAge,
-      'coupleTherapy': coupleTherapy,
-      'experienceWithIdentitySearch': experienceWithIdentitySearch,
+      'working_methods': workingMethods,
+      'client_age': clientAge,
+      'couple_therapy': coupleTherapy,
+      'experience_with_identity_search': experienceWithIdentitySearch,
     };
   }
 }
@@ -194,16 +195,22 @@ class EducationPsychologist {
   final int? year;
   final String? text;
   final String? diploma;
+  final FormData? formData;
 
   EducationPsychologist({
     this.id,
     this.year,
     this.text,
     this.diploma,
+    this.formData,
   });
 
-  FormData get toJson => FormData.fromMap({
-    'year': year,
-    'text': text,
-  });
+  factory EducationPsychologist.fromJson(Map<String, dynamic> json) {
+    return EducationPsychologist(
+      // id: json['id'],
+      year: json['year'],
+      text: json['text'],
+      // diploma: json['diploma'],
+    );
+  }
 }

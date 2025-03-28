@@ -441,6 +441,7 @@ class PsychologistSettingsUi extends StatelessWidget {
                         children: [
                           24.hGap,
                           TextFieldWithTitle(
+                            readOnly: true,
                             controller: read.phoneController,
                             keyboardType: TextInputType.phone,
                             title: 'Телефон',
@@ -570,6 +571,7 @@ class PsychologistSettingsUi extends StatelessWidget {
                         children: [
                           24.hGap,
                           AppTextField2(
+                            controller: read.workingMethodController,
                             height: 140,
                             maxLines: 5,
                             title: 'Опишите методы работы',
@@ -590,7 +592,6 @@ class PsychologistSettingsUi extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(24),
                                 onPressed: () {
                                   read.clientAge = !read.clientAge;
-                                  print('kkkaaaaaa   ${read.clientAge}');
                                   read.onSetState();
                                 },
                                 text: '16+',

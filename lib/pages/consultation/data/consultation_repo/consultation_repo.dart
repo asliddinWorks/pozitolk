@@ -6,9 +6,10 @@ import '../../../../di_service.dart';
 
 abstract class ConsultationRepo {
   Future<bool> patchPersonalData(BuildContext context, UserModel userModel);
+  Future<void> postUser();
   Future<bool> patchContact(BuildContext context, UserModel userModel);
   Future<bool> patchSpecialization(BuildContext context, UserModel userModel);
-  Future<bool> patchEducation(BuildContext context, EducationPsychologist educationPsychologist);
+  Future<bool> patchEducation(BuildContext context,  FormData formData);
   Future<UserModel> getUser();
 }
 
@@ -21,7 +22,7 @@ class ConsultationImpl extends ConsultationRepo {
     try {
       final token = await AppLocalData.getUserToken;
       Response response = await dio.patch(
-        'cabinet/change-self-psychologist/',
+        'cabinet/change-self-psychologist/?user_type=psychologist',
         options: Options(
           headers: headerWithAuth(token),
           // headers: {
@@ -46,7 +47,7 @@ class ConsultationImpl extends ConsultationRepo {
     try {
       final token = await AppLocalData.getUserToken;
       Response response = await dio.patch(
-        'cabinet/change-self-psychologist/',
+        'cabinet/change-self-psychologist/?user_type=psychologist',
         options: Options(
           headers: headerWithAuth(token),
         ),
@@ -83,7 +84,7 @@ class ConsultationImpl extends ConsultationRepo {
   }
 
   @override
-  Future<bool> patchEducation(BuildContext context, EducationPsychologist educationPsychologist) async {
+  Future<bool> patchEducation(BuildContext context, FormData formData) async {
     try {
       final token = await AppLocalData.getUserToken;
       Response response = await dio.post(
@@ -91,8 +92,10 @@ class ConsultationImpl extends ConsultationRepo {
         options: Options(
           headers: headerWithAuth(token),
         ),
-        data: educationPsychologist.toJson,
+        data: formData,
       );
+      print('okkk123');
+      print(response.data);
       if ((response.statusCode == 200) || (response.statusCode == 201)) {
         return true;
       }
@@ -109,10 +112,34 @@ class ConsultationImpl extends ConsultationRepo {
     try {
       final token = await AppLocalData.getUserToken;
       Response response = await dio.get(
-        'cabinet/self-psychologist/',
+        'cabinet/self-psychologist/?user_type=psychologist',
         options: Options(
           headers: headerWithAuth(token),
         ),
+      );
+      if ((response.statusCode == 200) || (response.statusCode == 201)) {
+        return UserModel.fromJson(response.data);
+      }
+      return UserModel.fromJson(response.data);
+    } on DioException catch (_) {
+      // print('AAAAAAAAAAAAAAA');
+      // print(e);
+    }
+    return UserModel.fromJson({});
+  }
+
+  @override
+  Future postUser() async {
+    try {
+      final token = await AppLocalData.getUserToken;
+      Response response = await dio.patch(
+        'cabinet/change-self-psychologist/?user_type=psychologist',
+        options: Options(
+          headers: headerWithAuth(token),
+        ),
+        data: {
+          'phone_number': '+998999999999',
+        }
       );
       if ((response.statusCode == 200) || (response.statusCode == 201)) {
         return UserModel.fromJson(response.data);

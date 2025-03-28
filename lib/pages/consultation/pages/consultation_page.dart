@@ -6,6 +6,8 @@ import 'package:motion_tab_bar_v2/motion-tab-controller.dart';
 import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
 import 'package:pozitolk/core/extension/widget_extension.dart';
+import 'package:pozitolk/di_service.dart';
+import 'package:pozitolk/pages/consultation/data/consultation_repo/consultation_repo.dart';
 import 'package:pozitolk/pages/consultation/pages/widgets/consultation_drawer.dart';
 import 'package:pozitolk/pages/consultation/pages/widgets/consultation_help_ui.dart';
 import 'package:pozitolk/pages/consultation/pages/widgets/psychologist_settings_ui.dart';
@@ -54,9 +56,14 @@ class _ConsultationPageState extends State<ConsultationPage>with SingleTickerPro
               Column(
                 children: [
                   3.hGap,
-                  Text(
-                    'позитолк',
-                    style: context.textStyle.s16w400.copyWith(fontSize: 17.5),
+                  GestureDetector(
+                    onTap: (){
+                      getIt.get<ConsultationRepo>().postUser();
+                    },
+                    child: Text(
+                      'позитолк',
+                      style: context.textStyle.s16w400.copyWith(fontSize: 17.5),
+                    ),
                   ),
                   // Text('Психотерапия brbhr', style: GoogleFonts.leckerliOne(color: context.color.primary)),
                 ],
@@ -196,9 +203,9 @@ class _ConsultationPageState extends State<ConsultationPage>with SingleTickerPro
         ],
         tabSize: 50,
         tabBarHeight: 55,
-        textStyle: const TextStyle(
+        textStyle: TextStyle(
           fontSize: 12,
-          color: Colors.black,
+          color: context.color.background2,
           fontWeight: FontWeight.w500,
         ),
         // tabIconColor: Colors.blue[600],

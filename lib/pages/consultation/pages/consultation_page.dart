@@ -34,6 +34,7 @@ class _ConsultationPageState extends State<ConsultationPage>with SingleTickerPro
     );
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<ConsultationViewModel>().getUser();
+      context.read<ConsultationViewModel>().getTable();
     });
     super.initState();
   }

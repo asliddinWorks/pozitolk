@@ -188,6 +188,12 @@ class UserModel {
       'experience_with_identity_search': experienceWithIdentitySearch,
     };
   }
+  Map<String, dynamic> toJsonClient() {
+    return {
+      'timezone': timezone,
+      'session_duration': sessionDuration,
+    };
+  }
 }
 
 class EducationPsychologist {
@@ -213,4 +219,16 @@ class EducationPsychologist {
       // diploma: json['diploma'],
     );
   }
+}
+
+class TableModel {
+  final String? dayOfWeek;
+  final String? time;
+
+  Map<String, dynamic> toJson() => {'day_of_week': dayOfWeek, 'time': time};
+
+  TableModel({
+    this.dayOfWeek,
+    this.time,
+  });
 }

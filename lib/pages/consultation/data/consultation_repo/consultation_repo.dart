@@ -9,8 +9,11 @@ abstract class ConsultationRepo {
   Future<void> postUser();
   Future<bool> patchContact(BuildContext context, UserModel userModel);
   Future<bool> patchSpecialization(BuildContext context, UserModel userModel);
+  Future<bool> patchClient(BuildContext context, UserModel userModel);
+  Future<bool> patchTable(List data);
   Future<bool> patchEducation(BuildContext context,  FormData formData);
   Future<UserModel> getUser();
+  Future<Map> getTable();
 }
 
 class ConsultationImpl extends ConsultationRepo {
@@ -84,6 +87,47 @@ class ConsultationImpl extends ConsultationRepo {
   }
 
   @override
+  Future<bool> patchClient(BuildContext context, UserModel userModel) async {
+    try {
+      final token = await AppLocalData.getUserToken;
+      Response response = await dio.patch(
+        'cabinet/change-self-psychologist/',
+        options: Options(
+          headers: headerWithAuth(token),
+        ),
+        data: userModel.toJsonClient(),
+      );
+      if ((response.statusCode == 200) || (response.statusCode == 201)) {
+        return true;
+      }
+      return false;
+    } on DioException catch (_) {
+    }
+    return false;
+  }
+  @override
+  Future<bool> patchTable(List data) async {
+    try {
+      print('data ${data}');
+      final token = await AppLocalData.getUserToken;
+      Response response = await dio.post(
+        '/cabinet/adjust-schedule/',
+        options: Options(
+          headers: headerWithAuth(token),
+        ),
+        data: data,
+      );
+
+      if ((response.statusCode == 200) || (response.statusCode == 201)) {
+        return true;
+      }
+      return false;
+    } on DioException catch (_) {
+    }
+    return false;
+  }
+
+  @override
   Future<bool> patchEducation(BuildContext context, FormData formData) async {
     try {
       final token = await AppLocalData.getUserToken;
@@ -126,6 +170,26 @@ class ConsultationImpl extends ConsultationRepo {
       // print(e);
     }
     return UserModel.fromJson({});
+  }
+  @override
+  Future<Map> getTable() async {
+    try {
+      final token = await AppLocalData.getUserToken;
+      Response response = await dio.get(
+        '/session/my_schedule/',
+        options: Options(
+          headers: headerWithAuth(token),
+        ),
+      );
+      if ((response.statusCode == 200) || (response.statusCode == 201)) {
+        return response.data;
+      }
+      return {};
+    } on DioException catch (_) {
+      // print('AAAAAAAAAAAAAAA');
+      // print(e);
+    }
+    return {};
   }
 
   @override

@@ -151,7 +151,6 @@ class ConsultationViewModel extends ChangeNotifier {
 
       isLoading = false;
       notifyListeners();
-
     } catch (_) {
       isLoading = false;
     }
@@ -279,6 +278,27 @@ class ConsultationViewModel extends ChangeNotifier {
     }
   }
 
+  Future<void> patchClient(BuildContext context) async {
+    try {
+      // if (phoneController.text.isEmpty) {
+      //   showToast(context, 'Пожалуйста, Заполните все поля');
+      //   return;
+      // }
+
+      final UserModel userModel = UserModel(
+        timezone: timeZone,
+        sessionDuration: int.parse(sessionDuration),
+      );
+      isLoading = true;
+      notifyListeners();
+      await consultationRepo.patchClient(context, userModel);
+      isLoading = false;
+      notifyListeners();
+    } catch (_) {
+      isLoading = false;
+    }
+  }
+
   UserModel userModel = UserModel();
 
   Future<void> getUser() async {
@@ -305,11 +325,15 @@ class ConsultationViewModel extends ChangeNotifier {
       educationPlaceController.clear();
       educationYearController.clear();
       for (var education in educationList) {
-        educationPlaceController.add(TextEditingController(text: education['text']));
-        educationYearController.add(TextEditingController(text: education['year'].toString()));
+        educationPlaceController
+            .add(TextEditingController(text: education['text']));
+        educationYearController
+            .add(TextEditingController(text: education['year'].toString()));
       }
+      timeZone = userModel.timezone ?? 'Europe/Moscow';
+      sessionDuration = userModel.sessionDuration.toString();
+      sessionDuration = userModel.sessionDuration.toString();
       notifyListeners();
-
     } catch (e) {
       print('Xatolik yuz berdi: $e');
     } finally {
@@ -327,12 +351,174 @@ class ConsultationViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+  void changeTable(index) {
+    if (sessionDuration == '1') {
+      if (greenIndexes[weekdays.indexOf(true)].contains(index)) {
+        greenIndexes[weekdays.indexOf(true)].remove(index);
+      } else {
+        greenIndexes[weekdays.indexOf(true)].add(index);
+      }
+      notifyListeners();
+    }
+    if (sessionDuration == '2') {
+      if (index == 23) {
+        return;
+      }
+      if (greenIndexes[weekdays.indexOf(true)].contains(index) &&
+          greenIndexes[weekdays.indexOf(true)].contains(index + 1)) {
+        for (var i = 0; i < 2; i++) {
+            // greenIndexes[weekdays.indexOf(true)].removeAt(index);
+            greenIndexes[weekdays.indexOf(true)].remove(index + i);
+            // print('removeeeee  ${index + i}');
+        }
+        notifyListeners();
+        return;
+      }
+      if (!greenIndexes[weekdays.indexOf(true)].contains(index) &&
+          !greenIndexes[weekdays.indexOf(true)].contains(index + 1)) {
+        for (var i = 0; i < 2; i++) {
+          greenIndexes[weekdays.indexOf(true)].add(index + i);
+          // print('addddd  ${index + i}');
+          // }
+          // greenIndexes[weekdays.indexOf(true)].add(index);
+        }
+      }
+      notifyListeners();
+    }
+    if (sessionDuration == '3') {
+      if (index == 23 || index == 22) {
+        return;
+      }
+      if (greenIndexes[weekdays.indexOf(true)].contains(index) &&
+          greenIndexes[weekdays.indexOf(true)].contains(index + 1) &&
+          greenIndexes[weekdays.indexOf(true)].contains(index + 2)) {
+        for (var i = 0; i < 3; i++) {
+            // greenIndexes[weekdays.indexOf(true)].removeAt(index);
+            greenIndexes[weekdays.indexOf(true)].remove(index + i);
+            // print('removeeeee  ${index + i}');
+        }
+        notifyListeners();
+        return;
+      }
+      if (!greenIndexes[weekdays.indexOf(true)].contains(index) &&
+          !greenIndexes[weekdays.indexOf(true)].contains(index + 1) &&
+          !greenIndexes[weekdays.indexOf(true)].contains(index + 2)) {
+        for (var i = 0; i < 3; i++) {
+          greenIndexes[weekdays.indexOf(true)].add(index + i);
+          // print('addddd  ${index + i}');
+          // }
+          // greenIndexes[weekdays.indexOf(true)].add(index);
+        }
+      }
+      notifyListeners();
+    }
+    // if (greenIndexes[weekdays.indexOf(true)].contains(index)) {
+    //   greenIndexes[weekdays.indexOf(true)].remove(index);
+    // }else{
+    //   greenIndexes[weekdays.indexOf(true)].add(index);
+    // }
+    // notifyListeners();
+  }
+
   final List<String> times = List.generate(24, (index) => '$index:00');
 
-  final List<int> orangeIndexes = [1, 2, 3, 12, 14, 21];
-  final List<int> grayIndexes = [5, 6, 13, 15, 17, 18, 22];
+  final List<int> orangeIndexes = [];
+
+  List greenIndexes = [
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+    [],
+  ];
+
+  List<Map<String, dynamic>> tableItems = [
+  ];
+
+  Future<void> patchTable(BuildContext context) async {
+    try {
+      // if (phoneController.text.isEmpty) {
+      //   showToast(context, 'Пожалуйста, Заполните все поля');
+      //   return;
+      // }
+      tableItems = [];
+      print('vjnfvjnjnfvj ${greenIndexes}');
+      for (int i = 0; i < greenIndexes.length; i++) {
+        for (int j = 0; j < greenIndexes[i].length; j++) {
+          print('okk ');
+          print('okk  ${times[greenIndexes[i][j]]}');
+          // print(TableModel(
+          //   time: times[greenIndexes[i][j]],
+          //   dayOfWeek: i.toString(),
+          // ).toJson());
+          tableItems.add(TableModel(
+            time: times[greenIndexes[i][j]],
+            dayOfWeek: i.toString(),
+          ).toJson());
+        }
+        print('iiiii  ${tableItems}');
+      }
+      isLoading = true;
+      notifyListeners();
+      print('eerr');
+      await consultationRepo.patchTable(tableItems);
+      isLoading = false;
+      notifyListeners();
+    } catch (_) {
+      isLoading = false;
+    }
+  }
+
+  Future<void> getTable() async {
+    isLoading = true;
+    notifyListeners();
+
+    try {
+      Map data = await consultationRepo.getTable(); // Malumotlarni kutamiz\
+      List<dynamic> slots = data['slots'] ?? [];
+
+      // print('gggmmm');
+      for (int i = 0; i < slots.length; i++) {
+        // print('${slots[i]['day_of_week_index']}  ${slots[i]['day_of_week_index'].runtimeType}');
+        // print('${slots[i]['time']}  ${slots[i]['time'].runtimeType}');
+        // print('ggg  ${int.parse(slots[i]['time'].split(':')[0])}');
+        if(!greenIndexes[slots[i]['day_of_week_index']].contains(int.parse(slots[i]['time'].split(':')[0]))){
+          greenIndexes[slots[i]['day_of_week_index']].add(
+            int.parse(slots[i]['time'].split(':')[0]),
+          );
+          // print('addddd  ${int.parse(slots[i]['time'].split(':')[0])}');
+        }
+      }
+
+      notifyListeners();
+    } catch (e) {
+      print('Xatolik yuz berdi: $e');
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
 
   bool clientAge = false;
   bool experienceWithIdentitySearch = false;
   bool coupleTherapy = false;
+
+  String? timeZone = 'Europe/Moscow';
+  String sessionDuration = '1';
+
+  final List<Map<String, String>> timeZones = [
+    {"name": "Kaliningrad (MSK–1, GMT+2)", "value": "Europe/Kaliningrad"},
+    {"name": "Moskva (MSK, GMT+3)", "value": "Europe/Moscow"},
+    {"name": "Samara (MSK+1, GMT+4)", "value": "Europe/Samara"},
+    {"name": "Yekaterinburg (MSK+2, GMT+5)", "value": "Asia/Yekaterinburg"},
+    {"name": "Omsk (MSK+3, GMT+6)", "value": "Asia/Omsk"},
+    {"name": "Krasnoyarsk (MSK+4, GMT+7)", "value": "Asia/Krasnoyarsk"},
+    {"name": "Irkutsk (MSK+5, GMT+8)", "value": "Asia/Irkutsk"},
+    {"name": "Yakutsk (MSK+6, GMT+9)", "value": "Asia/Yakutsk"},
+    {"name": "Vladivostok (MSK+7, GMT+10)", "value": "Asia/Vladivostok"},
+    {"name": "Magadan (MSK+8, GMT+11)", "value": "Asia/Magadan"},
+    {"name": "Kamchatka (MSK+9, GMT+12)", "value": "Asia/Kamchatka"},
+  ];
 }

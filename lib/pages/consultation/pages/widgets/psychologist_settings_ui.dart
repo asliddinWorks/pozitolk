@@ -33,7 +33,6 @@ class PsychologistSettingsUi extends StatelessWidget {
           child: Column(
             children: [
               GestureDetector(
-                onTap: () => read.getUser(),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -795,18 +794,45 @@ class PsychologistSettingsUi extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           24.hGap,
-                          DropDownWithTitle(
-                            title: 'Часовой пояс',
-                            onChanged: (_) {},
-                            dropdownValue: 'МСК (+3 GMT)',
-                            items: ['МСК (+3 GMT)', 'МСК (+4 GMT]'],
+                          Text('Часовой пояс', style: context.textStyle.s16w500Manrope,),
+                          5.hGap,
+                          Container(
+                            clipBehavior: Clip.hardEdge,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: context.color.base03,
+                            ),
+                            child: DropdownButton(
+                              onChanged: (String? newValue) {
+                                read.timeZone = newValue;
+                                read.onSetState();
+                              },
+                              value: read.timeZones.any((tz) => tz["value"] == read.timeZone) ? read.timeZone : null,
+                              isExpanded: true,
+                              underline: const SizedBox.shrink(),
+                              borderRadius: BorderRadius.circular(5),
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              icon: Icon(Icons.keyboard_arrow_down),
+                              style: context.textStyle.s16w500Manrope,
+                              // itemHeight: kMinInteractiveDimension + 30,
+                              itemHeight: null,
+                              items: read.timeZones.map<DropdownMenuItem<String>>((tz) {
+                                return DropdownMenuItem<String>(
+                                  value: tz["value"], // API-dan kelgan qiymat
+                                  child: Text(tz["name"]!), // Foydalanuvchi ko‘radigan matn
+                                );
+                              }).toList(),
+                            ),
                           ),
                           24.hGap,
                           DropDownWithTitle(
-                            title: 'Часовой пояс',
-                            onChanged: (_) {},
-                            dropdownValue: '1',
-                            items: ['1', '2'],
+                            title: 'Минимальное количество часов для записи',
+                            onChanged: (value) {
+                              read.sessionDuration = value;
+                              read.onSetState();
+                            },
+                            dropdownValue: watch.sessionDuration,
+                            items: ['1', '2','3'],
                           ),
                           24.hGap,
                           Text(
@@ -871,30 +897,35 @@ class PsychologistSettingsUi extends StatelessWidget {
                               Color bgColor;
                               if (read.orangeIndexes.contains(index)) {
                                 bgColor = context.color.primary;
-                              } else if (read.grayIndexes.contains(index)) {
-                                bgColor = context.color.background2;
-                              } else {
+                              } else if (read.greenIndexes[read.weekdays.indexOf(true)].contains(index)) {
                                 bgColor = Color(0xFFDAF9DA);
+                              } else {
+                                bgColor = context.color.background2;
                               }
 
-                              return Container(
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  color: bgColor,
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                child: Text(
-                                  read.times[index],
-                                  style: context.textStyle.s14w400Manrope.copyWith(
-                                    color: read.orangeIndexes.contains(index)
-                                        ?  context.color.background2 : read.grayIndexes.contains(index) ? context.color.textGrey3
-                                        : context.color.text,
+                              return GestureDetector(
+                                onTap: () {
+                                  read.changeTable(index);
+                                },
+                                child: Container(
+                                  alignment: Alignment.center,
+                                  decoration: BoxDecoration(
+                                    color: bgColor,
+                                    borderRadius: BorderRadius.circular(8),
                                   ),
-                                  // style: TextStyle(
-                                  //   fontSize: 18,
-                                  //   fontWeight: FontWeight.bold,
-                                  //   color: read.grayIndexes.contains(index) ? Colors.grey.shade600 : Colors.black,
-                                  // ),
+                                  child: Text(
+                                    read.times[index],
+                                    style: context.textStyle.s14w400Manrope.copyWith(
+                                      color: read.orangeIndexes.contains(index)
+                                          ?  context.color.background2 : read.greenIndexes[read.weekdays.indexOf(true)].contains(index) ? context.color.text
+                                          : context.color.textGrey3,
+                                    ),
+                                    // style: TextStyle(
+                                    //   fontSize: 18,
+                                    //   fontWeight: FontWeight.bold,
+                                    //   color: read.grayIndexes.contains(index) ? Colors.grey.shade600 : Colors.black,
+                                    // ),
+                                  ),
                                 ),
                               );
                             },
@@ -904,7 +935,10 @@ class PsychologistSettingsUi extends StatelessWidget {
                             contentPadding: EdgeInsets.symmetric(
                                 horizontal: 50, vertical: 7),
                             width: double.infinity,
-                            onPressed: () {},
+                            onPressed: () {
+                              read.patchClient(context);
+                              read.patchTable(context);
+                            },
                             text: 'Сохранить изменения',
                           ),
                           20.hGap,

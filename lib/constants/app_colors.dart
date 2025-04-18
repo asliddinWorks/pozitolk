@@ -27,6 +27,7 @@ class AppColors extends ThemeExtension<AppColors> {
     required this.containerGreen,
     required this.secondary,
     required this.secondary200,
+    required this.secondary700,
     required this.secondaryVar2,
     required this.googlePart,
     required this.iconColorGrey,
@@ -45,6 +46,8 @@ class AppColors extends ThemeExtension<AppColors> {
     required this.textA4,
     required this.textBA,
     required this.base03,
+    required this.base01,
+    required this.base04,
   });
 
   final Color primary;
@@ -59,6 +62,7 @@ class AppColors extends ThemeExtension<AppColors> {
   final Color containerGreen;
   final Color secondary;
   final Color secondary200;
+  final Color secondary700;
   final Color secondaryVar2;
   final Color googlePart;
   final Color iconColorGrey;
@@ -77,6 +81,8 @@ class AppColors extends ThemeExtension<AppColors> {
   final Color textA4;
   final Color textBA;
   final Color base03;
+  final Color base01;
+  final Color base04;
 
 
   static AppColors light = AppColors(
@@ -92,6 +98,7 @@ class AppColors extends ThemeExtension<AppColors> {
     containerGreen: const Color(0xFF2E4F24),
     secondary: const Color(0xFFFAAB1A),
     secondary200: const Color(0xFFABD29B),
+    secondary700: const Color(0xFF2E4F24),
     secondaryVar2: const Color(0x4DFFAB11),
     googlePart: const Color(0xFF4285F4),
     iconColorGrey: const Color(0xFFDDDDDD),
@@ -110,6 +117,8 @@ class AppColors extends ThemeExtension<AppColors> {
     warningAlert: const Color(0xFFFF0000),
     inactiveFBA: const Color(0x4DFFAB11),
     base03: const Color(0xFFF6F7F4),
+    base01: const Color(0xFFF3F4F1),
+    base04: const Color(0xFFEDEEEB),
   );
 
   @override
@@ -126,6 +135,7 @@ class AppColors extends ThemeExtension<AppColors> {
     Color? containerGreen,
     Color? secondary,
     Color? secondary200,
+    Color? secondary700,
     Color? secondaryVar2,
     Color? googlePart,
     Color? iconColorGrey,
@@ -144,6 +154,8 @@ class AppColors extends ThemeExtension<AppColors> {
     Color? textA4,
     Color? textBA,
     Color? base03,
+    Color? base01,
+    Color? base04,
   }) {
     return AppColors(
       primary: primary ?? this.primary,
@@ -158,6 +170,7 @@ class AppColors extends ThemeExtension<AppColors> {
       containerGreen: containerGreen ?? this.containerGreen,
       secondary: secondary ?? this.secondary,
       secondary200: secondary200 ?? this.secondary200,
+      secondary700: secondary700 ?? this.secondary700,
       secondaryVar2: secondaryVar2 ?? this.secondaryVar2,
       googlePart: googlePart ?? this.googlePart,
       iconColorGrey: iconColorGrey ?? this.iconColorGrey,
@@ -176,6 +189,8 @@ class AppColors extends ThemeExtension<AppColors> {
       textA4: textA4 ?? this.textA4,
       textBA: textBA ?? this.textBA,
       base03: base03 ?? this.base03,
+      base01: base01 ?? this.base01,
+      base04: base04 ?? this.base04,
 
     );
   }
@@ -198,6 +213,7 @@ class AppColors extends ThemeExtension<AppColors> {
       containerGreen: Color.lerp(containerGreen, other.containerGreen, t)!,
       secondary: Color.lerp(secondary, other.secondary, t)!,
       secondary200: Color.lerp(secondary200, other.secondary200, t)!,
+      secondary700: Color.lerp(secondary700, other.secondary700, t)!,
       secondaryVar2: Color.lerp(secondaryVar2, other.secondaryVar2, t)!,
       googlePart: Color.lerp(googlePart, other.googlePart, t)!,
       iconColorGrey: Color.lerp(iconColorGrey, other.iconColorGrey, t)!,
@@ -216,6 +232,8 @@ class AppColors extends ThemeExtension<AppColors> {
       textA4: Color.lerp(textA4, other.textA4, t)!,
       textBA: Color.lerp(textBA, other.textBA, t)!,
       base03: Color.lerp(base03, other.base03, t)!,
+      base01: Color.lerp(base01, other.base01, t)!,
+      base04: Color.lerp(base04, other.base04, t)!,
     );
   }
 }

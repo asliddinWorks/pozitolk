@@ -4,6 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
 import 'package:pozitolk/core/extension/widget_extension.dart';
+import 'package:pozitolk/pages/consultation/view_model/chat_view_model.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../constants/app_icons.dart';
@@ -15,6 +16,7 @@ class ConsultationDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final read = context.read<ConsultationViewModel>();
+    final readChat = context.read<ChatViewModel>();
     final watch = context.watch<ConsultationViewModel>();
     return SafeArea(
       child: Column(
@@ -41,6 +43,7 @@ class ConsultationDrawer extends StatelessWidget {
               GestureDetector(
                 onTap: () {
                   read.onSettings();
+                  readChat.isMessageOpen = false;
                   context.pop();
                 },
                 child: Container(
@@ -100,6 +103,7 @@ class ConsultationDrawer extends StatelessWidget {
               itemBuilder: (context, index) => GestureDetector(
                 onTap: () {
                   read.onDrawerSelected(context, index);
+                  readChat.isMessageOpen = false;
                 },
                 child: Container(
                   width: double.infinity,

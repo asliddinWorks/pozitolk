@@ -8,9 +8,12 @@ import 'package:pozitolk/core/extension/num_extension.dart';
 import 'package:pozitolk/core/extension/widget_extension.dart';
 import 'package:pozitolk/di_service.dart';
 import 'package:pozitolk/pages/consultation/data/consultation_repo/consultation_repo.dart';
+import 'package:pozitolk/pages/consultation/pages/widgets/consultation_chat_ui.dart';
 import 'package:pozitolk/pages/consultation/pages/widgets/consultation_drawer.dart';
 import 'package:pozitolk/pages/consultation/pages/widgets/consultation_help_ui.dart';
+import 'package:pozitolk/pages/consultation/pages/widgets/message_ui.dart';
 import 'package:pozitolk/pages/consultation/pages/widgets/psychologist_settings_ui.dart';
+import 'package:pozitolk/pages/consultation/view_model/chat_view_model.dart';
 import 'package:pozitolk/pages/consultation/view_model/consultation_view_model.dart';
 import 'package:provider/provider.dart';
 import '../../../constants/app_icons.dart';
@@ -41,7 +44,9 @@ class _ConsultationPageState extends State<ConsultationPage>with SingleTickerPro
   @override
   Widget build(BuildContext context) {
     final read = context.read<ConsultationViewModel>();
+    final readChat = context.read<ChatViewModel>();
     final watch = context.watch<ConsultationViewModel>();
+    final watchChat = context.watch<ChatViewModel>();
     return Scaffold(
       backgroundColor: context.color.background1,
       key: read.key,
@@ -76,6 +81,7 @@ class _ConsultationPageState extends State<ConsultationPage>with SingleTickerPro
           GestureDetector(
             onTap: () {
               read.onSettings();
+              readChat.isMessageOpen = false;
             },
             child: Container(
               // padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
@@ -137,13 +143,16 @@ class _ConsultationPageState extends State<ConsultationPage>with SingleTickerPro
           ),
         ),
       ),
-      body: ListView(
+      body: watchChat.isMessageOpen ? MessageUi(chatModel: watchChat.chatModel) : ListView(
+        physics: watch.drawerItem[1] ? NeverScrollableScrollPhysics() : BouncingScrollPhysics(),
         children: [
+          watchChat.isMessageOpen ? MessageUi(chatModel: watchChat.chatModel) : SizedBox.shrink(),
+          watch.drawerItem[1] && !watchChat.isMessageOpen ? ConsultationChatUi() : SizedBox.shrink(),
           watch.drawerItem[6] ? ConsultationHelpUi(): SizedBox.shrink(),
           watch.drawerItem[7] ? PsychologistSettingsUi() : SizedBox.shrink(),
         ],
       ),
-      bottomNavigationBar: MotionTabBar(
+      bottomNavigationBar: watchChat.isMessageOpen ? const SizedBox.shrink() : MotionTabBar(
         controller: read.motionTabBarController, // ADD THIS if you need to change your tab programmatically
         initialSelectedTab: " ",
         useSafeArea: true, // default: true, apply safe area wrapper

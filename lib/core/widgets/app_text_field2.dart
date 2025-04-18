@@ -22,7 +22,9 @@ class AppTextField2 extends StatelessWidget {
     this.icon,
     this.text,
     this.height,
-    this.inputFormatters, this.maxLength
+    this.inputFormatters,
+    this.maxLength,
+    this.fillColor
   });
 
   final TextEditingController? controller;
@@ -44,6 +46,7 @@ class AppTextField2 extends StatelessWidget {
   final double? height;
   final List<TextInputFormatter>? inputFormatters;
   final int? maxLength;
+  final Color? fillColor;
 
 
   @override
@@ -111,7 +114,7 @@ class AppTextField2 extends StatelessWidget {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
-                fillColor: context.color.base03,
+                fillColor: fillColor ?? context.color.base03,
                 hintText: hintText,
                 hintStyle: hintStyle,
               ),

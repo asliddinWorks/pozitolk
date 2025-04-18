@@ -8,8 +8,9 @@ import 'package:provider/provider.dart';
 import '../../view_model/chat_view_model.dart';
 
 class ChatItem extends StatelessWidget {
-  const ChatItem({super.key, required this.chatModel});
+  const ChatItem({super.key, required this.chatModel, required this.index});
   final ChatModel chatModel;
+  final int index;
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +19,7 @@ class ChatItem extends StatelessWidget {
       onTap: () {
         read.isMessageOpen = true;
         read.chatModel = chatModel;
+        read.index = index;
         read.setState();
       },
       child: Container(

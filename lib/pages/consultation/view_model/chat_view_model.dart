@@ -5,6 +5,7 @@ import 'package:pozitolk/pages/consultation/data/models/message_model.dart';
 class ChatViewModel extends ChangeNotifier {
   // MessageModel messageModel = MessageModel();
   ChatModel chatModel = ChatModel();
+  int index = 0;
   bool isMessageOpen = false;
   TextEditingController messageController = TextEditingController();
   final ScrollController scrollController = ScrollController();
@@ -116,7 +117,6 @@ class ChatViewModel extends ChangeNotifier {
   void setState() => notifyListeners();
 
   void scrollToBottom() {
-    print('ahaha');
     if (scrollController.hasClients) {
       scrollController.animateTo(
         0,
@@ -129,7 +129,7 @@ class ChatViewModel extends ChangeNotifier {
 
   void sendMessage() {
     if (messageController.text.isNotEmpty) {
-      chatUsers[1].messages.insert(0, MessageModel(
+      chatUsers[index].messages.insert(0, MessageModel(
         isMe: true,
         message: messageController.text,
         receiverId: 2,

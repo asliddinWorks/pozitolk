@@ -35,6 +35,7 @@ class ConsultationChatUi extends StatelessWidget {
               physics: NeverScrollableScrollPhysics(),
               shrinkWrap: true,
               itemBuilder: (context, index) => ChatItem(
+                index: index,
                 chatModel: read.chatUsers[index],
               ),
               itemCount: read.chatUsers.length,

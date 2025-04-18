@@ -1,0 +1,2 @@
+D:/ASLI/Works/pozitolk/android/app/.cxx/RelWithDebInfo/373vo5e7/x86_64/CMakeFiles/edit_cache.dir
+D:/ASLI/Works/pozitolk/android/app/.cxx/RelWithDebInfo/373vo5e7/x86_64/CMakeFiles/rebuild_cache.dir

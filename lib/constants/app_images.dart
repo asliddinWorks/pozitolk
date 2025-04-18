@@ -60,6 +60,7 @@ class AppImages{
   static const backgroundLogo = '${path}background_logo.png';
 
   static const defaultImage = '${path}default_image.png';
+  static const smail = '${path}smail.png';
 
   static const networkDefaultImage = 'https://t3.ftcdn.net/jpg/04/60/01/36/360_F_460013622_6xF8uN6ubMvLx0tAJECBHfKPoNOR5cRa.jpg';
 

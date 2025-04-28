@@ -52,6 +52,8 @@ class RegisterRepoImpl extends RegisterRepo {
       );
       if ((response.statusCode == 200) || (response.statusCode == 201)) {
         AppLocalData.saveUserToken(response.data['token']);
+        UserModel userModel = UserModel.fromJsonSaveHive(response.data['user']);
+        AppLocalData.saveUserModel(userModel);
         // AppLocalData.saveUserRefreshToken(response.data['refresh']);
         return true;
       }

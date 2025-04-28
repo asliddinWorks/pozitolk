@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -100,6 +99,7 @@ class ConsultationViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
+
   void onOpen(int index) {
     if (isOpen[index] == true) {
       isOpen[index] = false;
@@ -164,7 +164,7 @@ class ConsultationViewModel extends ChangeNotifier {
     isLoading = false;
     notifyListeners();
   }
-
+  int userId = 0;
   File? selectedImageFile;
   String? imageUrl;
   TextEditingController nameController = TextEditingController();
@@ -307,6 +307,7 @@ class ConsultationViewModel extends ChangeNotifier {
 
     try {
       userModel = await consultationRepo.getUser(); // Malumotlarni kutamiz\
+      userId = userModel.id ?? 0;
       nameController.text = userModel.name ?? '';
       dateController.text = userModel.dateOfBirth ?? '';
       selectLanguage = userModel.language ?? '';
@@ -447,8 +448,8 @@ class ConsultationViewModel extends ChangeNotifier {
       print('vjnfvjnjnfvj ${greenIndexes}');
       for (int i = 0; i < greenIndexes.length; i++) {
         for (int j = 0; j < greenIndexes[i].length; j++) {
-          print('okk ');
-          print('okk  ${times[greenIndexes[i][j]]}');
+          // print('okk ');
+          // print('okk  ${times[greenIndexes[i][j]]}');
           // print(TableModel(
           //   time: times[greenIndexes[i][j]],
           //   dayOfWeek: i.toString(),
@@ -458,11 +459,11 @@ class ConsultationViewModel extends ChangeNotifier {
             dayOfWeek: i.toString(),
           ).toJson());
         }
-        print('iiiii  ${tableItems}');
+        // print('iiiii  ${tableItems}');
       }
       isLoading = true;
       notifyListeners();
-      print('eerr');
+      // print('eerr');
       await consultationRepo.patchTable(tableItems);
       isLoading = false;
       notifyListeners();

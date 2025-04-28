@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
           create: (context) => ConsultationViewModel(getIt()),
         ),
         ChangeNotifierProvider(
-          create: (context) => ChatViewModel(),
+          create: (context) => ChatViewModel(getIt()),
         ),
       ],
       builder: (context, viewModel) => MaterialApp.router(

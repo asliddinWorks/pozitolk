@@ -216,8 +216,6 @@ class _LoginPageState extends State<LoginPage> {
                                 key: read.formKey,
                                 child: Theme(
                                   data: Theme.of(context).copyWith(
-                                    dialogBackgroundColor: Colors
-                                        .white, // 🔥 Davlat tanlash oynasining orqa fonini oq qilish
                                     inputDecorationTheme: InputDecorationTheme(
                                       filled: true,
                                       fillColor: Colors
@@ -228,7 +226,8 @@ class _LoginPageState extends State<LoginPage> {
                                         borderSide:
                                             BorderSide(color: Colors.grey),
                                       ),
-                                    ),
+                                    ), dialogTheme: DialogThemeData(backgroundColor: Colors
+                                        .white),
                                   ),
                                   child: IntlPhoneField(
                                     pickerDialogStyle: PickerDialogStyle(

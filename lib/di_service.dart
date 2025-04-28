@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:pozitolk/pages/consultation/data/consultation_repo/chat_repo.dart';
 import 'package:pozitolk/pages/consultation/data/consultation_repo/consultation_repo.dart';
 import 'package:pozitolk/pages/login/data/login_repo/login_repo.dart';
 
@@ -56,8 +57,8 @@ void getItInit() async {
 
   /// Repository
     ..registerLazySingleton<RegisterRepo>(() => RegisterRepoImpl(getIt()))
-    ..registerLazySingleton<ConsultationRepo>(() => ConsultationImpl(getIt()));
-    // ..registerLazySingleton<ProfileRepo>(() => ProfileRepoImpl(getIt()))
+    ..registerLazySingleton<ConsultationRepo>(() => ConsultationImpl(getIt()))
+    ..registerLazySingleton<ChatRepo>(() => ChatRepoImpl(getIt()));
     // ..registerLazySingleton<AddCarRepo>(() => AddCarRepoImpl(getIt()))
     // ..registerLazySingleton<GasRepo>(() => GasRepoImpl(getIt()))
     // ..registerLazySingleton<ServiceRepo>(() => ServiceRepoImpl(getIt()))

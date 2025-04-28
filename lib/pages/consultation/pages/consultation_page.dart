@@ -6,8 +6,6 @@ import 'package:motion_tab_bar_v2/motion-tab-controller.dart';
 import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
 import 'package:pozitolk/core/extension/widget_extension.dart';
-import 'package:pozitolk/di_service.dart';
-import 'package:pozitolk/pages/consultation/data/consultation_repo/consultation_repo.dart';
 import 'package:pozitolk/pages/consultation/pages/widgets/consultation_chat_ui.dart';
 import 'package:pozitolk/pages/consultation/pages/widgets/consultation_drawer.dart';
 import 'package:pozitolk/pages/consultation/pages/widgets/consultation_help_ui.dart';
@@ -64,7 +62,7 @@ class _ConsultationPageState extends State<ConsultationPage>with SingleTickerPro
                   3.hGap,
                   GestureDetector(
                     onTap: (){
-                      getIt.get<ConsultationRepo>().postUser();
+                      // getIt.get<ConsultationRepo>().postUser();
                     },
                     child: Text(
                       'позитолк',

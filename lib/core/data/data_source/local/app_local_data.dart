@@ -2,6 +2,8 @@
 import 'package:hive/hive.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../../../../pages/login/model/user_model.dart';
+
 class AppLocalData {
 
   static Future<void> saveGridAxisCount(int gridCount) async {
@@ -40,6 +42,14 @@ class AppLocalData {
 
   static Future<String?> get getUserRefreshToken async {
     return await box.get('refreshToken');
+  }
+
+  static Future<void> saveUserModel(UserModel userModel) async {
+    await box.put('userModel', userModel.toJsonSaveHive());
+  }
+
+  static Future<Map> get getUserModel async {
+    return await box.get('userModel');
   }
 
   static Future<void> removeAll() async {

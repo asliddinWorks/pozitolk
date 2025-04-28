@@ -1,6 +1,7 @@
 import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
 import 'package:pozitolk/core/extension/widget_extension.dart';
@@ -9,6 +10,7 @@ import 'package:pozitolk/core/widgets/app_text_field2.dart';
 import 'package:pozitolk/pages/consultation/data/models/message_model.dart';
 import 'package:pozitolk/pages/consultation/pages/items/message_item.dart';
 import 'package:provider/provider.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 import '../../../../constants/app_images.dart';
 import '../../../../core/utils/app_custom_dialog.dart';
 import '../../view_model/chat_view_model.dart';
@@ -26,8 +28,12 @@ class _MessageUiState extends State<MessageUi> {
   void initState() {
     ChatViewModel chatViewModel = context.read<ChatViewModel>();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(Duration(milliseconds: 200), chatViewModel.scrollToBottom);
+      Future.delayed(Duration(milliseconds: 500), chatViewModel.scrollToBottom);
+      chatViewModel.initChatPagination();
     });
+    chatViewModel.channel = WebSocketChannel.connect(
+      Uri.parse('wss://backend.xn--g1acgdmcd1a.xn--p1ai/api/schema/swagger-ui/#/ws/chat/1/?token=9db3a903c8b23b39e44ded75db9176c5997f6ea9&user_type=psychologist'),
+    );
     super.initState();
   }
 
@@ -67,17 +73,17 @@ class _MessageUiState extends State<MessageUi> {
                   8.wGap,
                   ClipOval(
                     child: Image(
-                      image: widget.chatModel.avatar.toString() == 'null' ||
-                              widget.chatModel.avatar.toString() == ''
+                      image: widget.chatModel.clientAvatar.toString() == 'null' ||
+                              widget.chatModel.clientAvatar.toString() == ''
                           ? AssetImage(AppImages.defaultImage)
-                          : NetworkImage(widget.chatModel.avatar.toString()),
+                          : NetworkImage(widget.chatModel.clientAvatar.toString()),
                       height: 32,
                       width: 32,
                     ),
                   ),
                   8.wGap,
                   Text(
-                    widget.chatModel.name.toString(),
+                    widget.chatModel.clientNickname.toString(),
                     style: context.textStyle.s20w600Manrope,
                   ),
                   Spacer(),
@@ -158,21 +164,39 @@ class _MessageUiState extends State<MessageUi> {
                   ),
                 ],
               ),
-              // Spacer(),
               Expanded(
-                child: ListView.builder(
-                  reverse: true,
+                child: PagedListView(
                   shrinkWrap: true,
-                  controller: read.scrollController,
-                  // shrinkWrap: true,
-                  // physics: BouncingScrollPhysics(),
-                  itemBuilder: (context, index) => MessageItem(
-                    avatar: widget.chatModel.avatar.toString(),
-                    messageModel: widget.chatModel.messages![index],
+                  reverse: true,
+                  pagingController: watch.chatController,
+                  builderDelegate: PagedChildBuilderDelegate<MessageModel>(
+                    noItemsFoundIndicatorBuilder: (context) => const Center(
+                      child: Text('информация недоступна'),
+                    ),
+                    itemBuilder: (context, item, index) => MessageItem(
+                      avatar: widget.chatModel.clientAvatar.toString(),
+                      messageModel: item,
+                      isMe: read.userId != item.sender ? false : true, //isMe: true,
+                    ),
                   ),
-                  itemCount: widget.chatModel.messages!.length,
                 ),
               ),
+              // Spacer(),
+              // Expanded(
+              //   child: ListView.builder(
+              //     reverse: true,
+              //     shrinkWrap: true,
+              //     controller: read.scrollController,
+              //     // shrinkWrap: true,
+              //     // physics: BouncingScrollPhysics(),
+              //     itemBuilder: (context, index) => MessageItem(
+              //       avatar: widget.chatModel.clientAvatar.toString(),
+              //       messageModel: widget.chatModel.lastMessage!,
+              //       isMe: true,
+              //     ),
+              //     itemCount: 1,
+              //   ),
+              // ),
               Row(
                 children: [
                   Expanded(
@@ -192,7 +216,7 @@ class _MessageUiState extends State<MessageUi> {
                     angle: -35 * math.pi / 180,
                     child: IconButton(
                       onPressed: () {
-                        read.sendMessage();
+                        read.sendMessage(read.messageController.text);
                       },
                       icon: Icon(
                         Icons.send_rounded,

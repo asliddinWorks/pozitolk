@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 
 class UserModel {
   UserModel({
+    this.id,
     this.phone,
     this.code,
     this.isPsychologist,
@@ -40,6 +41,7 @@ class UserModel {
     this.imageFile,
     this.educationPsychologist,
   });
+  int? id;
   String? phone;
   String? code;
   bool? isPsychologist;
@@ -88,9 +90,19 @@ class UserModel {
         'code': code,
         'is_psychologist': isPsychologist,
       };
+   UserModel.fromJsonSaveHive(Map<String, dynamic> json) {
+    id = json['id'];
+    phone = json['phone'];
+  }
+
+  Map<String, dynamic> toJsonSaveHive() => {
+        'phone': phone,
+        'id': id,
+      };
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
+      id: json['id'],
       educationPsychologist: json['education_psychologist'],
       phone: json['phone'],
       psychoTopics: json['psycho_topics'],

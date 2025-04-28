@@ -5,6 +5,7 @@ import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
 import 'package:pozitolk/pages/consultation/data/models/message_model.dart';
 import 'package:provider/provider.dart';
+import '../../../../core/data/data_source/local/app_local_data.dart';
 import '../../view_model/chat_view_model.dart';
 
 class ChatItem extends StatelessWidget {
@@ -16,7 +17,10 @@ class ChatItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final read = context.read<ChatViewModel>();
     return GestureDetector(
-      onTap: () {
+      onTap: () async{
+        Map userModel = await  AppLocalData.getUserModel;
+        read.userId = userModel['id'];
+        read.chatId = chatModel.id!;
         read.isMessageOpen = true;
         read.chatModel = chatModel;
         read.index = index;
@@ -36,10 +40,10 @@ class ChatItem extends StatelessWidget {
               ),
               clipBehavior: Clip.hardEdge,
               child: Image(
-                image: chatModel.avatar.toString() == 'null' ||
-                        chatModel.avatar.toString() == ''
+                image: chatModel.clientAvatar.toString() == 'null' ||
+                        chatModel.clientAvatar.toString() == ''
                     ? AssetImage(AppImages.defaultImage)
-                    : NetworkImage(chatModel.avatar.toString()),
+                    : NetworkImage(chatModel.clientAvatar.toString()),
                 fit: BoxFit.cover,
               ),
             ),
@@ -50,12 +54,16 @@ class ChatItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    chatModel.name.toString(),
+                    chatModel.clientNickname.toString(),
                     style: context.textStyle.s16w600Manrope,
                   ),
                   4.hGap,
                   Text(
-                    chatModel.messages!.last.message.toString(),
+                    // '',
+                    chatModel.lastMessage!.text.toString() == 'null' ||
+                            chatModel.lastMessage!.text.toString() == ''
+                        ? ''
+                        : chatModel.lastMessage!.text.toString(),
                     style: context.textStyle.s14w500Manrope,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
@@ -66,13 +74,15 @@ class ChatItem extends StatelessWidget {
             // Spacer(),
             Column(
               children: [
-                SizedBox(
-                  width: 40,
-                  child: Text(
-                    chatModel.messages!.last.timestamp.toString(),
-                    style: context.textStyle.s14w500Manrope
-                        .copyWith(fontSize: 12, height: 1.9),
-                  ),
+                Text(
+                  // '',
+                  chatModel.lastMessage!.sender.toString() == 'null' ||
+                          chatModel.lastMessage!.sender.toString() == ''
+                      ? ''
+                      : read.formatDateTime(chatModel.lastMessage!.createdAt!,),
+                  // chatModel.lastMessage!.createdAt.toString(),
+                  style: context.textStyle.s14w500Manrope
+                      .copyWith(fontSize: 12, height: 1.9),
                 ),
               ],
             )

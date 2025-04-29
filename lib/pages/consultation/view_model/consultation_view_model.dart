@@ -113,6 +113,7 @@ class ConsultationViewModel extends ChangeNotifier {
   void onSettings() {
     drawerItem = List.generate(8, (index) => false);
     drawerItem[7] = true;
+    motionTabBarController?.index = 1;
     notifyListeners();
   }
 

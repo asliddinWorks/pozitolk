@@ -39,7 +39,7 @@ class ChatViewModel extends ChangeNotifier {
     final token = await AppLocalData.getUserToken;
     channel = WebSocketChannel.connect(
     Uri.parse('wss://backend.xn--g1acgdmcd1a.xn--p1ai/ws/chat/${chatModel.id}/?token=$token&user_type=psychologist'),);
-    print('urlllllllll ');
+    // print('urlllllllll ');
   }
 
   void addNewMessage(MessageModel message) {
@@ -126,7 +126,7 @@ onCloseChat() {
 
     Future<void> getChatList() async {
       chatUsers = await chatRepo.getChatList();
-      print('qqqqq');
+      // print('qqqqq');
       print(chatUsers);
       notifyListeners();
     }

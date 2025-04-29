@@ -53,7 +53,7 @@ class ChatRepoImpl implements ChatRepo {
           'page_size': pageSize
         }
       );
-      print('id $chatId, page $page, pageSize $pageSize, response ${response.data}');
+      // print('id $chatId, page $page, pageSize $pageSize, response ${response.data}');
       if((response.statusCode == 200) || (response.statusCode == 201)){
         List<MessageModel> list = [];
         List list2 = [];

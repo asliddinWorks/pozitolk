@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pozitolk/core/data/data_source/local/app_local_data.dart';
 import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
 import 'package:pozitolk/pages/consultation/pages/items/chat_item.dart';
-import 'package:pozitolk/pages/consultation/pages/widgets/new.dart';
 import 'package:pozitolk/pages/consultation/view_model/chat_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -29,12 +27,7 @@ class ConsultationChatUi extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             GestureDetector(
-              onTap: ()async{
-                Map userModel = await  AppLocalData.getUserModel;
-                print('id  ${userModel['id']} ${userModel['phone']}  $userModel');
-                // read.onMessage();
-                Navigator.push(context, MaterialPageRoute(builder: (context) => New()));
-              },
+              onTap: ()async{},
               child: Text(
                 'Чаты',
                 style: context.textStyle.s16w600Manrope.copyWith(fontSize: 20),

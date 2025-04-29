@@ -109,6 +109,7 @@ class ConsultationDrawer extends StatelessWidget {
                     await readChat.getChatList();
                     read.isLoading = false;
                     readChat.isMessageOpen = false;
+                    read.motionTabBarController?.index = 3;
                     read.onSetState();
                   }
                 },

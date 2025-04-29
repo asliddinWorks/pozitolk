@@ -225,6 +225,14 @@ class _ConsultationPageState extends State<ConsultationPage>with SingleTickerPro
         onTabItemSelected: (int value) {
           setState(() {
             read.motionTabBarController!.index = value;
+            if(read.motionTabBarController!.index == 3) {
+              read.drawerItem = List.generate(8, (index) => false);
+              read.drawerItem[1] = true;
+            }
+            if(read.motionTabBarController!.index == 1) {
+              read.drawerItem = List.generate(8, (index) => false);
+              read.drawerItem[7] = true;
+            }
           });
         },
       ),

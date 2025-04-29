@@ -10,7 +10,6 @@ import 'package:pozitolk/core/widgets/app_text_field2.dart';
 import 'package:pozitolk/pages/consultation/data/models/message_model.dart';
 import 'package:pozitolk/pages/consultation/pages/items/message_item.dart';
 import 'package:provider/provider.dart';
-import 'package:web_socket_channel/web_socket_channel.dart';
 import '../../../../constants/app_images.dart';
 import '../../../../core/utils/app_custom_dialog.dart';
 import '../../view_model/chat_view_model.dart';
@@ -24,17 +23,24 @@ class MessageUi extends StatefulWidget {
 }
 
 class _MessageUiState extends State<MessageUi> {
+
+  late ChatViewModel chatViewModel;
+
   @override
   void initState() {
-    ChatViewModel chatViewModel = context.read<ChatViewModel>();
+    chatViewModel= context.read<ChatViewModel>();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Future.delayed(Duration(milliseconds: 500), chatViewModel.scrollToBottom);
+      Future.delayed(Duration(milliseconds: 200), chatViewModel.scrollToBottom);
       chatViewModel.initChatPagination();
     });
-    chatViewModel.channel = WebSocketChannel.connect(
-      Uri.parse('wss://backend.xn--g1acgdmcd1a.xn--p1ai/api/schema/swagger-ui/#/ws/chat/1/?token=9db3a903c8b23b39e44ded75db9176c5997f6ea9&user_type=psychologist'),
-    );
     super.initState();
+  }
+
+  @override
+  dispose(){
+    chatViewModel.appDispose();
+    chatViewModel.getChatList();
+    super.dispose();
   }
 
   @override
@@ -65,10 +71,15 @@ class _MessageUiState extends State<MessageUi> {
             children: [
               Row(
                 children: [
-                  Text(
-                    'Чаты /',
-                    style: context.textStyle.s20w600Manrope
-                        .copyWith(color: context.color.textGrey3),
+                  GestureDetector(
+                    onTap: (){
+                      read.onCloseChat();
+                    },
+                    child: Text(
+                      'Чаты /',
+                      style: context.textStyle.s20w600Manrope
+                          .copyWith(color: context.color.textGrey3),
+                    ),
                   ),
                   8.wGap,
                   ClipOval(
@@ -166,6 +177,7 @@ class _MessageUiState extends State<MessageUi> {
               ),
               Expanded(
                 child: PagedListView(
+                  scrollController: read.scrollController,
                   shrinkWrap: true,
                   reverse: true,
                   pagingController: watch.chatController,

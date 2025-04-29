@@ -31,7 +31,7 @@ class ConsultationChatUi extends StatelessWidget {
             GestureDetector(
               onTap: ()async{
                 Map userModel = await  AppLocalData.getUserModel;
-                print('id  ${userModel['id']} ${userModel['phone']}  ${userModel}');
+                print('id  ${userModel['id']} ${userModel['phone']}  $userModel');
                 // read.onMessage();
                 Navigator.push(context, MaterialPageRoute(builder: (context) => New()));
               },

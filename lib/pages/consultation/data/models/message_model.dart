@@ -99,7 +99,15 @@ class MessageModel {
   factory MessageModel.fromJson(Map<String, dynamic> json) {
     return MessageModel(
       id: json['id'],
-      // sender: json['sender'],
+      sender: json['sender'],
+      text: json['text'],
+      createdAt: json['created_at'] != null ? DateTime.parse(json['created_at']) : null,
+    );
+  }
+  factory MessageModel.fromJson2(Map<String, dynamic> json) {
+    return MessageModel(
+      id: 0,
+      sender: json['id'],
       text: json['text'],
       createdAt: json['created_at'] != null ? DateTime.parse(json['created_at']) : null,
     );

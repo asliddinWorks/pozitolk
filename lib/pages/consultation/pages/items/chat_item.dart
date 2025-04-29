@@ -24,6 +24,8 @@ class ChatItem extends StatelessWidget {
         read.isMessageOpen = true;
         read.chatModel = chatModel;
         read.index = index;
+        read.initWebSocket();
+        read.connectWebSocket();
         read.setState();
       },
       child: Container(

@@ -1,6 +1,6 @@
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'package:flutter/material.dart';
-
+import 'dart:convert';
 
 
 class New extends StatelessWidget {
@@ -39,7 +39,8 @@ class _WebSocketExampleState extends State<WebSocketExample> {
   @override
   void dispose() {
     _channel.sink.close();
-    super.dispose();}
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +53,8 @@ class _WebSocketExampleState extends State<WebSocketExample> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          _channel.sink.add('Hello from Flutter!');
+          final messageJson = jsonEncode({"text":"good"}); // Map'ni JSON formatga o‘tkazamiz
+          _channel.sink.add(messageJson);
         },
         child: Icon(Icons.send),
       ),

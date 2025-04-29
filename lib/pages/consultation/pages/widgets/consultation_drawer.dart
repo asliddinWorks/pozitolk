@@ -107,8 +107,6 @@ class ConsultationDrawer extends StatelessWidget {
                     read.isLoading = true;
                     read.onSetState();
                     await readChat.getChatList();
-                    readChat.initWebSocket();
-                    readChat.connectWebSocket();
                     read.isLoading = false;
                     readChat.isMessageOpen = false;
                     read.onSetState();

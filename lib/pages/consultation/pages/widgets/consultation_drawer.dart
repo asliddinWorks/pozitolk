@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
 import 'package:pozitolk/core/extension/widget_extension.dart';
 import 'package:pozitolk/pages/consultation/view_model/chat_view_model.dart';
+import 'package:pozitolk/router/router.dart';
 import 'package:provider/provider.dart';
-
 import '../../../../constants/app_icons.dart';
 import '../../view_model/consultation_view_model.dart';
 
@@ -42,7 +43,7 @@ class ConsultationDrawer extends StatelessWidget {
               Spacer(),
               GestureDetector(
                 onTap: () {
-                  read.onSettings();
+                  read.onSettings(context);
                   readChat.isMessageOpen = false;
                   context.pop();
                 },
@@ -102,16 +103,27 @@ class ConsultationDrawer extends StatelessWidget {
             child: ListView.builder(
               itemBuilder: (context, index) => GestureDetector(
                 onTap: () async {
-                  read.onDrawerSelected(context, index);
-                  if (index == 1) {
-                    read.isLoading = true;
-                    read.onSetState();
-                    await readChat.getChatList();
-                    read.isLoading = false;
-                    readChat.isMessageOpen = false;
+                  if(index == 1) {
+                    context.go(RouteNames.consultationChat);
                     read.motionTabBarController?.index = 3;
-                    read.onSetState();
                   }
+                  if(index == 6) {
+                    context.go(RouteNames.consultationHelp);
+                    read.motionTabBarController?.index = 2;
+                  }
+                  // if(index == 5) {
+                  //   context.go(RouteNames.psychologistSettings);
+                  // }
+                  read.onDrawerSelected(context, index);
+                  // if (index == 1) {
+                  //   read.isLoading = true;
+                  //   read.onSetState();
+                  //   await readChat.getChatList();
+                  //   read.isLoading = false;
+                  //   readChat.isMessageOpen = false;
+                  //   read.motionTabBarController?.index = 3;
+                  //   read.onSetState();
+                  // }
                 },
                 child: Container(
                   width: double.infinity,

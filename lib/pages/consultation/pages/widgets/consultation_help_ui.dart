@@ -119,163 +119,165 @@ class ConsultationHelpUi extends StatelessWidget {
   Widget build(BuildContext context) {
     final read = context.read<ConsultationViewModel>();
     final watch = context.watch<ConsultationViewModel>();
-    return Column(
-      children: [
-        Column(
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(16),
-                  width: 78,
-                  height: 56,
-                  decoration: BoxDecoration(
-                    color: context.color.secondary200,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: SvgPicture.asset(AppIcons.icDecoration),
-                ),
-                Container(
-                  padding: EdgeInsets.all(16),
-                  width: 78,
-                  height: 56,
-                  decoration: BoxDecoration(
-                    color: context.color.secondary200,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: SvgPicture.asset(AppIcons.icDecoration),
-                ),
-                Container(
-                  padding: EdgeInsets.all(16),
-                  width: 78,
-                  height: 56,
-                  decoration: BoxDecoration(
-                    color: context.color.secondary200,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: SvgPicture.asset(AppIcons.icDecoration),
-                ),
-                Container(
-                  padding: EdgeInsets.all(16),
-                  width: 78,
-                  height: 56,
-                  decoration: BoxDecoration(
-                    color: context.color.secondary200,
-                    borderRadius: BorderRadius.circular(12),
-                  ),
-                  child: SvgPicture.asset(AppIcons.icDecoration),
-                ),
-              ],
-            ).padding(EdgeInsets.all(16)),
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: context.color.background2,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  topRight: Radius.circular(16),
-                ),
-              ),
-              child: ListView.builder(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                itemCount: read.faqTitle.length,
-                itemBuilder: (context, index) {
-                  return ConsultationHelpItem(
-                    isOpen: watch.isOpen[index],
-                    title: read.faqTitle[index],
-                    text: read.faqText[index],
-                    index: index,
-                  );
-                },
-              ),
-            ),
-            10.hGap,
-            Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: context.color.background2,
-                borderRadius: BorderRadius.only(
-                  topLeft: Radius.circular(16),
-                  topRight: Radius.circular(16),
-                ),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    'Не нашли ответ на свой вопрос?',
-                    style:
-                        context.textStyle.s22w600Manrope.copyWith(fontSize: 20),
-                  ),
-                  8.hGap,
-                  Text(
-                    'Напишите нам, мы поможем разобраться',
-                    style: context.textStyle.s14w400Manrope,
-                  ),
-                  22.hGap,
-                  AppButton(
-                    color: context.color.secondary200,
-                    fillTextStyle: context.textStyle.s16w600Manrope.copyWith(
-                      color: context.color.background2,
-                      fontWeight: FontWeight.w500,
-                    ),
-                    width: double.infinity,
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    width: 78,
                     height: 56,
-                    onPressed: () {},
-                    text: 'Написать в тех.поддержку',
-                  ),
-                  22.hGap,
-                  Text(
-                    'Есть вопросы о работе вашего специалиста?',
-                    style:
-                        context.textStyle.s22w600Manrope.copyWith(fontSize: 20),
-                  ),
-                  8.hGap,
-                  Text(
-                    'Напишите нам, мы поможем разобраться',
-                    style: context.textStyle.s14w400Manrope,
-                  ),
-                  22.hGap,
-                  AppButton(
-                    color: context.color.secondary200,
-                    fillTextStyle: context.textStyle.s16w600Manrope.copyWith(
-                      color: context.color.background2,
-                      fontWeight: FontWeight.w500,
+                    decoration: BoxDecoration(
+                      color: context.color.secondary200,
+                      borderRadius: BorderRadius.circular(12),
                     ),
-                    width: double.infinity,
+                    child: SvgPicture.asset(AppIcons.icDecoration),
+                  ),
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    width: 78,
                     height: 56,
-                    onPressed: () {},
-                    text: 'Написать куратору',
+                    decoration: BoxDecoration(
+                      color: context.color.secondary200,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: SvgPicture.asset(AppIcons.icDecoration),
                   ),
-                  22.hGap,
-                  Wrap(
-                    children: [
-                      Text(
-                        'Электронная почта - ',
-                        style: context.textStyle.s16w600Manrope
-                            .copyWith(color: context.color.text),
-                      ),
-                      GestureDetector(
-                        onTap: (){
-                          // launchUrlString('help@pozitalk.ru');
-                        },
-                        child: Text(
-                          'help@pozitalk.ru',
-                          style: context.textStyle.s16w600Manrope
-                              .copyWith(color: context.color.primary),
-                        ),
-                      ),
-                    ],
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    width: 78,
+                    height: 56,
+                    decoration: BoxDecoration(
+                      color: context.color.secondary200,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: SvgPicture.asset(AppIcons.icDecoration),
                   ),
-                  100.hGap
+                  Container(
+                    padding: EdgeInsets.all(16),
+                    width: 78,
+                    height: 56,
+                    decoration: BoxDecoration(
+                      color: context.color.secondary200,
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: SvgPicture.asset(AppIcons.icDecoration),
+                  ),
                 ],
+              ).padding(EdgeInsets.all(16)),
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: context.color.background2,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                  ),
+                ),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: NeverScrollableScrollPhysics(),
+                  itemCount: read.faqTitle.length,
+                  itemBuilder: (context, index) {
+                    return ConsultationHelpItem(
+                      isOpen: watch.isOpen[index],
+                      title: read.faqTitle[index],
+                      text: read.faqText[index],
+                      index: index,
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
-        ),
-      ],
+              10.hGap,
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: context.color.background2,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(16),
+                    topRight: Radius.circular(16),
+                  ),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Не нашли ответ на свой вопрос?',
+                      style:
+                          context.textStyle.s22w600Manrope.copyWith(fontSize: 20),
+                    ),
+                    8.hGap,
+                    Text(
+                      'Напишите нам, мы поможем разобраться',
+                      style: context.textStyle.s14w400Manrope,
+                    ),
+                    22.hGap,
+                    AppButton(
+                      color: context.color.secondary200,
+                      fillTextStyle: context.textStyle.s16w600Manrope.copyWith(
+                        color: context.color.background2,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      width: double.infinity,
+                      height: 56,
+                      onPressed: () {},
+                      text: 'Написать в тех.поддержку',
+                    ),
+                    22.hGap,
+                    Text(
+                      'Есть вопросы о работе вашего специалиста?',
+                      style:
+                          context.textStyle.s22w600Manrope.copyWith(fontSize: 20),
+                    ),
+                    8.hGap,
+                    Text(
+                      'Напишите нам, мы поможем разобраться',
+                      style: context.textStyle.s14w400Manrope,
+                    ),
+                    22.hGap,
+                    AppButton(
+                      color: context.color.secondary200,
+                      fillTextStyle: context.textStyle.s16w600Manrope.copyWith(
+                        color: context.color.background2,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      width: double.infinity,
+                      height: 56,
+                      onPressed: () {},
+                      text: 'Написать куратору',
+                    ),
+                    22.hGap,
+                    Wrap(
+                      children: [
+                        Text(
+                          'Электронная почта - ',
+                          style: context.textStyle.s16w600Manrope
+                              .copyWith(color: context.color.text),
+                        ),
+                        GestureDetector(
+                          onTap: (){
+                            // launchUrlString('help@pozitalk.ru');
+                          },
+                          child: Text(
+                            'help@pozitalk.ru',
+                            style: context.textStyle.s16w600Manrope
+                                .copyWith(color: context.color.primary),
+                          ),
+                        ),
+                      ],
+                    ),
+                    100.hGap
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

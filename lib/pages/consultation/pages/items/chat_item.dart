@@ -1,11 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pozitolk/constants/app_images.dart';
 import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
 import 'package:pozitolk/pages/consultation/data/models/message_model.dart';
+import 'package:pozitolk/pages/consultation/view_model/consultation_view_model.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/data/data_source/local/app_local_data.dart';
+import '../../../../router/router.dart';
 import '../../view_model/chat_view_model.dart';
 
 class ChatItem extends StatelessWidget {
@@ -16,6 +19,7 @@ class ChatItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final read = context.read<ChatViewModel>();
+    final readConsult = context.read<ConsultationViewModel>();
     return GestureDetector(
       onTap: () async{
         Map userModel = await  AppLocalData.getUserModel;
@@ -26,7 +30,13 @@ class ChatItem extends StatelessWidget {
         read.index = index;
         read.initWebSocket();
         read.connectWebSocket();
+        // Navigator.push(context, MaterialPageRoute(builder: (context) => MessageUi(chatModel: chatModel,)));
         read.setState();
+        await  context.push(RouteNames.messageUi, extra: chatModel);
+        print('onnaaaaaaaaaa');
+        readConsult.selectNavigation = "ИИ-чат";
+        await read.getChatList();
+        // readConsult.motionTabBarController?.index = 3;
       },
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 12),

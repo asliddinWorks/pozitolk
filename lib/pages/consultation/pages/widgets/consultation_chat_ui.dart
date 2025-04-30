@@ -1,16 +1,36 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
+import 'package:pozitolk/core/extension/widget_extension.dart';
 import 'package:pozitolk/pages/consultation/pages/items/chat_item.dart';
 import 'package:pozitolk/pages/consultation/view_model/chat_view_model.dart';
 import 'package:provider/provider.dart';
 
-class ConsultationChatUi extends StatelessWidget {
+import '../../../../router/router.dart';
+
+class ConsultationChatUi extends StatefulWidget  {
   const ConsultationChatUi({super.key});
 
   @override
+  State<ConsultationChatUi> createState() => _ConsultationChatUiState();
+}
+
+class _ConsultationChatUiState extends State<ConsultationChatUi> {
+  late ChatViewModel read;
+  @override
+  void initState() {
+    read = context.read<ChatViewModel>();
+    WidgetsBinding.instance.addPostFrameCallback((_)async {
+      // Future.delayed(Duration(milliseconds: 200),);
+      await read.getChatList();
+    });
+    super.initState();
+  }
+  @override
   Widget build(BuildContext context) {
     final read = context.read<ChatViewModel>();
+    final watch = context.watch<ChatViewModel>();
     return Container(
       padding: EdgeInsets.all(16),
       height: context.height * .85,
@@ -27,7 +47,9 @@ class ConsultationChatUi extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             GestureDetector(
-              onTap: ()async{},
+              onTap: (){
+                context.push(RouteNames.new2);
+              },
               child: Text(
                 'Чаты',
                 style: context.textStyle.s16w600Manrope.copyWith(fontSize: 20),
@@ -48,6 +70,6 @@ class ConsultationChatUi extends StatelessWidget {
           ],
         ),
       ),
-    );
+    ).loadingView(watch.isLoading);
   }
 }

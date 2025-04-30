@@ -9,6 +9,7 @@ import 'package:pozitolk/core/widgets/app_button.dart';
 import 'package:pozitolk/core/widgets/app_text_field2.dart';
 import 'package:pozitolk/pages/consultation/data/models/message_model.dart';
 import 'package:pozitolk/pages/consultation/pages/items/message_item.dart';
+import 'package:pozitolk/pages/consultation/view_model/consultation_view_model.dart';
 import 'package:provider/provider.dart';
 import '../../../../constants/app_images.dart';
 import '../../../../core/utils/app_custom_dialog.dart';
@@ -25,10 +26,12 @@ class MessageUi extends StatefulWidget {
 class _MessageUiState extends State<MessageUi> {
 
   late ChatViewModel chatViewModel;
+  late ConsultationViewModel consultationViewModel;
 
   @override
   void initState() {
     chatViewModel= context.read<ChatViewModel>();
+    consultationViewModel = context.read<ConsultationViewModel>();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Future.delayed(Duration(milliseconds: 200), chatViewModel.scrollToBottom);
       chatViewModel.initChatPagination();
@@ -39,7 +42,9 @@ class _MessageUiState extends State<MessageUi> {
   @override
   dispose(){
     chatViewModel.appDispose();
-    chatViewModel.getChatList();
+    // chatViewModel.getChatList();
+    // consultationViewModel.drawerItem = List.generate(8, (index) => false);
+    // consultationViewModel.onChat();
     super.dispose();
   }
 
@@ -47,11 +52,13 @@ class _MessageUiState extends State<MessageUi> {
   Widget build(BuildContext context) {
     final watch = context.watch<ChatViewModel>();
     final read = context.read<ChatViewModel>();
+    // final readConsultation = context.read<ConsultationViewModel>();
     return PopScope(
       canPop: !watch.isMessageOpen,
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop && read.isMessageOpen) {
           read.isMessageOpen = false;
+          context.pop();
           read.setState();
         }
       },

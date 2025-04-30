@@ -19,10 +19,11 @@ class ConsultationViewModel extends ChangeNotifier {
   MotionTabBarController? motionTabBarController;
 
   bool isLoading = false;
-
+  bool isShow = false;
   bool isChecked1 = false;
   bool isChecked2 = false;
   bool isChecked3 = false;
+  String selectNavigation = ' ';
 
   TextEditingController dateController = TextEditingController();
   List<bool> drawerItem = List.generate(8, (index) => index == 0);
@@ -84,7 +85,7 @@ class ConsultationViewModel extends ChangeNotifier {
     '',
   ];
 
-  List<bool> profileItem = List.generate(6, (index) => index == 0);
+  List<bool> profileItem = List.generate(6, (index) => false);
 
   void onProfileItemSelected(int index) {
     profileItem = List.generate(profileItem.length, (index) => false);
@@ -110,10 +111,18 @@ class ConsultationViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onSettings() {
+  void onSettings(BuildContext context) {
     drawerItem = List.generate(8, (index) => false);
     drawerItem[7] = true;
     motionTabBarController?.index = 1;
+    context.go(RouteNames.psychologistSettings);
+    notifyListeners();
+  }
+
+  void onChat() {
+    drawerItem = List.generate(8, (index) => false);
+    drawerItem[1] = true;
+    motionTabBarController?.index = 3;
     notifyListeners();
   }
 
@@ -352,6 +361,7 @@ class ConsultationViewModel extends ChangeNotifier {
     weekdays[index] = true;
     notifyListeners();
   }
+
 
   void changeTable(index) {
     if (sessionDuration == '1') {

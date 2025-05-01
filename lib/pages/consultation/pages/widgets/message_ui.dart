@@ -84,6 +84,8 @@ class _MessageUiState extends State<MessageUi> {
                   GestureDetector(
                     onTap: (){
                       read.onCloseChat();
+                      readConsultation.selectNavigation = "ИИ-чат";
+                      context.pop();
                     },
                     child: Text(
                       'Чаты /',

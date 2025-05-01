@@ -21,9 +21,9 @@ class _ConsultationPageState extends State<ConsultationPage>with SingleTickerPro
     //   length: 5,
     //   vsync: this,
     // );
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      context.read<ConsultationViewModel>().getUser();
-      context.read<ConsultationViewModel>().getTable();
+    WidgetsBinding.instance.addPostFrameCallback((_) async{
+      await context.read<ConsultationViewModel>().getUser();
+      await context.read<ConsultationViewModel>().getTable();
     });
     super.initState();
   }
@@ -35,6 +35,7 @@ class _ConsultationPageState extends State<ConsultationPage>with SingleTickerPro
     // final watchChat = context.watch<ChatViewModel>();
     return Scaffold(
       backgroundColor: context.color.background1,
+      body: Center(),
       // key: read.key,
       // appBar: AppBar(
       //   toolbarHeight: 56,

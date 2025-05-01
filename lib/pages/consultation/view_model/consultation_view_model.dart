@@ -114,7 +114,6 @@ class ConsultationViewModel extends ChangeNotifier {
   void onSettings(BuildContext context) {
     drawerItem = List.generate(8, (index) => false);
     drawerItem[7] = true;
-    motionTabBarController?.index = 1;
     context.go(RouteNames.psychologistSettings);
     notifyListeners();
   }

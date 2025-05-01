@@ -113,8 +113,31 @@ import 'package:pozitolk/pages/consultation/pages/items/consultation_help_item.d
 import 'package:pozitolk/pages/consultation/view_model/consultation_view_model.dart';
 import 'package:provider/provider.dart';
 
-class ConsultationHelpUi extends StatelessWidget {
+import '../../view_model/chat_view_model.dart';
+
+class ConsultationHelpUi extends StatefulWidget {
   const ConsultationHelpUi({super.key});
+
+  @override
+  State<ConsultationHelpUi> createState() => _ConsultationHelpUiState();
+}
+
+class _ConsultationHelpUiState extends State<ConsultationHelpUi> {
+  late ChatViewModel readChat;
+  late ConsultationViewModel read;
+  @override
+  void initState() {
+    read = context.read<ConsultationViewModel>();
+    readChat = context.read<ChatViewModel>();
+    readChat.isMessageOpen = false;
+    WidgetsBinding.instance.addPostFrameCallback((_) async{
+      await Future.delayed(Duration(microseconds: 200),);
+      // read.onDrawerSelected(context, 7);
+      // read.motionTabBarController?.index = 0;
+      read.onSetState();
+    });
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     final read = context.read<ConsultationViewModel>();

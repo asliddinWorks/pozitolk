@@ -8,6 +8,7 @@ import 'package:pozitolk/core/extension/num_extension.dart';
 import 'package:pozitolk/core/extension/widget_extension.dart';
 import 'package:pozitolk/core/widgets/app_button.dart';
 import 'package:pozitolk/core/widgets/upload_image_square.dart';
+import 'package:pozitolk/pages/consultation/view_model/chat_view_model.dart';
 import 'package:pozitolk/pages/consultation/view_model/consultation_view_model.dart';
 import 'package:provider/provider.dart';
 import '../../../../core/utils/calendar_day.dart';
@@ -24,13 +25,19 @@ class PsychologistSettingsUi extends StatefulWidget {
 
 class _PsychologistSettingsUiState extends State<PsychologistSettingsUi> {
   late ConsultationViewModel read;
+  late ChatViewModel readChat;
   @override
   void initState() {
     read = context.read<ConsultationViewModel>();
-    read.profileItem[0] = true;
+    readChat = context.read<ChatViewModel>();
+    readChat.isMessageOpen = false;
     WidgetsBinding.instance.addPostFrameCallback((_) async{
-     await Future.delayed(Duration(microseconds: 100),);
+      read.motionTabBarController?.index = 1;
+      await Future.delayed(Duration(milliseconds: 400),);
+      read.profileItem[0] = true;
       read.isShow = true;
+      read.key.currentState!.closeEndDrawer();
+      // read.onDrawerSelected(context, 7);
       read.onSetState();
     });
     super.initState();
@@ -350,6 +357,9 @@ class _PsychologistSettingsUiState extends State<PsychologistSettingsUi> {
                               imageFile: read.selectedImageFile,
                             ),
                             24.hGap,
+                            // TextField(
+                            //   controller: read.nameController,
+                            // ),
                             watch.isShow ?
                             TextFieldWithTitle(
                               controller: read.nameController,

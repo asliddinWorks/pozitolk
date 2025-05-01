@@ -7,7 +7,6 @@ import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
 import 'package:pozitolk/router/router.dart';
 import 'package:provider/provider.dart';
-
 import '../../constants/app_icons.dart';
 import '../consultation/pages/widgets/consultation_drawer.dart';
 import '../consultation/view_model/chat_view_model.dart';
@@ -140,82 +139,27 @@ class _AppBarCustomState extends State<AppBarCustom>
         ),
       ),
       body: widget.child,
-      bottomNavigationBar: watchChat.isMessageOpen
-          ? const SizedBox.shrink()
-          :
-      // MotionTabBar(
-      //   controller: read.motionTabBarController, // Add this controller if you need to change your tab programmatically
-      //   initialSelectedTab: "Home",
-      //   useSafeArea: true, // default: true, apply safe area wrapper
-      //   labels: const ["Dashboard", "Home", "Profile", "Settings", 'ok'],
-      //   icons: const [Icons.dashboard, Icons.home, Icons.people_alt, Icons.settings, Icons.settings],
-      //   // optional badges, length must be same with labels
-      //   badges: [
-      //     null,
-      //     null,
-      //     null,
-      //     // Default Motion Badge Widget
-      //     // const MotionBadgeWidget(
-      //     //   text: '10+',
-      //     //   textColor: Colors.white, // optional, default to Colors.white
-      //     //   color: Colors.red, // optional, default to Colors.red
-      //     //   size: 18, // optional, default to 18
-      //     // ),
-      //
-      //     // custom badge Widget
-      //     // Container(
-      //     //   color: Colors.black,
-      //     //   padding: const EdgeInsets.all(2),
-      //     //   child: const Text(
-      //     //     '48',
-      //     //     style: TextStyle(
-      //     //       fontSize: 14,
-      //     //       color: Colors.white,
-      //     //     ),
-      //     //   ),
-      //     // ),
-      //
-      //     // allow null
-      //     null,
-      //     null,
-      //     // Default Motion Badge Widget with indicator only
-      //     // const MotionBadgeWidget(
-      //     //   isIndicator: true,
-      //     //   color: Colors.red, // optional, default to Colors.red
-      //     //   size: 5, // optional, default to 5,
-      //     //   show: true, // true / false
-      //     // ),
-      //   ],
-      //   tabSize: 50,
-      //   tabBarHeight: 55,
-      //   textStyle: const TextStyle(
-      //     fontSize: 12,
-      //     color: Colors.black,
-      //     fontWeight: FontWeight.w500,
-      //   ),
-      //   tabIconColor: Colors.blue[600],
-      //   tabIconSize: 28.0,
-      //   tabIconSelectedSize: 26.0,
-      //   tabSelectedColor: Colors.blue[900],
-      //   tabIconSelectedColor: Colors.white,
-      //   tabBarColor: Colors.white,
-      //   onTabItemSelected: (int value) {
-      //     setState(() {
-      //       read.motionTabBarController!.index = value;
-      //     });
-      //   },
-      // ),
       // body: TabBarView(
       //   physics: const NeverScrollableScrollPhysics(), // swipe navigation handling is not supported
-      //   controller: _motionTabBarController,
+      //   controller: read.motionTabBarController,
       //   children: <Widget>[
-      //     MainPageContentComponent(title: "Dashboard Page", controller: _motionTabBarController!),
-      //     MainPageContentComponent(title: "Home Page", controller: _motionTabBarController!),
-      //     MainPageContentComponent(title: "Profile Page", controller: _motionTabBarController!),
-      //     MainPageContentComponent(title: "Settings Page", controller: _motionTabBarController!),
+      //     // widget.child,
+      //     ConsultationPage(),
+      //     PsychologistSettingsUi(),
+      //     ConsultationHelpUi(),
+      //     ConsultationChatUi(),
+      //     NavigationDefault(),
+      //     // MainPageContentComponent(title: "Dashboard Page", controller: read.motionTabBarController!),
+      //     // MainPageContentComponent(title: "Home Page", controller: read.motionTabBarController!),
+      //     // MainPageContentComponent(title: "Profile Page", controller: read.motionTabBarController!),
+      //     // MainPageContentComponent(title: "Settings Page", controller: read.motionTabBarController!),
+      //     // MainPageContentComponent(title: "Settings Page", controller: read.motionTabBarController!),
       //   ],
       // ),
     // );
+      bottomNavigationBar: watchChat.isMessageOpen
+          ? const SizedBox.shrink()
+          :
       MotionTabBar(
               controller: read
                   .motionTabBarController, // ADD THIS if you need to change your tab programmatically
@@ -323,49 +267,3 @@ class _AppBarCustomState extends State<AppBarCustom>
     );
   }
 }
-
-// class MainPageContentComponent extends StatelessWidget {
-//   const MainPageContentComponent({
-//     required this.title,
-//     required this.controller,
-//     Key? key,
-//   }) : super(key: key);
-//
-//   final String title;
-//   final MotionTabBarController controller;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Center(
-//       child: Column(
-//         mainAxisAlignment: MainAxisAlignment.center,
-//         children: [
-//           Text(title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
-//           const SizedBox(height: 50),
-//           const Text('Go to "X" page programmatically'),
-//           const SizedBox(height: 10),
-//           ElevatedButton(
-//             onPressed: () => controller.index = 0,
-//             child: const Text('Dashboard Page'),
-//           ),
-//           ElevatedButton(
-//             onPressed: () => controller.index = 1,
-//             child: const Text('Home Page'),
-//           ),
-//           ElevatedButton(
-//             onPressed: () => controller.index = 2,
-//             child: const Text('Profile Page'),
-//           ),
-//           ElevatedButton(
-//             onPressed: () => controller.index = 3,
-//             child: const Text('Settings Page'),
-//           ),
-//           ElevatedButton(
-//             onPressed: () => controller.index = 4,
-//             child: const Text('Settings Page'),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }

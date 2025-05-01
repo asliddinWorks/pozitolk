@@ -103,18 +103,20 @@ class ConsultationDrawer extends StatelessWidget {
             child: ListView.builder(
               itemBuilder: (context, index) => GestureDetector(
                 onTap: () async {
+                  read.onDrawerSelected(context, index);
                   if(index == 1) {
                     context.go(RouteNames.consultationChat);
-                    read.motionTabBarController?.index = 3;
+                    read.selectNavigation = "ИИ-чат";
+                    read.key.currentState!.closeEndDrawer();
                   }
                   if(index == 6) {
                     context.go(RouteNames.consultationHelp);
-                    read.motionTabBarController?.index = 2;
+                    read.selectNavigation = " ";
+                    read.key.currentState!.closeEndDrawer();
                   }
                   // if(index == 5) {
                   //   context.go(RouteNames.psychologistSettings);
                   // }
-                  read.onDrawerSelected(context, index);
                   // if (index == 1) {
                   //   read.isLoading = true;
                   //   read.onSetState();

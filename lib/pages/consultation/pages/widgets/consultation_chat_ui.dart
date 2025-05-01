@@ -8,6 +8,7 @@ import 'package:pozitolk/pages/consultation/view_model/chat_view_model.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../router/router.dart';
+import '../../view_model/consultation_view_model.dart';
 
 class ConsultationChatUi extends StatefulWidget  {
   const ConsultationChatUi({super.key});
@@ -18,12 +19,19 @@ class ConsultationChatUi extends StatefulWidget  {
 
 class _ConsultationChatUiState extends State<ConsultationChatUi> {
   late ChatViewModel read;
+  late ConsultationViewModel readConsultation;
   @override
   void initState() {
     read = context.read<ChatViewModel>();
+    readConsultation = context.read<ConsultationViewModel>();
     WidgetsBinding.instance.addPostFrameCallback((_)async {
       // Future.delayed(Duration(milliseconds: 200),);
+      read.isMessageOpen = false;
       await read.getChatList();
+      readConsultation.key.currentState!.closeEndDrawer();
+      // readConsultation.onDrawerSelected(context, 1);
+
+      readConsultation.motionTabBarController?.index = 3;
     });
     super.initState();
   }

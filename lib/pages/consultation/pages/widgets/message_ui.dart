@@ -44,7 +44,9 @@ class _MessageUiState extends State<MessageUi> {
     chatViewModel.appDispose();
     // chatViewModel.getChatList();
     // consultationViewModel.drawerItem = List.generate(8, (index) => false);
-    // consultationViewModel.onChat();
+    // chatViewModel.isMessageOpen = false;
+    // consultationViewModel.key.currentState!.closeEndDrawer();
+    chatViewModel.isMessageOpen = false;
     super.dispose();
   }
 
@@ -52,12 +54,13 @@ class _MessageUiState extends State<MessageUi> {
   Widget build(BuildContext context) {
     final watch = context.watch<ChatViewModel>();
     final read = context.read<ChatViewModel>();
-    // final readConsultation = context.read<ConsultationViewModel>();
+    final readConsultation = context.read<ConsultationViewModel>();
     return PopScope(
       canPop: !watch.isMessageOpen,
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop && read.isMessageOpen) {
           read.isMessageOpen = false;
+          readConsultation.selectNavigation = "ИИ-чат";
           context.pop();
           read.setState();
         }

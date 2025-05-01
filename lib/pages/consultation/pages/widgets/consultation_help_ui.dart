@@ -131,9 +131,10 @@ class _ConsultationHelpUiState extends State<ConsultationHelpUi> {
     readChat = context.read<ChatViewModel>();
     WidgetsBinding.instance.addPostFrameCallback((_) async{
       if(!readChat.isMessageOpen) {
-        readChat.isMessageOpen = false;
+        print('uutt');
         read.motionTabBarController?.index = 2;
       }
+      readChat.isMessageOpen = false;
       // await Future.delayed(Duration(microseconds: 200),);
       // read.onDrawerSelected(context, 7);
       read.onSetState();

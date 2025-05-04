@@ -6,7 +6,6 @@ import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
 import 'package:pozitolk/core/extension/widget_extension.dart';
 import 'package:pozitolk/pages/consultation/view_model/chat_view_model.dart';
-import 'package:pozitolk/router/router.dart';
 import 'package:provider/provider.dart';
 import '../../../../constants/app_icons.dart';
 import '../../view_model/consultation_view_model.dart';
@@ -104,19 +103,11 @@ class ConsultationDrawer extends StatelessWidget {
               itemBuilder: (context, index) => GestureDetector(
                 onTap: () async {
                   read.onDrawerSelected(context, index);
-                  if(index == 1) {
-                    context.go(RouteNames.consultationChat);
-                    read.selectNavigation = "ИИ-чат";
-                    read.key.currentState!.closeEndDrawer();
+                  await Future.delayed(Duration(milliseconds: 400),);
+                  if(index == 2) {
+
+                    // context.go(RouteNames.psychologistSettings);
                   }
-                  if(index == 6) {
-                    context.go(RouteNames.consultationHelp);
-                    read.selectNavigation = " ";
-                    read.key.currentState!.closeEndDrawer();
-                  }
-                  // if(index == 5) {
-                  //   context.go(RouteNames.psychologistSettings);
-                  // }
                   // if (index == 1) {
                   //   read.isLoading = true;
                   //   read.onSetState();
@@ -124,7 +115,7 @@ class ConsultationDrawer extends StatelessWidget {
                   //   read.isLoading = false;
                   //   readChat.isMessageOpen = false;
                   //   read.motionTabBarController?.index = 3;
-                  //   read.onSetState();
+                    read.onSetState();
                   // }
                 },
                 child: Container(

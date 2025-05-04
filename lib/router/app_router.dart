@@ -11,6 +11,9 @@ sealed class RouteNames {
   static const psychologistSettings = '/psychologistSettings';
   static const consultationChat = '/consultationChat';
   static const consultationHelp = '/consultationHelp';
+  static const client = '/client';
+  static const schedule = '/schedule';
+  static const statistics = '/statistics';
 
 }
 
@@ -52,6 +55,24 @@ GoRouter router = GoRouter(
           path: RouteNames.consultationHelp,
           builder: (context, state) {
             return  ConsultationHelpUi();
+          },
+        ),
+        GoRoute(
+          path: RouteNames.client,
+          builder: (context, state) {
+            return  ClientPage();
+          },
+        ),
+        GoRoute(
+          path: RouteNames.schedule,
+          builder: (context, state) {
+            return  SchedulePage();
+          },
+        ),
+        GoRoute(
+          path: RouteNames.statistics,
+          builder: (context, state) {
+            return  StatisticsPage();
           },
         ),
       ],

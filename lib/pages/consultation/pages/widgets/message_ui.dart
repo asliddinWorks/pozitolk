@@ -46,7 +46,7 @@ class _MessageUiState extends State<MessageUi> {
     // consultationViewModel.drawerItem = List.generate(8, (index) => false);
     // chatViewModel.isMessageOpen = false;
     // consultationViewModel.key.currentState!.closeEndDrawer();
-    chatViewModel.isMessageOpen = false;
+    // chatViewModel.isMessageOpen = false;
     super.dispose();
   }
 
@@ -60,9 +60,10 @@ class _MessageUiState extends State<MessageUi> {
       onPopInvokedWithResult: (didPop, result) {
         if (!didPop && read.isMessageOpen) {
           read.isMessageOpen = false;
-          readConsultation.selectNavigation = "ИИ-чат";
+          readConsultation.selectNavigation = "Чаты";
           context.pop();
-          read.setState();
+          // readConsultation.onDrawerSelected(context, 1);
+          // read.setState();
         }
       },
       child: Container(
@@ -84,8 +85,8 @@ class _MessageUiState extends State<MessageUi> {
                   GestureDetector(
                     onTap: (){
                       read.onCloseChat();
-                      readConsultation.selectNavigation = "ИИ-чат";
-                      context.pop();
+                      readConsultation.selectNavigation = "Чаты";
+                      readConsultation.onDrawerSelected(context, 1);
                     },
                     child: Text(
                       'Чаты /',

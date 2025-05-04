@@ -2,7 +2,10 @@
 import 'package:go_router/go_router.dart';
 import 'package:pozitolk/pages/app_bar/app_bar.dart';
 import 'package:pozitolk/pages/consultation/data/models/message_model.dart';
+import 'package:pozitolk/pages/consultation/pages/client_page.dart';
 import 'package:pozitolk/pages/consultation/pages/consultation_page.dart';
+import 'package:pozitolk/pages/consultation/pages/schedule_page.dart';
+import 'package:pozitolk/pages/consultation/pages/statistics_page.dart';
 import 'package:pozitolk/pages/consultation/pages/widgets/consultation_chat_ui.dart';
 import 'package:pozitolk/pages/consultation/pages/widgets/consultation_help_ui.dart';
 import 'package:pozitolk/pages/consultation/pages/widgets/psychologist_settings_ui.dart';

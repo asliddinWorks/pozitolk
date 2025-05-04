@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:go_router/go_router.dart';
 import 'package:motion_tab_bar_v2/motion-tab-bar.dart';
 import 'package:motion_tab_bar_v2/motion-tab-controller.dart';
 import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
-import 'package:pozitolk/router/router.dart';
 import 'package:provider/provider.dart';
 import '../../constants/app_icons.dart';
 import '../consultation/pages/widgets/consultation_drawer.dart';
@@ -156,11 +154,10 @@ class _AppBarCustomState extends State<AppBarCustom>
       //     // MainPageContentComponent(title: "Settings Page", controller: read.motionTabBarController!),
       //   ],
       // ),
-    // );
+      // );
       bottomNavigationBar: watchChat.isMessageOpen
           ? const SizedBox.shrink()
-          :
-      MotionTabBar(
+          : MotionTabBar(
               controller: read
                   .motionTabBarController, // ADD THIS if you need to change your tab programmatically
               initialSelectedTab: read.selectNavigation,
@@ -168,11 +165,11 @@ class _AppBarCustomState extends State<AppBarCustom>
               useSafeArea: true, // default: true, apply safe area wrapper
               // labelAlwaysVisible: true, // default: false, set to "true" if you need to always show labels
               labels: const [
-                "Главная",
-                "Личный кабинет",
-                " ",
-                "ИИ-чат",
-                'Календарь'
+                "Клиенты",
+                "Статистика",
+                "Расписание",
+                "Чаты",
+                'Настройки'
               ],
 
               //// use default icon (with IconData)
@@ -185,15 +182,35 @@ class _AppBarCustomState extends State<AppBarCustom>
 
               // use custom widget as display Icon
               iconWidgets: [
-                SvgPicture.asset(AppIcons.icHome),
-                SvgPicture.asset(AppIcons.icUser),
+                SvgPicture.asset(
+                  AppIcons.icUsers,
+                  colorFilter: ColorFilter.mode(
+                    context.color.background2,
+                    BlendMode.srcIn,
+                  ),
+                ),
+                SvgPicture.asset(
+                  AppIcons.icStatistics,
+                  colorFilter: ColorFilter.mode(
+                    context.color.background2,
+                    BlendMode.srcIn,
+                  ),
+                ),
                 SvgPicture.asset(
                   AppIcons.icWhiteLogo,
                   width: 24,
                   height: 24,
                 ),
-                SvgPicture.asset(AppIcons.icNavigationChat),
-                SvgPicture.asset(AppIcons.icNavigationCalendar),
+                SvgPicture.asset(
+                  AppIcons.icNavigationChat,
+                ),
+                SvgPicture.asset(
+                  AppIcons.icSettings,
+                  colorFilter: ColorFilter.mode(
+                    context.color.background2,
+                    BlendMode.srcIn,
+                  ),
+                ),
               ],
 
               // optional badges, length must be same with labels
@@ -235,13 +252,14 @@ class _AppBarCustomState extends State<AppBarCustom>
               tabSize: 50,
               tabBarHeight: 55,
               textStyle: TextStyle(
-                fontSize: 12,
+                fontSize: 8,
                 color: context.color.background2,
                 fontWeight: FontWeight.w500,
               ),
               // tabIconColor: Colors.blue[600],
               tabIconSize: 28.0,
               tabIconSelectedSize: 32.0,
+              tabIconColor: context.color.background2,
               tabSelectedColor: context.color.primary,
               tabIconSelectedColor: Colors.black,
               tabBarColor: context.color.primary,
@@ -249,17 +267,26 @@ class _AppBarCustomState extends State<AppBarCustom>
                 print(value);
 
                 read.motionTabBarController!.index = value;
-                if(read.motionTabBarController!.index == 3) {
+                if (read.motionTabBarController!.index == 0) {
+                  read.onDrawerSelected(context, 2);
+                }
+                if (read.motionTabBarController!.index == 1) {
+                  read.onDrawerSelected(context, 4);
+                }
+                if (read.motionTabBarController!.index == 2) {
+                  read.onDrawerSelected(context, 0);
+                }
+                if (read.motionTabBarController!.index == 3) {
                   // await readChat.getChatList();
-                  context.go(RouteNames.consultationChat);
-                  read.drawerItem = List.generate(8, (index) => false);
-                  read.drawerItem[1] = true;
+                  //   context.go(RouteNames.consultationChat);
+                  //   read.drawerItem = List.generate(8, (index) => false);
+                  //   read.drawerItem[1] = true;
+                  read.onDrawerSelected(context, 1);
                 }
-                if(read.motionTabBarController!.index == 1) {
-                  context.go(RouteNames.psychologistSettings);
-                  read.drawerItem = List.generate(8, (index) => false);
-                  read.drawerItem[7] = true;
+                if (read.motionTabBarController!.index == 4) {
+                  read.onDrawerSelected(context, 7);
                 }
+
                 read.onSetState();
                 setState(() {});
               },

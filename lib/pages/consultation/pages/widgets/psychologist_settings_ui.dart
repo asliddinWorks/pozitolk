@@ -32,7 +32,7 @@ class _PsychologistSettingsUiState extends State<PsychologistSettingsUi> {
     readChat = context.read<ChatViewModel>();
     readChat.isMessageOpen = false;
     WidgetsBinding.instance.addPostFrameCallback((_) async{
-      read.motionTabBarController?.index = 1;
+      read.motionTabBarController?.index = 4;
       await Future.delayed(Duration(milliseconds: 400),);
       read.profileItem[0] = true;
       read.isShow = true;

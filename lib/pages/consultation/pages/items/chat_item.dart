@@ -9,6 +9,7 @@ import 'package:provider/provider.dart';
 import '../../../../core/data/data_source/local/app_local_data.dart';
 import '../../../../router/router.dart';
 import '../../view_model/chat_view_model.dart';
+import '../../view_model/consultation_view_model.dart';
 
 class ChatItem extends StatelessWidget {
   const ChatItem({super.key, required this.chatModel, required this.index});
@@ -18,7 +19,7 @@ class ChatItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final read = context.read<ChatViewModel>();
-    // final readConsult = context.read<ConsultationViewModel>();
+    final readConsult = context.read<ConsultationViewModel>();
     return GestureDetector(
       onTap: () async{
         Map userModel = await  AppLocalData.getUserModel;
@@ -31,11 +32,12 @@ class ChatItem extends StatelessWidget {
         read.connectWebSocket();
         // Navigator.push(context, MaterialPageRoute(builder: (context) => MessageUi(chatModel: chatModel,)));
         read.setState();
-        await  context.push(RouteNames.messageUi, extra: chatModel);
+        await context.push(RouteNames.messageUi, extra: chatModel);
+        read.isMessageOpen = false;
         print('onnaaaaaaaaaa');
-        // readConsult.selectNavigation = "ИИ-чат";
+        readConsult.selectNavigation = "Чаты";
+        Future.delayed(Duration(milliseconds: 2000),);
         await read.getChatList();
-        // readConsult.motionTabBarController?.index = 3;
       },
       child: Container(
         padding: EdgeInsets.symmetric(vertical: 12),

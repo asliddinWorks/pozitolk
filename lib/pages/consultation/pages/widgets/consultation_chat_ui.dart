@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
 import 'package:pozitolk/core/extension/widget_extension.dart';
 import 'package:pozitolk/pages/consultation/pages/items/chat_item.dart';
 import 'package:pozitolk/pages/consultation/view_model/chat_view_model.dart';
 import 'package:provider/provider.dart';
-
-import '../../../../router/router.dart';
 import '../../view_model/consultation_view_model.dart';
 
 class ConsultationChatUi extends StatefulWidget  {
@@ -24,14 +21,16 @@ class _ConsultationChatUiState extends State<ConsultationChatUi> {
   void initState() {
     read = context.read<ChatViewModel>();
     readConsultation = context.read<ConsultationViewModel>();
+    read.isMessageOpen = false;
     WidgetsBinding.instance.addPostFrameCallback((_)async {
       // Future.delayed(Duration(milliseconds: 200),);
-      read.isMessageOpen = false;
       await read.getChatList();
       readConsultation.key.currentState!.closeEndDrawer();
       // readConsultation.onDrawerSelected(context, 1);
-
-      readConsultation.motionTabBarController?.index = 3;
+      if(!read.isMessageOpen) {
+        readConsultation.motionTabBarController?.index = 3;
+      }
+      readConsultation.onSetState();
     });
     super.initState();
   }
@@ -56,7 +55,7 @@ class _ConsultationChatUiState extends State<ConsultationChatUi> {
           children: [
             GestureDetector(
               onTap: (){
-                context.push(RouteNames.new2);
+                // context.push(RouteNames.new2);
               },
               child: Text(
                 'Чаты',

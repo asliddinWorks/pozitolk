@@ -5,10 +5,12 @@ import 'package:go_router/go_router.dart';
 import 'package:motion_tab_bar_v2/motion-tab-controller.dart';
 import 'package:pozitolk/constants/app_icons.dart';
 import 'package:pozitolk/core/data/data_source/local/app_local_data.dart';
+import 'package:pozitolk/di_service.dart';
 import 'package:pozitolk/pages/consultation/data/consultation_repo/consultation_repo.dart';
 import 'package:pozitolk/pages/login/model/user_model.dart';
 import '../../../core/tools/toast_bar.dart';
 import '../../../router/router.dart';
+import 'chat_view_model.dart';
 
 class ConsultationViewModel extends ChangeNotifier {
   final ConsultationRepo consultationRepo;
@@ -23,7 +25,9 @@ class ConsultationViewModel extends ChangeNotifier {
   bool isChecked1 = false;
   bool isChecked2 = false;
   bool isChecked3 = false;
-  String selectNavigation = ' ';
+  String selectNavigation = 'Клиенты';
+
+  final readChat = ChatViewModel(getIt());
 
   TextEditingController dateController = TextEditingController();
   List<bool> drawerItem = List.generate(8, (index) => index == 0);
@@ -93,10 +97,48 @@ class ConsultationViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  void onDrawerSelected(BuildContext context, int index) {
+  void onDrawerSelected(BuildContext context, int index)async {
     drawerItem = List.generate(drawerItem.length, (index) => false);
     drawerItem[index] = true;
-    context.pop();
+    // context.pop();
+    key.currentState!.closeEndDrawer();
+    if(index == 0) {
+      context.go(RouteNames.schedule);
+      selectNavigation = "Расписание";
+      await Future.delayed(Duration(milliseconds: 50),);
+      motionTabBarController?.index = 2;
+    }
+    // if(!readChat.isMessageOpen){
+      if(index == 1) {
+        readChat.isMessageOpen = false;
+        context.go(RouteNames.consultationChat);
+        selectNavigation = "Чаты";
+        // await Future.delayed(Duration(milliseconds: 50),);
+        // readChat.isMessageOpen = true;
+        // motionTabBarController?.index = 3;
+      }
+    // }
+    if(index == 2) {
+      selectNavigation = "Клиенты";
+      context.go(RouteNames.client);
+      await Future.delayed(Duration(milliseconds: 50),);
+      motionTabBarController?.index = 0;
+    }
+    if(index == 4) {
+      context.go(RouteNames.statistics);
+      selectNavigation = "Статистика";
+      await Future.delayed(Duration(milliseconds: 50),);
+      motionTabBarController?.index = 1;
+      // motionTabBarController?.index = 1;
+    }
+    if(index == 6) {
+      context.go(RouteNames.consultationHelp);
+      readChat.isMessageOpen = true;
+    }
+    if(index == 7) {
+      selectNavigation = "Настройки";
+      context.go(RouteNames.psychologistSettings);
+    }
     notifyListeners();
   }
 

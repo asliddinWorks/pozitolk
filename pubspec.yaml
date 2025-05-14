@@ -35,7 +35,7 @@ dependencies:
   url_launcher: ^6.3.1
   intl_phone_number_field: ^0.2.1
   intl_phone_field: ^3.2.0
-  intl: ^0.17.0
+  intl: ^0.20.2
   motion_tab_bar_v2: ^0.4.0
   dio: ^5.7.0
   fluttertoast: ^8.2.8

@@ -10,6 +10,7 @@ import 'package:pozitolk/pages/consultation/data/consultation_repo/consultation_
 import 'package:pozitolk/pages/login/model/user_model.dart';
 import '../../../core/tools/toast_bar.dart';
 import '../../../router/router.dart';
+import '../data/models/message_model.dart';
 import 'chat_view_model.dart';
 
 class ConsultationViewModel extends ChangeNotifier {
@@ -573,5 +574,43 @@ class ConsultationViewModel extends ChangeNotifier {
     {"name": "Vladivostok (MSK+7, GMT+10)", "value": "Asia/Vladivostok"},
     {"name": "Magadan (MSK+8, GMT+11)", "value": "Asia/Magadan"},
     {"name": "Kamchatka (MSK+9, GMT+12)", "value": "Asia/Kamchatka"},
+  ];
+
+  List<SlotModel> tableSelect = [
+    SlotModel(
+      key: '2025-05-12 06:00',
+      date: DateTime(2025, 5, 12),
+      hour: '06:00',
+    ),
+    SlotModel(
+      key: '2025-05-13 14:00',
+      date: DateTime(2025, 5, 13),
+      hour: '14:00',
+    ),
+    SlotModel(
+      key: '2025-05-14 08:00',
+      date: DateTime(2025, 5, 14),
+      hour: '08:00',
+    ),
+    SlotModel(
+      key: '2025-05-20 08:00',
+      date: DateTime(2025, 5, 20),
+      hour: '08:00',
+    ),
+    SlotModel(
+      key: '2025-05-19 14:00',
+      date: DateTime(2025, 5, 19),
+      hour: '14:00',
+    ),
+    SlotModel(
+      key: '2025-06-9 17:00',
+      date: DateTime(2025, 6, 9),
+      hour: '17:00',
+    ),
+    SlotModel(
+      key: '2025-06-12 18:00',
+      date: DateTime(2025, 6, 12),
+      hour: '18:00',
+    ),
   ];
 }

@@ -125,6 +125,22 @@ class MessageModel {
 
 
 
+class SlotModel {
+  final String key;
+  final DateTime date;
+  final String hour;
+  bool isChecked;
+  bool isSelected;  // Yangi xususiyat
+
+  SlotModel({
+    required this.key,
+    required this.date,
+    required this.hour,
+    this.isChecked = false,
+    this.isSelected = false,  // Default qiymat false
+  });
+}
+
 
 
 

@@ -125,22 +125,78 @@ class MessageModel {
 
 
 
+// class SlotModel {
+//   final String key;
+//   final DateTime date;
+//   final String hour;
+//   bool isChecked;
+//   bool isSelected;  // Yangi xususiyat
+//
+//   SlotModel({
+//     required this.key,
+//     required this.date,
+//     required this.hour,
+//     this.isChecked = false,
+//     this.isSelected = false,  // Default qiymat false
+//   });
+// }
+
+
 class SlotModel {
-  final String key;
-  final DateTime date;
-  final String hour;
-  bool isChecked;
-  bool isSelected;  // Yangi xususiyat
+  final int? slotId;
+  final String? dayOfWeek;
+  final int? dayOfWeekIndex;
+  final String? time;
+  final DateTime? datetime;
+  final String? status;
+  final int? sessionId;
+  final int? clientId;
+  final String? clientName;
+  bool? isChecked = false;
+  bool? isSelected = false;
 
   SlotModel({
-    required this.key,
-    required this.date,
-    required this.hour,
-    this.isChecked = false,
-    this.isSelected = false,  // Default qiymat false
+    this.slotId,
+    this.dayOfWeek,
+    this.dayOfWeekIndex,
+    this.time,
+    this.datetime,
+    this.status,
+    this.sessionId,
+    this.clientId,
+    this.clientName,
+    this.isChecked ,
+    this.isSelected,
   });
-}
 
+  factory SlotModel.fromJson(Map<String, dynamic> json) {
+    return SlotModel(
+      slotId: json['slot_id'],
+      dayOfWeek: json['day_of_week'],
+      dayOfWeekIndex: json['day_of_week_index'],
+      time: json['time'],
+      datetime: DateTime.parse(json['datetime']),
+      status: json['status'],
+      sessionId: json['session_id'],
+      clientId: json['client_id'],
+      clientName: json['client_name'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'slot_id': slotId,
+      'day_of_week': dayOfWeek,
+      'day_of_week_index': dayOfWeekIndex,
+      'time': time,
+      'datetime': datetime?.toIso8601String(),
+      'status': status,
+      'session_id': sessionId,
+      'client_id': clientId,
+      'client_name': clientName,
+    };
+  }
+}
 
 
 

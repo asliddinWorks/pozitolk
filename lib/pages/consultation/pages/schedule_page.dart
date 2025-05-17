@@ -253,12 +253,11 @@
 //   }
 // }
 
-
-
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
+import 'package:pozitolk/core/extension/widget_extension.dart';
 import 'package:pozitolk/pages/consultation/view_model/consultation_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -278,14 +277,14 @@ class _SchedulePageState extends State<SchedulePage> {
   late ScrollController _horizontalController;
 
   // Soatlar 06:00 dan 22:00 gacha
-   List<String> hours = List.generate(
+  List<String> hours = List.generate(
     22 - 6 + 1,
-        (i) => '${(6 + i).toString().padLeft(2, '0')}:00',
+    (i) => '${(6 + i).toString().padLeft(2, '0')}:00',
   );
 
   void onCheckBoxChanged(SlotModel model) {
     setState(() {
-      model.isChecked = !model.isChecked;  // Tanlangan holatni teskari qilish
+      model.isChecked = !model.isChecked!; // Tanlangan holatni teskari qilish
     });
   }
 
@@ -295,7 +294,8 @@ class _SchedulePageState extends State<SchedulePage> {
   final int numberOfDays = 7; // 5 kunlik hafta
   final int numberOfDays2 = 35; // 5 kunlik hafta
 
-  final DateTime startOfWeek = DateTime(2025, 5, 12);  // Haftaning boshlanish sanasi// Nechta kun olish kerak
+  final DateTime startOfWeek = DateTime(
+      2025, 5, 12); // Haftaning boshlanish sanasi// Nechta kun olish kerak
 
   // Model: tanlangan va ro'yxatga kiritilgan sanalar
 
@@ -381,13 +381,12 @@ class _SchedulePageState extends State<SchedulePage> {
   //   });
   // }
 
-
-
   @override
   void initState() {
     super.initState();
     consultationViewModel = context.read<ConsultationViewModel>();
-    currentWeekStart = DateTime.now().subtract(Duration(days: DateTime.now().weekday - 1));
+    currentWeekStart =
+        DateTime.now().subtract(Duration(days: DateTime.now().weekday - 1));
     _verticalTimeController = ScrollController();
     _verticalContentController = ScrollController();
     _horizontalController = ScrollController();
@@ -405,24 +404,27 @@ class _SchedulePageState extends State<SchedulePage> {
     });
 
     // Soatlar
-    hours = List.generate(17, (i) => '${(6 + i).toString().padLeft(2, '0')}:00');
+    hours =
+        List.generate(17, (i) => '${(6 + i).toString().padLeft(2, '0')}:00');
 
     // Kunlar
     final now = DateTime.now();
     final startOfWeek = now.subtract(Duration(days: now.weekday - 1));
-    days = List.generate(numberOfDays2, (i) => startOfWeek.add(Duration(days: i)));
+    days =
+        List.generate(numberOfDays2, (i) => startOfWeek.add(Duration(days: i)));
 
     // Slotlar
     List<SlotModel> allSlots = [];
     for (var day in days) {
       for (var hour in hours) {
+        String date = '${DateFormat('yyyy-MM-dd').format(day)} $hour';
         SlotModel slot = SlotModel(
-          key: '${DateFormat('yyyy-MM-dd').format(day)} $hour',
-          date: day,
-          hour: hour,
+          datetime: DateTime.parse(date),
+          // datetime:  day.add(Duration(hours: int.parse(hour.substring(0, 2)))),
         );
         // Oldindan tanlanganlar
-        if (consultationViewModel.tableSelect.any((selected) => selected.key == slot.key)) {
+        if (consultationViewModel.tableSelect
+            .any((selected) => selected.datetime == slot.datetime)) {
           slot.isSelected = true;
         }
         allSlots.add(slot);
@@ -431,10 +433,10 @@ class _SchedulePageState extends State<SchedulePage> {
 
     // Yangi holatni saqlash
     setState(() {
-      consultationViewModel.tableSelect = allSlots.where((s) => s.isSelected).toList();
+      consultationViewModel.tableSelect =
+          allSlots.where((s) => s.isSelected?? false).toList();
     });
   }
-
 
   // @override
   // void initState() {
@@ -484,14 +486,24 @@ class _SchedulePageState extends State<SchedulePage> {
   }
 
   String getWeekday(DateTime d) {
-    const w = ['Dush', 'Sesh', 'Chors', 'Paysh', 'Juma', 'Shan', 'Yaksh'];
+    const w = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
     return w[d.weekday - 1];
   }
 
   String getMonth(DateTime d) {
     const m = [
-      'Yan', 'Fev', 'Mar', 'Apr', 'May', 'Iyn',
-      'Iyl', 'Avg', 'Sen', 'Okt', 'Noy', 'Dek'
+      'Янв',
+      'Фев',
+      'Мар',
+      'Апр',
+      'Май',
+      'Июн',
+      'Июл',
+      'Авг',
+      'Сен',
+      'Окт',
+      'Ноя',
+      'Дек'
     ];
     return m[d.month - 1];
   }
@@ -513,20 +525,34 @@ class _SchedulePageState extends State<SchedulePage> {
   // Modelni tekshirish va qayta qo'shish yoki olib tashlash
   void toggleSelection(SlotModel model) {
     setState(() {
-      model.isChecked = !model.isChecked;
+      // print(model.isChecked);
+      // if(model.isChecked == false) {
+      //   model.isChecked = true;
+      // }
+      // model.isChecked = !model.isChecked;
+      final index = consultationViewModel.tableSelect
+          .indexWhere((m) => m.datetime == model.datetime);
 
-      final index = consultationViewModel.tableSelect.indexWhere((m) => m.key == model.key);
-      if (model.isChecked) {
+      if (model.isChecked!) {
         if (index < 0) {
           consultationViewModel.tableSelect.add(model);
+          // print('model.key: ${model.key}');
         }
       } else {
         if (index >= 0) {
           consultationViewModel.tableSelect.removeAt(index);
+          // print('model.key: ${model.key}');
         }
       }
+      // if(model.isChecked == false) {
+      //   if (index >= 0) {
+      //     consultationViewModel.tableSelect.removeAt(index);
+      //     print('model.key: ${model.key}');
+      //   }
+      // }
     });
   }
+
 
 
   @override
@@ -534,159 +560,210 @@ class _SchedulePageState extends State<SchedulePage> {
     // consultationViewModel = context.read<ConsultationViewModel>();
     final days = List.generate(
       numberOfDays,
-          (i) => currentWeekStart.add(Duration(days: i)),
+      (i) => currentWeekStart.add(Duration(days: i)),
     );
 
     return Scaffold(
-      body: Column(
-        children: [
-          Row(
-            children: [
-              Text('Raspisaniya', style: Theme.of(context).textTheme.titleLarge),
-              Spacer(),
-              IconButton(
-                onPressed: weekSelected == 0 ? null : goToPreviousWeek,
-                icon: Icon(Icons.chevron_left, size: 27, color: weekSelected == 0 ? Colors.grey : null,),
-              ),
-              Text(
-                '${DateFormat('dd MMM').format(currentWeekStart)} - ${DateFormat('dd MMM').format(currentWeekStart.add(Duration(days: 4)))}',
-                style: Theme.of(context).textTheme.bodyMedium,
-              ),
-              IconButton(
-                onPressed: weekSelected == 4 ? null : goToNextWeek,
-                icon: Icon(Icons.chevron_right, size: 27, color: weekSelected == 4 ? Colors.grey : null,),
-              ),
-            ],
+      backgroundColor: context.color.background1,
+      body: Container(
+        // padding: EdgeInsets.all(16),
+        height: context.height * .85,
+        margin: const EdgeInsets.only(top: 4),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(16),
+            topRight: Radius.circular(16),
           ),
-          10.hGap,
-          Expanded(
-            child: Row(
+          color: context.color.background2,
+        ),
+        child: Column(
+          children: [
+            Row(
               children: [
-                // Vaqtlar ustuni: 06:00-22:00, header uchun bo'sh joy
+                16.wGap,
                 SizedBox(
-                  width: 60,
-                  child: Column(
-                    children: [
-                      Container(
-                        height: 50,
-                        decoration: const BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(width: 1, color: Colors.grey),
-                          ),
-                        ),
-                      ),
-                      Expanded(
-                        child: ListView.builder(
-                          controller: _verticalTimeController,
-                          itemCount: hours.length,
-                          itemBuilder: (_, i) {
-                            return Container(
-                              height: 50,
-                              alignment: Alignment.center,
-                              decoration: const BoxDecoration(
-                                border: Border(
-                                  bottom: BorderSide(width: 1, color: Colors.grey),
-                                ),
-                              ),
-                              child: Text(hours[i]),
-                            );
-                          },
-                        ),
-                      ),
-                    ],
+                  width: context.width * .35,
+                  child: FittedBox(
+                    child: Text(
+                      'Расписания',
+                      style: context.textStyle.s20w600Manrope,
+                    ),
                   ),
                 ),
-                const VerticalDivider(width: 1, thickness: 1, color: Colors.grey),
-
-                // Jadval (kunlar + kataklar) – bitta gorizontal scroll ichida
-                Expanded(
-                  child: SingleChildScrollView(
-                    controller: _horizontalController,
-                    scrollDirection: Axis.horizontal,
-                    child: SizedBox(
-                      width: numberOfDays * 125.0,
-                      child: Column(
-                        children: [
-                          // Kunlar sarlavhasi
-                          SizedBox(
-                            height: 50,
-                            child: Row(
-                              children: days.map((d) {
-                                return Container(
-                                  width: 125,
-                                  alignment: Alignment.center,
-                                  padding: const EdgeInsets.all(8),
-                                  decoration: const BoxDecoration(
-                                    border: Border(
-                                      right: BorderSide(width: 1, color: Colors.grey),
-                                      bottom: BorderSide(width: 1, color: Colors.grey),
-                                    ),
-                                  ),
-                                  child: Text(
-                                    '${getWeekday(d)}, ${d.day.toString().padLeft(2, '0')} ${getMonth(d)}',
-                                    style: const TextStyle(fontSize: 13),
-                                    overflow:  TextOverflow.ellipsis,
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                          // Kataklar (vertikal ListView)
-                          Expanded(
-                            child: ListView.builder(
-                              controller: _verticalContentController,
-                              itemCount: hours.length,
-                              itemBuilder: (_, row) {
-                                return Row(
-                                  children: List.generate(numberOfDays, (col) {
-                                    final dayStr = DateFormat('yyyy-MM-dd').format(days[col]);
-                                    final hourStr = hours[row];
-                                    final String key = '$dayStr $hourStr';
-                                    final isChecked = consultationViewModel.tableSelect.any((model) => model.key == key);
-
-                                    return Container(
-                                      width: 125,
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        border: Border(
-                                          right: BorderSide(width: 1, color: Colors.grey),
-                                          bottom: BorderSide(width: 1, color: Colors.grey),
-                                        ),
-                                      ),
-                                      child: Center(
-                                        child: Checkbox(
-                                          value: isChecked,
-                                          onChanged: (bool? value) {
-                                            if (value != null) {
-                                              final model = SlotModel(
-                                                key: key,
-                                                date: days[col],
-                                                hour: hours[row],
-                                              );
-                                              toggleSelection(model);
-                                              print(consultationViewModel.tableSelect);
-                                            }
-                                          },
-                                        ),
-                                      ),
-                                    );
-                                  }),
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
+                Spacer(),
+                IconButton(
+                  onPressed: weekSelected == 0 ? null : goToPreviousWeek,
+                  icon: Icon(
+                    Icons.chevron_left,
+                    size: 27,
+                    color: weekSelected == 0 ? Colors.grey : null,
+                  ),
+                ),
+                SizedBox(
+                  width: context.width * .3,
+                  child: FittedBox(
+                    child: Text(
+                      '${DateFormat(
+                        'dd MMM',
+                      ).format(currentWeekStart)} - ${DateFormat(
+                        'dd MMM',
+                      ).format(currentWeekStart.add(Duration(days: 4)))}',
+                      style: context.textStyle.s14w500Manrope,
                     ),
+                  ),
+                ),
+                IconButton(
+                  onPressed: weekSelected == 4 ? null : goToNextWeek,
+                  icon: Icon(
+                    Icons.chevron_right,
+                    size: 27,
+                    color: weekSelected == 4 ? Colors.grey : null,
                   ),
                 ),
               ],
             ),
-          ),
-        ],
+            10.hGap,
+            Expanded(
+              child: Row(
+                children: [
+                  // Vaqtlar ustuni: 06:00-22:00, header uchun bo'sh joy
+                  SizedBox(
+                    width: 60,
+                    child: Column(
+                      children: [
+                        Container(
+                          height: 50,
+                          decoration: const BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(width: 1, color: Colors.grey),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: ListView.builder(
+                            controller: _verticalTimeController,
+                            itemCount: hours.length,
+                            itemBuilder: (_, i) {
+                              return Container(
+                                height: 50,
+                                alignment: Alignment.center,
+                                decoration: const BoxDecoration(
+                                  border: Border(
+                                    bottom: BorderSide(
+                                        width: 1, color: Colors.grey),
+                                  ),
+                                ),
+                                child: Text(hours[i]),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const VerticalDivider(
+                      width: 1, thickness: 1, color: Colors.grey),
+
+                  // Jadval (kunlar + kataklar) – bitta gorizontal scroll ichida
+                  Expanded(
+                    child: SingleChildScrollView(
+                      controller: _horizontalController,
+                      scrollDirection: Axis.horizontal,
+                      child: SizedBox(
+                        width: numberOfDays * 125.0,
+                        child: Column(
+                          children: [
+                            // Kunlar sarlavhasi
+                            SizedBox(
+                              height: 50,
+                              child: Row(
+                                children: days.map((d) {
+                                  return Container(
+                                    width: 125,
+                                    alignment: Alignment.center,
+                                    padding: const EdgeInsets.all(8),
+                                    decoration: const BoxDecoration(
+                                      border: Border(
+                                        right: BorderSide(
+                                            width: 1, color: Colors.grey),
+                                        bottom: BorderSide(
+                                            width: 1, color: Colors.grey),
+                                      ),
+                                    ),
+                                    child: Text(
+                                      '${getWeekday(d)}, ${d.day.toString().padLeft(2, '0')} ${getMonth(d)}',
+                                      style: const TextStyle(fontSize: 13),
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ),
+                            // Kataklar (vertikal ListView)
+                            Expanded(
+                              child: ListView.builder(
+                                controller: _verticalContentController,
+                                itemCount: hours.length,
+                                itemBuilder: (_, row) {
+                                  return Row(
+                                    children: List.generate(numberOfDays, (col) {
+                                      final dayStr = DateFormat('yyyy-MM-dd')
+                                          .format(days[col]);
+                                      final hourStr = hours[row];
+                                      // final String key = '$dayStr $hourStr';
+                                      final DateTime dateTime = DateTime.parse(
+                                        '$dayStr $hourStr',
+                                      );
+                                      final isChecked = consultationViewModel
+                                          .tableSelect
+                                          .any((model) => model.datetime == dateTime);
+
+                                      return Container(
+                                        width: 125,
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          border: Border(
+                                            right: BorderSide(
+                                                width: 1, color: Colors.grey),
+                                            bottom: BorderSide(
+                                                width: 1, color: Colors.grey),
+                                          ),
+                                        ),
+                                        child: Center(
+                                          child: Checkbox(
+                                            value: isChecked,
+                                            onChanged: (bool? value) {
+                                              if (value != null) {
+                                                final model = SlotModel(
+                                                  datetime: dateTime,
+                                                  // date: days[col],
+                                                  // hour: hours[row],
+                                                  isChecked: value,
+                                                );
+                                                toggleSelection(model);
+                                                print(consultationViewModel
+                                                    .tableSelect);
+                                              }
+                                            },
+                                          ),
+                                        ),
+                                      );
+                                    }),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ).padding(EdgeInsets.symmetric(horizontal: 16)),
+            ),
+          ],
+        ),
       ),
     );
   }
 }
-
-

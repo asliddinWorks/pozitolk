@@ -12,6 +12,7 @@ import 'core/theme/light_theme.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  // await initializeDateFormatting('ru', 'Ru');
   await init();
   runApp(const MyApp());
 }

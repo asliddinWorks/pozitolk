@@ -578,39 +578,39 @@ class ConsultationViewModel extends ChangeNotifier {
 
   List<SlotModel> tableSelect = [
     SlotModel(
-      key: '2025-05-12 06:00',
-      date: DateTime(2025, 5, 12),
-      hour: '06:00',
+      // key: '2025-05-12 06:00',
+      datetime: DateTime.parse("2025-05-12T12:00"),
+      // hour: '06:00',
     ),
     SlotModel(
-      key: '2025-05-13 14:00',
-      date: DateTime(2025, 5, 13),
-      hour: '14:00',
+      // key: '2025-05-13 14:00',
+      datetime: DateTime.parse("2025-05-17T12:00"),
+      // hour: '14:00',
     ),
+    // SlotModel(
+    //   key: '2025-05-14 08:00',
+    //   date: DateTime(2025, 5, 14),
+    //   hour: '08:00',
+    // ),
+    // SlotModel(
+    //   key: '2025-05-20 08:00',
+    //   date: DateTime(2025, 5, 20),
+    //   hour: '08:00',
+    // ),
+    // SlotModel(
+    //   key: '2025-05-19 14:00',
+    //   date: DateTime(2025, 5, 19),
+    //   hour: '14:00',
+    // ),
+    // SlotModel(
+    //   key: '2025-06-9 17:00',
+    //   date: DateTime(2025, 6, 9),
+    //   hour: '17:00',
+    // ),
     SlotModel(
-      key: '2025-05-14 08:00',
-      date: DateTime(2025, 5, 14),
-      hour: '08:00',
-    ),
-    SlotModel(
-      key: '2025-05-20 08:00',
-      date: DateTime(2025, 5, 20),
-      hour: '08:00',
-    ),
-    SlotModel(
-      key: '2025-05-19 14:00',
-      date: DateTime(2025, 5, 19),
-      hour: '14:00',
-    ),
-    SlotModel(
-      key: '2025-06-9 17:00',
-      date: DateTime(2025, 6, 9),
-      hour: '17:00',
-    ),
-    SlotModel(
-      key: '2025-06-12 18:00',
-      date: DateTime(2025, 6, 12),
-      hour: '18:00',
+      // key: '2025-06-12 18:00',
+      datetime: DateTime.parse("2025-05-17T14:00"),
+      // hour: '18:00',
     ),
   ];
 }

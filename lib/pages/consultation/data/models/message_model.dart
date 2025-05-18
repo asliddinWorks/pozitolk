@@ -172,14 +172,14 @@ class SlotModel {
   factory SlotModel.fromJson(Map<String, dynamic> json) {
     return SlotModel(
       slotId: json['slot_id'],
-      dayOfWeek: json['day_of_week'],
-      dayOfWeekIndex: json['day_of_week_index'],
-      time: json['time'],
+      // dayOfWeek: json['day_of_week'],
+      // dayOfWeekIndex: json['day_of_week_index'],
+      // time: json['time'],
       datetime: DateTime.parse(json['datetime']),
-      status: json['status'],
-      sessionId: json['session_id'],
-      clientId: json['client_id'],
-      clientName: json['client_name'],
+      // status: json['status'],
+      // sessionId: json['session_id'],
+      // clientId: json['client_id'],
+      // clientName: json['client_name'],
     );
   }
 

@@ -282,11 +282,12 @@ class _SchedulePageState extends State<SchedulePage> {
     (i) => '${(6 + i).toString().padLeft(2, '0')}:00',
   );
 
-  void onCheckBoxChanged(SlotModel model) {
-    setState(() {
-      model.isChecked = !model.isChecked!; // Tanlangan holatni teskari qilish
-    });
-  }
+  // void onCheckBoxChanged(SlotModel model) {
+  //   late ConsultationViewModel consultationViewModel;
+  //   setState(() {
+  //     model.isChecked = !model.isChecked!; // Tanlangan holatni teskari qilish
+  //   });
+  // }
 
   // Hozirgi kundan boshlanadigan hafta
   late DateTime currentWeekStart;
@@ -383,6 +384,7 @@ class _SchedulePageState extends State<SchedulePage> {
 
   @override
   void initState() {
+    // consultationViewModel = context.read<ConsultationViewModel>();
     super.initState();
     consultationViewModel = context.read<ConsultationViewModel>();
     currentWeekStart =
@@ -390,7 +392,9 @@ class _SchedulePageState extends State<SchedulePage> {
     _verticalTimeController = ScrollController();
     _verticalContentController = ScrollController();
     _horizontalController = ScrollController();
-
+    WidgetsBinding.instance.addPostFrameCallback((_) async{
+      await getSlot();
+    });
     // Scroll sinxronizatsiya
     _verticalTimeController.addListener(() {
       if (_verticalContentController.offset != _verticalTimeController.offset) {
@@ -434,10 +438,20 @@ class _SchedulePageState extends State<SchedulePage> {
     // Yangi holatni saqlash
     setState(() {
       consultationViewModel.tableSelect =
-          allSlots.where((s) => s.isSelected?? false).toList();
+          allSlots.where((s) => s.isSelected ?? false).toList();
     });
   }
 
+  Future<void> getSlot() async{
+    String startDate = DateFormat('yyyy-MM-dd').format(currentWeekStart);
+    String endDate = DateFormat('yyyy-MM-dd').format(
+      currentWeekStart.add(
+        Duration(days: 6),
+      ),
+    );
+    print('startDate: $startDate, endDate: $endDate');
+    await consultationViewModel.getSlots(startDate, endDate);
+  }
   // @override
   // void initState() {
   //   super.initState();
@@ -508,18 +522,18 @@ class _SchedulePageState extends State<SchedulePage> {
     return m[d.month - 1];
   }
 
-  void goToPreviousWeek() {
-    setState(() {
+  void goToPreviousWeek()async {
       weekSelected = weekSelected - 1;
       currentWeekStart = currentWeekStart.subtract(Duration(days: 7));
-    });
+      await getSlot();
+      setState(() {});
   }
 
-  void goToNextWeek() {
-    setState(() {
+  void goToNextWeek()async {
       weekSelected = weekSelected + 1;
       currentWeekStart = currentWeekStart.add(Duration(days: 7));
-    });
+      await getSlot();
+      setState(() {});
   }
 
   // Modelni tekshirish va qayta qo'shish yoki olib tashlash
@@ -553,11 +567,10 @@ class _SchedulePageState extends State<SchedulePage> {
     });
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-    // consultationViewModel = context.read<ConsultationViewModel>();
+    // final read = context.read<ConsultationViewModel>();
+    final watch = context.watch<ConsultationViewModel>();
     final days = List.generate(
       numberOfDays,
       (i) => currentWeekStart.add(Duration(days: i)),
@@ -584,15 +597,25 @@ class _SchedulePageState extends State<SchedulePage> {
                 SizedBox(
                   width: context.width * .35,
                   child: FittedBox(
-                    child: Text(
-                      'Расписания',
-                      style: context.textStyle.s20w600Manrope,
+                    child: GestureDetector(
+                      onTap: () async {
+                        // await read.getSlots('1', '1');
+                        setState(() {});
+                      },
+                      child: Text(
+                        'Расписания',
+                        style: context.textStyle.s20w600Manrope,
+                      ),
                     ),
                   ),
                 ),
                 Spacer(),
                 IconButton(
                   onPressed: weekSelected == 0 ? null : goToPreviousWeek,
+                  // onPressed: ()async{
+                  //   weekSelected == 0 ? null : goToPreviousWeek;
+                  //   await getSlot();
+                  // },
                   icon: Icon(
                     Icons.chevron_left,
                     size: 27,
@@ -607,13 +630,17 @@ class _SchedulePageState extends State<SchedulePage> {
                         'dd MMM',
                       ).format(currentWeekStart)} - ${DateFormat(
                         'dd MMM',
-                      ).format(currentWeekStart.add(Duration(days: 4)))}',
+                      ).format(currentWeekStart.add(Duration(days: 6)))}',
                       style: context.textStyle.s14w500Manrope,
                     ),
                   ),
                 ),
                 IconButton(
                   onPressed: weekSelected == 4 ? null : goToNextWeek,
+                  // onPressed: ()async{
+                  //   weekSelected == 4 ? null : goToNextWeek;
+                  //   await getSlot();
+                  // },
                   icon: Icon(
                     Icons.chevron_right,
                     size: 27,
@@ -706,7 +733,8 @@ class _SchedulePageState extends State<SchedulePage> {
                                 itemCount: hours.length,
                                 itemBuilder: (_, row) {
                                   return Row(
-                                    children: List.generate(numberOfDays, (col) {
+                                    children:
+                                        List.generate(numberOfDays, (col) {
                                       final dayStr = DateFormat('yyyy-MM-dd')
                                           .format(days[col]);
                                       final hourStr = hours[row];
@@ -716,7 +744,8 @@ class _SchedulePageState extends State<SchedulePage> {
                                       );
                                       final isChecked = consultationViewModel
                                           .tableSelect
-                                          .any((model) => model.datetime == dateTime);
+                                          .any((model) =>
+                                              model.datetime == dateTime);
 
                                       return Container(
                                         width: 125,
@@ -742,7 +771,11 @@ class _SchedulePageState extends State<SchedulePage> {
                                                 );
                                                 toggleSelection(model);
                                                 print(consultationViewModel
-                                                    .tableSelect);
+                                                        .tableSelect.isEmpty
+                                                    ? []
+                                                    : consultationViewModel
+                                                        .tableSelect[0]
+                                                        .datetime);
                                               }
                                             },
                                           ),
@@ -764,6 +797,6 @@ class _SchedulePageState extends State<SchedulePage> {
           ],
         ),
       ),
-    );
+    ).loadingView(watch.isLoading);
   }
 }

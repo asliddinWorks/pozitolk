@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:pozitolk/pages/consultation/data/models/message_model.dart';
 import 'package:pozitolk/pages/login/model/user_model.dart';
 import '../../../../core/data/data_source/local/app_local_data.dart';
 import '../../../../di_service.dart';
@@ -14,6 +15,7 @@ abstract class ConsultationRepo {
   Future<bool> patchEducation(BuildContext context,  FormData formData);
   Future<UserModel> getUser();
   Future<Map> getTable();
+  Future<List<SlotModel>> getSlots(String startDate, String endDate);
 }
 
 class ConsultationImpl extends ConsultationRepo {
@@ -214,5 +216,40 @@ class ConsultationImpl extends ConsultationRepo {
       // print(e);
     }
     return UserModel.fromJson({});
+  }
+
+  @override
+  Future<List<SlotModel>> getSlots(String startDate, String endDate) async{
+    try{
+      final token = await AppLocalData.getUserToken;
+      Response response = await dio.get(
+          // '/session/message-list/$chatId/?page=$page&page_size=$pageSize',
+        'https://backend.xn--g1acgdmcd1a.xn--p1ai/session/my_schedule/?start_date=$startDate&end_date=$endDate&user_type=psychologist',
+          // 'fuel-app/owner-fuel/?page=$page&page_size=$pageSize',
+          options: Options(
+            headers: headerWithAuth(token),
+          ),
+          queryParameters: {
+            'start_date': startDate,
+            'end_date': endDate
+          }
+      );
+      // print('id $chatId, page $page, pageSize $pageSize, response ${response.data}');
+      if((response.statusCode == 200) || (response.statusCode == 201)){
+        List<SlotModel> list = [];
+        List list2 = [];
+        list2 = response.data['slots'];
+        for(int i = 0; i < list2.length; i++){
+        }
+        for (var item in list2) {
+          final model = SlotModel.fromJson(item);
+          list.add(model);
+        }
+        return list;
+      }
+    }catch(e){
+      return [];
+    }
+    return [];
   }
 }

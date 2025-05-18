@@ -613,4 +613,36 @@ class ConsultationViewModel extends ChangeNotifier {
       // hour: '18:00',
     ),
   ];
+
+  Future getSlots(String startDate, String endDate) async {
+    isLoading = true;
+    notifyListeners();
+
+    try {
+      print(1133);
+      tableSelect = await consultationRepo.getSlots(startDate, endDate); // Malumotlarni kutamiz\
+      print(3344);
+      // List<dynamic> slots = data['slots'] ?? [];
+      print('tableSelect: $tableSelect');
+      // print('gggmmm');
+      // for (int i = 0; i < slots.length; i++) {
+      //   // print('${slots[i]['day_of_week_index']}  ${slots[i]['day_of_week_index'].runtimeType}');
+      //   // print('${slots[i]['time']}  ${slots[i]['time'].runtimeType}');
+      //   // print('ggg  ${int.parse(slots[i]['time'].split(':')[0])}');
+      //   if(!greenIndexes[slots[i]['day_of_week_index']].contains(int.parse(slots[i]['time'].split(':')[0]))){
+      //     greenIndexes[slots[i]['day_of_week_index']].add(
+      //       int.parse(slots[i]['time'].split(':')[0]),
+      //     );
+      //     // print('addddd  ${int.parse(slots[i]['time'].split(':')[0])}');
+      //   }
+      // }
+
+      notifyListeners();
+    } catch (e) {
+      print('Xatolik yuz berdi: $e');
+    } finally {
+      isLoading = false;
+      notifyListeners();
+    }
+  }
 }

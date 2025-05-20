@@ -554,6 +554,7 @@ class ConsultationViewModel extends ChangeNotifier {
       notifyListeners();
     }
   }
+  bool selectedSlot = false;
   SlotModel? slotModel;
   DateTime slotDate = DateTime.now();
   bool clientAge = false;

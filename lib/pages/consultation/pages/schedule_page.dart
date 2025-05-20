@@ -258,6 +258,7 @@ import 'package:intl/intl.dart';
 import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
 import 'package:pozitolk/core/extension/widget_extension.dart';
+import 'package:pozitolk/core/widgets/app_button.dart';
 import 'package:pozitolk/pages/consultation/view_model/consultation_view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -392,57 +393,60 @@ class _SchedulePageState extends State<SchedulePage> {
     _verticalTimeController = ScrollController();
     _verticalContentController = ScrollController();
     _horizontalController = ScrollController();
-    WidgetsBinding.instance.addPostFrameCallback((_) async{
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      await Future.delayed(Duration(milliseconds: 200));
       await getSlot();
+      _verticalTimeController.addListener(() {
+        if (_verticalContentController.offset !=
+            _verticalTimeController.offset) {
+          _verticalContentController.jumpTo(_verticalTimeController.offset);
+        }
+      });
+      _verticalContentController.addListener(() {
+        if (_verticalTimeController.offset !=
+            _verticalContentController.offset) {
+          _verticalTimeController.jumpTo(_verticalContentController.offset);
+        }
+      });
+
+      // Soatlar
+      hours =
+          List.generate(17, (i) => '${(6 + i).toString().padLeft(2, '0')}:00');
+
+      // Kunlar
+      final now = DateTime.now();
+      final startOfWeek = now.subtract(Duration(days: now.weekday - 1));
+      days = List.generate(
+          numberOfDays2, (i) => startOfWeek.add(Duration(days: i)));
+
+      // Slotlar
+      List<SlotModel> allSlots = [];
+      for (var day in days) {
+        for (var hour in hours) {
+          String date = '${DateFormat('yyyy-MM-dd').format(day)} $hour';
+          SlotModel slot = SlotModel(
+            datetime: DateTime.parse(date),
+            // datetime:  day.add(Duration(hours: int.parse(hour.substring(0, 2)))),
+          );
+          // Oldindan tanlanganlar
+          if (consultationViewModel.tableSelect
+              .any((selected) => selected.datetime == slot.datetime)) {
+            slot.isSelected = true;
+          }
+          allSlots.add(slot);
+        }
+      }
+      // Yangi holatni saqlash
+      setState(() {
+        // consultationViewModel.tableSelect =
+        //     allSlots.where((s) => s.isSelected ?? false).toList();
+      });
+      // await getSlot();
     });
     // Scroll sinxronizatsiya
-    _verticalTimeController.addListener(() {
-      if (_verticalContentController.offset != _verticalTimeController.offset) {
-        _verticalContentController.jumpTo(_verticalTimeController.offset);
-      }
-    });
-    _verticalContentController.addListener(() {
-      if (_verticalTimeController.offset != _verticalContentController.offset) {
-        _verticalTimeController.jumpTo(_verticalContentController.offset);
-      }
-    });
-
-    // Soatlar
-    hours =
-        List.generate(17, (i) => '${(6 + i).toString().padLeft(2, '0')}:00');
-
-    // Kunlar
-    final now = DateTime.now();
-    final startOfWeek = now.subtract(Duration(days: now.weekday - 1));
-    days =
-        List.generate(numberOfDays2, (i) => startOfWeek.add(Duration(days: i)));
-
-    // Slotlar
-    List<SlotModel> allSlots = [];
-    for (var day in days) {
-      for (var hour in hours) {
-        String date = '${DateFormat('yyyy-MM-dd').format(day)} $hour';
-        SlotModel slot = SlotModel(
-          datetime: DateTime.parse(date),
-          // datetime:  day.add(Duration(hours: int.parse(hour.substring(0, 2)))),
-        );
-        // Oldindan tanlanganlar
-        if (consultationViewModel.tableSelect
-            .any((selected) => selected.datetime == slot.datetime)) {
-          slot.isSelected = true;
-        }
-        allSlots.add(slot);
-      }
-    }
-
-    // Yangi holatni saqlash
-    setState(() {
-      consultationViewModel.tableSelect =
-          allSlots.where((s) => s.isSelected ?? false).toList();
-    });
   }
 
-  Future<void> getSlot() async{
+  Future<void> getSlot() async {
     String startDate = DateFormat('yyyy-MM-dd').format(currentWeekStart);
     String endDate = DateFormat('yyyy-MM-dd').format(
       currentWeekStart.add(
@@ -451,6 +455,9 @@ class _SchedulePageState extends State<SchedulePage> {
     );
     print('startDate: $startDate, endDate: $endDate');
     await consultationViewModel.getSlots(startDate, endDate);
+    // for (var element in list) {
+    //   print('element: ${element.clientName?? ''}');
+    // }
   }
   // @override
   // void initState() {
@@ -522,18 +529,18 @@ class _SchedulePageState extends State<SchedulePage> {
     return m[d.month - 1];
   }
 
-  void goToPreviousWeek()async {
-      weekSelected = weekSelected - 1;
-      currentWeekStart = currentWeekStart.subtract(Duration(days: 7));
-      await getSlot();
-      setState(() {});
+  void goToPreviousWeek() async {
+    weekSelected = weekSelected - 1;
+    currentWeekStart = currentWeekStart.subtract(Duration(days: 7));
+    await getSlot();
+    setState(() {});
   }
 
-  void goToNextWeek()async {
-      weekSelected = weekSelected + 1;
-      currentWeekStart = currentWeekStart.add(Duration(days: 7));
-      await getSlot();
-      setState(() {});
+  void goToNextWeek() async {
+    weekSelected = weekSelected + 1;
+    currentWeekStart = currentWeekStart.add(Duration(days: 7));
+    await getSlot();
+    setState(() {});
   }
 
   // Modelni tekshirish va qayta qo'shish yoki olib tashlash
@@ -569,7 +576,7 @@ class _SchedulePageState extends State<SchedulePage> {
 
   @override
   Widget build(BuildContext context) {
-    // final read = context.read<ConsultationViewModel>();
+    final read = context.read<ConsultationViewModel>();
     final watch = context.watch<ConsultationViewModel>();
     final days = List.generate(
       numberOfDays,
@@ -578,210 +585,152 @@ class _SchedulePageState extends State<SchedulePage> {
 
     return Scaffold(
       backgroundColor: context.color.background1,
-      body: Container(
-        // padding: EdgeInsets.all(16),
-        height: context.height * .85,
-        margin: const EdgeInsets.only(top: 4),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(16),
-            topRight: Radius.circular(16),
-          ),
-          color: context.color.background2,
-        ),
-        child: Column(
-          children: [
-            Row(
+      body: ListView(
+        children: [
+          Container(
+            margin: const EdgeInsets.only(top: 4),
+            padding: EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              ),
+              color: context.color.background2,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                16.wGap,
-                SizedBox(
-                  width: context.width * .35,
-                  child: FittedBox(
-                    child: GestureDetector(
-                      onTap: () async {
-                        // await read.getSlots('1', '1');
-                        setState(() {});
-                      },
-                      child: Text(
-                        'Расписания',
-                        style: context.textStyle.s20w600Manrope,
-                      ),
-                    ),
-                  ),
+                Text(
+                  'Констатинопольский',
+                  style: context.textStyle.s20w600Manrope,
                 ),
-                Spacer(),
-                IconButton(
-                  onPressed: weekSelected == 0 ? null : goToPreviousWeek,
-                  // onPressed: ()async{
-                  //   weekSelected == 0 ? null : goToPreviousWeek;
-                  //   await getSlot();
-                  // },
-                  icon: Icon(
-                    Icons.chevron_left,
-                    size: 27,
-                    color: weekSelected == 0 ? Colors.grey : null,
-                  ),
+                6.hGap,
+                Text(
+                  'Специалист ответит в удобное время Вам в чате',
+                  style: context.textStyle.s14w400Manrope,
                 ),
-                SizedBox(
-                  width: context.width * .3,
-                  child: FittedBox(
-                    child: Text(
-                      '${DateFormat(
-                        'dd MMM',
-                      ).format(currentWeekStart)} - ${DateFormat(
-                        'dd MMM',
-                      ).format(currentWeekStart.add(Duration(days: 6)))}',
-                      style: context.textStyle.s14w500Manrope,
-                    ),
-                  ),
+                16.hGap,
+                AppButton(
+                  onPressed: () {},
+                  text: 'Запустить консультацию',
                 ),
-                IconButton(
-                  onPressed: weekSelected == 4 ? null : goToNextWeek,
-                  // onPressed: ()async{
-                  //   weekSelected == 4 ? null : goToNextWeek;
-                  //   await getSlot();
-                  // },
-                  icon: Icon(
-                    Icons.chevron_right,
-                    size: 27,
-                    color: weekSelected == 4 ? Colors.grey : null,
-                  ),
+                6.hGap,
+                AppButton(
+                  borderColor: Colors.transparent,
+                  appButtonType: AppButtonType.outlined,
+                  onPressed: () {
+                    read.onDrawerSelected(context, 1);
+                  },
+                  text: 'Написать в чате',
                 ),
               ],
             ),
-            10.hGap,
-            Expanded(
-              child: Row(
-                children: [
-                  // Vaqtlar ustuni: 06:00-22:00, header uchun bo'sh joy
-                  SizedBox(
-                    width: 60,
-                    child: Column(
-                      children: [
-                        Container(
-                          height: 50,
-                          decoration: const BoxDecoration(
-                            border: Border(
-                              bottom: BorderSide(width: 1, color: Colors.grey),
-                            ),
+          ),
+          Container(
+            // padding: EdgeInsets.all(16),
+            height: context.height * .85,
+            margin: const EdgeInsets.only(top: 4),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(16),
+                topRight: Radius.circular(16),
+              ),
+              color: context.color.background2,
+            ),
+            child: Column(
+              children: [
+                Row(
+                  children: [
+                    16.wGap,
+                    SizedBox(
+                      width: context.width * .35,
+                      child: FittedBox(
+                        child: GestureDetector(
+                          onTap: () async {
+                            // await read.getSlots('1', '1');
+                            setState(() {});
+                          },
+                          child: Text(
+                            'Расписания',
+                            style: context.textStyle.s20w600Manrope,
                           ),
                         ),
-                        Expanded(
-                          child: ListView.builder(
-                            controller: _verticalTimeController,
-                            itemCount: hours.length,
-                            itemBuilder: (_, i) {
-                              return Container(
-                                height: 50,
-                                alignment: Alignment.center,
-                                decoration: const BoxDecoration(
-                                  border: Border(
-                                    bottom: BorderSide(
-                                        width: 1, color: Colors.grey),
-                                  ),
-                                ),
-                                child: Text(hours[i]),
-                              );
-                            },
-                          ),
-                        ),
-                      ],
+                      ),
                     ),
-                  ),
-                  const VerticalDivider(
-                      width: 1, thickness: 1, color: Colors.grey),
-
-                  // Jadval (kunlar + kataklar) – bitta gorizontal scroll ichida
-                  Expanded(
-                    child: SingleChildScrollView(
-                      controller: _horizontalController,
-                      scrollDirection: Axis.horizontal,
-                      child: SizedBox(
-                        width: numberOfDays * 125.0,
+                    Spacer(),
+                    IconButton(
+                      onPressed: weekSelected == 0 ? null : goToPreviousWeek,
+                      // onPressed: ()async{
+                      //   weekSelected == 0 ? null : goToPreviousWeek;
+                      //   await getSlot();
+                      // },
+                      icon: Icon(
+                        Icons.chevron_left,
+                        size: 27,
+                        color: weekSelected == 0 ? Colors.grey : null,
+                      ),
+                    ),
+                    SizedBox(
+                      width: context.width * .3,
+                      child: FittedBox(
+                        child: Text(
+                          '${DateFormat(
+                            'dd MMM',
+                          ).format(currentWeekStart)} - ${DateFormat(
+                            'dd MMM',
+                          ).format(currentWeekStart.add(Duration(days: 6)))}',
+                          style: context.textStyle.s14w500Manrope,
+                        ),
+                      ),
+                    ),
+                    IconButton(
+                      onPressed: weekSelected == 4 ? null : goToNextWeek,
+                      // onPressed: ()async{
+                      //   weekSelected == 4 ? null : goToNextWeek;
+                      //   await getSlot();
+                      // },
+                      icon: Icon(
+                        Icons.chevron_right,
+                        size: 27,
+                        color: weekSelected == 4 ? Colors.grey : null,
+                      ),
+                    ),
+                  ],
+                ),
+                10.hGap,
+                Expanded(
+                  child: Row(
+                    children: [
+                      // Vaqtlar ustuni: 06:00-22:00, header uchun bo'sh joy
+                      SizedBox(
+                        width: 60,
                         child: Column(
                           children: [
-                            // Kunlar sarlavhasi
-                            SizedBox(
+                            Container(
                               height: 50,
-                              child: Row(
-                                children: days.map((d) {
-                                  return Container(
-                                    width: 125,
-                                    alignment: Alignment.center,
-                                    padding: const EdgeInsets.all(8),
-                                    decoration: const BoxDecoration(
-                                      border: Border(
-                                        right: BorderSide(
-                                            width: 1, color: Colors.grey),
-                                        bottom: BorderSide(
-                                            width: 1, color: Colors.grey),
-                                      ),
-                                    ),
-                                    child: Text(
-                                      '${getWeekday(d)}, ${d.day.toString().padLeft(2, '0')} ${getMonth(d)}',
-                                      style: const TextStyle(fontSize: 13),
-                                      overflow: TextOverflow.ellipsis,
-                                    ),
-                                  );
-                                }).toList(),
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                      width: 1, color: context.color.base01),
+                                ),
                               ),
                             ),
-                            // Kataklar (vertikal ListView)
                             Expanded(
                               child: ListView.builder(
-                                controller: _verticalContentController,
+                                controller: _verticalTimeController,
                                 itemCount: hours.length,
-                                itemBuilder: (_, row) {
-                                  return Row(
-                                    children:
-                                        List.generate(numberOfDays, (col) {
-                                      final dayStr = DateFormat('yyyy-MM-dd')
-                                          .format(days[col]);
-                                      final hourStr = hours[row];
-                                      // final String key = '$dayStr $hourStr';
-                                      final DateTime dateTime = DateTime.parse(
-                                        '$dayStr $hourStr',
-                                      );
-                                      final isChecked = consultationViewModel
-                                          .tableSelect
-                                          .any((model) =>
-                                              model.datetime == dateTime);
-
-                                      return Container(
-                                        width: 125,
-                                        height: 50,
-                                        decoration: BoxDecoration(
-                                          border: Border(
-                                            right: BorderSide(
-                                                width: 1, color: Colors.grey),
-                                            bottom: BorderSide(
-                                                width: 1, color: Colors.grey),
-                                          ),
-                                        ),
-                                        child: Center(
-                                          child: Checkbox(
-                                            value: isChecked,
-                                            onChanged: (bool? value) {
-                                              if (value != null) {
-                                                final model = SlotModel(
-                                                  datetime: dateTime,
-                                                  // date: days[col],
-                                                  // hour: hours[row],
-                                                  isChecked: value,
-                                                );
-                                                toggleSelection(model);
-                                                print(consultationViewModel
-                                                        .tableSelect.isEmpty
-                                                    ? []
-                                                    : consultationViewModel
-                                                        .tableSelect[0]
-                                                        .datetime);
-                                              }
-                                            },
-                                          ),
-                                        ),
-                                      );
-                                    }),
+                                itemBuilder: (_, i) {
+                                  return Container(
+                                    height: 50,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        bottom: BorderSide(
+                                            width: 1,
+                                            color: context.color.base01),
+                                      ),
+                                    ),
+                                    child: Text(hours[i]),
                                   );
                                 },
                               ),
@@ -789,13 +738,218 @@ class _SchedulePageState extends State<SchedulePage> {
                           ],
                         ),
                       ),
-                    ),
-                  ),
-                ],
-              ).padding(EdgeInsets.symmetric(horizontal: 16)),
+                      VerticalDivider(
+                          width: 1, thickness: 1, color: context.color.base01),
+
+                      // Jadval (kunlar + kataklar) – bitta gorizontal scroll ichida
+                      Expanded(
+                        child: SingleChildScrollView(
+                          controller: _horizontalController,
+                          scrollDirection: Axis.horizontal,
+                          child: SizedBox(
+                            width: numberOfDays * 125.0,
+                            child: Column(
+                              children: [
+                                // Kunlar sarlavhasi
+                                SizedBox(
+                                  height: 50,
+                                  child: Row(
+                                    children: days.map((d) {
+                                      return Container(
+                                        width: 125,
+                                        alignment: Alignment.center,
+                                        padding: const EdgeInsets.all(8),
+                                        decoration: BoxDecoration(
+                                          border: Border(
+                                            right: BorderSide(
+                                                width: 1,
+                                                color: context.color.base01),
+                                            bottom: BorderSide(
+                                                width: 1,
+                                                color: context.color.base01),
+                                          ),
+                                        ),
+                                        child: Text(
+                                          '${getWeekday(d)}, ${d.day.toString().padLeft(2, '0')} ${getMonth(d)}',
+                                          style: const TextStyle(fontSize: 13),
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
+                                      );
+                                    }).toList(),
+                                  ),
+                                ),
+                                // Kataklar (vertikal ListView)
+                                Expanded(
+                                  child: ListView.builder(
+                                    controller: _verticalContentController,
+                                    itemCount: hours.length,
+                                    itemBuilder: (_, row) {
+                                      return Row(
+                                        children:
+                                            List.generate(numberOfDays, (col) {
+                                          final dayStr =
+                                              DateFormat('yyyy-MM-dd')
+                                                  .format(days[col]);
+                                          final hourStr = hours[row];
+                                          // final String key = '$dayStr $hourStr';
+                                          final DateTime dateTime =
+                                              DateTime.parse(
+                                            '$dayStr $hourStr',
+                                          );
+                                          // final isSession = consultationViewModel
+                                          //     .tableSelect
+                                          //     .any((model) =>
+                                          //         model.clientId != null);
+                                          bool isSession = false;
+                                          if (consultationViewModel.tableSelect
+                                              .any((model) =>
+                                                  model.datetime == dateTime)) {
+                                            final model = consultationViewModel
+                                                .tableSelect
+                                                .firstWhere(
+                                              (model) =>
+                                                  model.datetime == dateTime,
+                                            );
+
+                                            if (model.clientId != null) {
+                                              read.slotModel = model;
+                                              isSession = true;
+                                              print(
+                                                  'modelll   ${model.clientName}');
+                                            }
+                                          }
+                                          final isChecked =
+                                              consultationViewModel.tableSelect.any((model) => model.datetime == dateTime);
+                                          return Container(
+                                            padding: EdgeInsets.all(2),
+                                            width: 125,
+                                            height: 50,
+                                            decoration: BoxDecoration(
+                                              border: Border(
+                                                right: BorderSide(
+                                                    width: 1,
+                                                    color:
+                                                        context.color.base01),
+                                                bottom: BorderSide(
+                                                    width: 1,
+                                                    color:
+                                                        context.color.base01),
+                                              ),
+                                            ),
+                                            child: isSession
+                                                ? GestureDetector(
+                                                    onTap: () {
+                                                      if (consultationViewModel.tableSelect.any((model) => model.datetime == dateTime)) {
+                                                        final model = consultationViewModel.tableSelect.firstWhere((model) => model.datetime == dateTime,);
+
+                                                        if (model.clientId !=
+                                                            null) {
+                                                          read.slotModel =
+                                                              model;
+                                                          isSession = true;
+                                                          print(
+                                                              'modelll   ${model.clientName}');
+                                                        }
+                                                      }
+                                                      read.slotDate = read
+                                                          .slotModel!.datetime!;
+                                                      print(
+                                                          'slotId   ${read.slotDate}   ${read.slotModel!.datetime}');
+                                                      setState(() {});
+                                                    },
+                                                    child: Container(
+                                                      alignment:
+                                                          Alignment.center,
+                                                      decoration: BoxDecoration(
+                                                          border: Border
+                                                              .all(
+                                                                  color: context
+                                                                      .color
+                                                                      .primary,
+                                                                  width: 2),
+                                                          borderRadius:
+                                                              BorderRadius
+                                                                  .circular(4),
+                                                          color: read.slotDate ==
+                                                                  read.slotModel!
+                                                                      .datetime
+                                                              ? context.color
+                                                                  .background2
+                                                              : context.color
+                                                                  .primary),
+                                                      child: Text(
+                                                        read.slotModel!
+                                                            .clientName!,
+                                                        style: context.textStyle
+                                                            .s14w500Manrope,
+                                                        overflow: TextOverflow
+                                                            .ellipsis,
+                                                      ),
+                                                    ),
+                                                  )
+                                                : Container(
+                                                    alignment: Alignment.center,
+                                                    decoration: BoxDecoration(
+                                                        color: isChecked
+                                                            ? Color(0xFFDAF9DA)
+                                                            : Colors
+                                                                .transparent,
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(4)),
+                                                    child: Checkbox(
+                                                      value: isChecked,
+                                                      onChanged: (bool? value) {
+                                                        if (value != null) {
+                                                          if (!isChecked) {
+                                                            read.postSlot(
+                                                                dateTime
+                                                                    .toString(),
+                                                                true);
+                                                          } else {
+                                                            read.postSlot(
+                                                                dateTime
+                                                                    .toString(),
+                                                                false);
+                                                          }
+                                                          final model =
+                                                              SlotModel(
+                                                            datetime: dateTime,
+                                                            // date: days[col],
+                                                            // hour: hours[row],
+                                                            isChecked: value,
+                                                          );
+                                                          toggleSelection(
+                                                              model);
+                                                          print(read.tableSelect
+                                                                  .isEmpty
+                                                              ? []
+                                                              : read
+                                                                  .tableSelect[
+                                                                      0]
+                                                                  .datetime);
+                                                        }
+                                                      },
+                                                    ),
+                                                  ),
+                                          );
+                                        }),
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ).padding(EdgeInsets.only(left: 16, right: 1, bottom: 26)),
+                ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     ).loadingView(watch.isLoading);
   }

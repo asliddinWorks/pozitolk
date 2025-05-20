@@ -31,7 +31,7 @@ class ConsultationViewModel extends ChangeNotifier {
   final readChat = ChatViewModel(getIt());
 
   TextEditingController dateController = TextEditingController();
-  List<bool> drawerItem = List.generate(8, (index) => index == 0);
+  List<bool> drawerItem = List.generate(8, (index) => index == 2);
   List<String> drawerText = [
     'Расписание',
     'Чаты',
@@ -554,7 +554,8 @@ class ConsultationViewModel extends ChangeNotifier {
       notifyListeners();
     }
   }
-
+  SlotModel? slotModel;
+  DateTime slotDate = DateTime.now();
   bool clientAge = false;
   bool experienceWithIdentitySearch = false;
   bool coupleTherapy = false;
@@ -620,10 +621,12 @@ class ConsultationViewModel extends ChangeNotifier {
 
     try {
       print(1133);
-      tableSelect = await consultationRepo.getSlots(startDate, endDate); // Malumotlarni kutamiz\
+      final result = await consultationRepo.getSlots(startDate, endDate); // Malumotlarni kutamiz\
+      tableSelect = result.$1;
+      // tableSelect.map((m) => print(m.clientId)).toList();
       print(3344);
       // List<dynamic> slots = data['slots'] ?? [];
-      print('tableSelect: $tableSelect');
+      // print('tableSelect: ${result.$2[2].startTime?? ''} ${result.$2[2].id?? ''}   nn   ${result.$1[0].datetime?? ''}');
       // print('gggmmm');
       // for (int i = 0; i < slots.length; i++) {
       //   // print('${slots[i]['day_of_week_index']}  ${slots[i]['day_of_week_index'].runtimeType}');
@@ -636,7 +639,6 @@ class ConsultationViewModel extends ChangeNotifier {
       //     // print('addddd  ${int.parse(slots[i]['time'].split(':')[0])}');
       //   }
       // }
-
       notifyListeners();
     } catch (e) {
       print('Xatolik yuz berdi: $e');
@@ -644,5 +646,14 @@ class ConsultationViewModel extends ChangeNotifier {
       isLoading = false;
       notifyListeners();
     }
+  }
+
+  Future<void> postSlot(String dateTime, bool isAvailable)async{
+    try{
+      await consultationRepo.postSlot(dateTime, isAvailable);
+    }catch(e){
+      print(e);
+    }
+
   }
 }

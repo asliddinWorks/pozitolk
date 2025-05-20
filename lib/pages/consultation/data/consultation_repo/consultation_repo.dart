@@ -12,10 +12,11 @@ abstract class ConsultationRepo {
   Future<bool> patchSpecialization(BuildContext context, UserModel userModel);
   Future<bool> patchClient(BuildContext context, UserModel userModel);
   Future<bool> patchTable(List data);
-  Future<bool> patchEducation(BuildContext context,  FormData formData);
+  Future<bool> patchEducation(BuildContext context, FormData formData);
   Future<UserModel> getUser();
   Future<Map> getTable();
-  Future<List<SlotModel>> getSlots(String startDate, String endDate);
+  Future<(List<SlotModel>, List<ScheduleModel>)> getSlots(String startDate, String endDate);
+  Future<bool> postSlot(String dateTime, bool isAvailable);
 }
 
 class ConsultationImpl extends ConsultationRepo {
@@ -23,7 +24,8 @@ class ConsultationImpl extends ConsultationRepo {
   final Dio dio;
 
   @override
-  Future<bool> patchPersonalData(BuildContext context, UserModel userModel) async {
+  Future<bool> patchPersonalData(
+      BuildContext context, UserModel userModel) async {
     try {
       final token = await AppLocalData.getUserToken;
       Response response = await dio.patch(
@@ -68,8 +70,10 @@ class ConsultationImpl extends ConsultationRepo {
     }
     return false;
   }
+
   @override
-  Future<bool> patchSpecialization(BuildContext context, UserModel userModel) async {
+  Future<bool> patchSpecialization(
+      BuildContext context, UserModel userModel) async {
     try {
       final token = await AppLocalData.getUserToken;
       Response response = await dio.patch(
@@ -83,8 +87,7 @@ class ConsultationImpl extends ConsultationRepo {
         return true;
       }
       return false;
-    } on DioException catch (_) {
-    }
+    } on DioException catch (_) {}
     return false;
   }
 
@@ -103,10 +106,10 @@ class ConsultationImpl extends ConsultationRepo {
         return true;
       }
       return false;
-    } on DioException catch (_) {
-    }
+    } on DioException catch (_) {}
     return false;
   }
+
   @override
   Future<bool> patchTable(List data) async {
     try {
@@ -124,8 +127,7 @@ class ConsultationImpl extends ConsultationRepo {
         return true;
       }
       return false;
-    } on DioException catch (_) {
-    }
+    } on DioException catch (_) {}
     return false;
   }
 
@@ -173,6 +175,7 @@ class ConsultationImpl extends ConsultationRepo {
     }
     return UserModel.fromJson({});
   }
+
   @override
   Future<Map> getTable() async {
     try {
@@ -198,15 +201,14 @@ class ConsultationImpl extends ConsultationRepo {
   Future postUser() async {
     try {
       final token = await AppLocalData.getUserToken;
-      Response response = await dio.patch(
-        'cabinet/change-self-psychologist/?user_type=psychologist',
-        options: Options(
-          headers: headerWithAuth(token),
-        ),
-        data: {
-          'phone_number': '+998999999999',
-        }
-      );
+      Response response = await dio
+          .patch('cabinet/change-self-psychologist/?user_type=psychologist',
+          options: Options(
+            headers: headerWithAuth(token),
+          ),
+          data: {
+            'phone_number': '+998999999999',
+          });
       if ((response.statusCode == 200) || (response.statusCode == 201)) {
         return UserModel.fromJson(response.data);
       }
@@ -219,37 +221,64 @@ class ConsultationImpl extends ConsultationRepo {
   }
 
   @override
-  Future<List<SlotModel>> getSlots(String startDate, String endDate) async{
-    try{
+  Future<bool> postSlot(String dateTime, bool isAvailable) async {
+    try {
+      final token = await AppLocalData.getUserToken;
+      Response response = await dio.post(
+          'https://backend.xn--g1acgdmcd1a.xn--p1ai/session/timeslots/update_availability/?user_type=psychologist',
+          options: Options(
+            headers: headerWithAuth(token),
+          ),
+
+          data: [
+            {"datetime": dateTime, "is_available": isAvailable}
+          ]
+      );
+      if ((response.statusCode == 200) || (response.statusCode == 201)) {
+        return true;
+      }
+      return false;
+    } on DioException catch (e) {
+      // print('AAAAAAAAAAAAAAA');
+      print('eeeeerrrrrr $e');
+    }
+    return false;
+  }
+
+  @override
+  Future<(List<SlotModel>, List<ScheduleModel>)> getSlots(String startDate, String endDate) async {
+    try {
       final token = await AppLocalData.getUserToken;
       Response response = await dio.get(
-          // '/session/message-list/$chatId/?page=$page&page_size=$pageSize',
-        'https://backend.xn--g1acgdmcd1a.xn--p1ai/session/my_schedule/?start_date=$startDate&end_date=$endDate&user_type=psychologist',
+        // '/session/message-list/$chatId/?page=$page&page_size=$pageSize',
+          'https://backend.xn--g1acgdmcd1a.xn--p1ai/session/my_schedule/?start_date=$startDate&end_date=$endDate&user_type=psychologist',
           // 'fuel-app/owner-fuel/?page=$page&page_size=$pageSize',
           options: Options(
             headers: headerWithAuth(token),
           ),
-          queryParameters: {
-            'start_date': startDate,
-            'end_date': endDate
-          }
-      );
+          queryParameters: {'start_date': startDate, 'end_date': endDate});
       // print('id $chatId, page $page, pageSize $pageSize, response ${response.data}');
-      if((response.statusCode == 200) || (response.statusCode == 201)){
+      if ((response.statusCode == 200) || (response.statusCode == 201)) {
         List<SlotModel> list = [];
+        List list3 = [];
+        List<ScheduleModel> scheduleList = [];
+        list3 = response.data['sessions'];
+        for (var item in list3) {
+          final model = ScheduleModel.fromJson(item);
+          scheduleList.add(model);
+        }
         List list2 = [];
         list2 = response.data['slots'];
-        for(int i = 0; i < list2.length; i++){
-        }
+        for (int i = 0; i < list2.length; i++) {}
         for (var item in list2) {
           final model = SlotModel.fromJson(item);
           list.add(model);
         }
-        return list;
+        return (list, scheduleList);
       }
-    }catch(e){
-      return [];
+    } catch (e) {
+      return (<SlotModel>[], <ScheduleModel>[]);
     }
-    return [];
+    return (<SlotModel>[], <ScheduleModel>[]);
   }
 }

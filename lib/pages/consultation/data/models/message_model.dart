@@ -172,14 +172,14 @@ class SlotModel {
   factory SlotModel.fromJson(Map<String, dynamic> json) {
     return SlotModel(
       slotId: json['slot_id'],
-      // dayOfWeek: json['day_of_week'],
-      // dayOfWeekIndex: json['day_of_week_index'],
-      // time: json['time'],
+      dayOfWeek: json['day_of_week'],
+      dayOfWeekIndex: json['day_of_week_index'],
+      time: json['time'],
       datetime: DateTime.parse(json['datetime']),
-      // status: json['status'],
-      // sessionId: json['session_id'],
-      // clientId: json['client_id'],
-      // clientName: json['client_name'],
+      status: json['status'],
+      sessionId: json['session_id'],
+      clientId: json['client_id'],
+      clientName: json['client_name'],
     );
   }
 
@@ -194,6 +194,55 @@ class SlotModel {
       'session_id': sessionId,
       'client_id': clientId,
       'client_name': clientName,
+    };
+  }
+}
+
+
+class ScheduleModel {
+  final int clientId;
+  final String clientName;
+  final int id;
+  final DateTime startTime;
+  final DateTime endTime;
+  final String time;
+  final String dayOfWeek;
+  final int dayOfWeekIndex;
+
+  ScheduleModel({
+    required this.clientId,
+    required this.clientName,
+    required this.id,
+    required this.startTime,
+    required this.endTime,
+    required this.time,
+    required this.dayOfWeek,
+    required this.dayOfWeekIndex,
+  });
+
+  factory ScheduleModel.fromJson(Map<String, dynamic> json) {
+    return ScheduleModel(
+      clientId: json['client_id'],
+      clientName: json['client_name'],
+      id: json['id'],
+      startTime: DateTime.parse(json['start_time']),
+      endTime: DateTime.parse(json['end_time']),
+      time: json['time'],
+      dayOfWeek: json['day_of_week'],
+      dayOfWeekIndex: json['day_of_week_index'],
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'client_id': clientId,
+      'client_name': clientName,
+      'id': id,
+      'start_time': startTime.toIso8601String(),
+      'end_time': endTime.toIso8601String(),
+      'time': time,
+      'day_of_week': dayOfWeek,
+      'day_of_week_index': dayOfWeekIndex,
     };
   }
 }

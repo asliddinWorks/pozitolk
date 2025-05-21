@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:pozitolk/pages/consultation/data/models/message_model.dart';
+import 'package:pozitolk/pages/consultation/data/models/notes_model.dart';
 import 'package:pozitolk/pages/login/model/user_model.dart';
 import '../../../../core/data/data_source/local/app_local_data.dart';
 import '../../../../di_service.dart';
@@ -17,6 +18,8 @@ abstract class ConsultationRepo {
   Future<Map> getTable();
   Future<(List<SlotModel>, List<ScheduleModel>)> getSlots(String startDate, String endDate);
   Future<bool> postSlot(String dateTime, bool isAvailable);
+  Future<List<NotesModel>> getNotes(int id);
+  Future<bool> postNotes(NotesModel notesModel);
 }
 
 class ConsultationImpl extends ConsultationRepo {
@@ -280,5 +283,51 @@ class ConsultationImpl extends ConsultationRepo {
       return (<SlotModel>[], <ScheduleModel>[]);
     }
     return (<SlotModel>[], <ScheduleModel>[]);
+  }
+
+  @override
+  Future<List<NotesModel>> getNotes(int id) async {
+    try {
+      final token = await AppLocalData.getUserToken;
+      Response response = await dio.get(
+        'session/notes/?user_type=psychologist&client_id=$id',
+        options: Options(
+          headers: headerWithAuth(token),
+        ),
+      );
+      if ((response.statusCode == 200) || (response.statusCode == 201)) {
+        List<NotesModel> list = [];
+        List list2 = [];
+        list2 = response.data;
+        // for (int i = 0; i < list2.length; i++) {}
+        for (var item in list2) {
+          final model = NotesModel.fromJson(item);
+          list.add(model);
+        }
+        return list;
+      }
+    } catch (e) {
+      return [];
+    }
+    return [];
+  }
+
+  @override
+  Future<bool> postNotes(NotesModel notesModel) async {
+    try {
+      final token = await AppLocalData.getUserToken;
+      Response response = await dio.post(
+        'session/notes/?user_type=psychologist',
+        options: Options(
+          headers: headerWithAuth(token),
+        ),
+        data: notesModel.toJson(),
+      );
+      if ((response.statusCode == 200) || (response.statusCode == 201)) {
+        return true;
+      }
+      return false;
+    } on DioException catch (_) {}
+    return false;
   }
 }

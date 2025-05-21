@@ -4,6 +4,7 @@ import 'package:motion_tab_bar_v2/motion-tab-bar.dart';
 import 'package:motion_tab_bar_v2/motion-tab-controller.dart';
 import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
+import 'package:pozitolk/core/extension/widget_extension.dart';
 import 'package:provider/provider.dart';
 import '../../constants/app_icons.dart';
 import '../consultation/pages/widgets/consultation_drawer.dart';
@@ -264,6 +265,8 @@ class _AppBarCustomState extends State<AppBarCustom>
               tabIconSelectedColor: Colors.black,
               tabBarColor: context.color.primary,
               onTabItemSelected: (int value) {
+                // await Future.delayed(Duration(milliseconds: (read.isLoading || readChat.isLoading) ? 500 : 0));
+                // if(read.isLoading || readChat.isLoading) return;
                 print(value);
 
                 read.motionTabBarController!.index = value;

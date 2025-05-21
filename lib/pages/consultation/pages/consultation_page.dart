@@ -22,7 +22,10 @@ class _ConsultationPageState extends State<ConsultationPage>with SingleTickerPro
     //   vsync: this,
     // );
     WidgetsBinding.instance.addPostFrameCallback((_) async{
+      // await Future.delayed(Duration(milliseconds: !mounted ? 0 : 400),);
+      if (!mounted) return;
       await context.read<ConsultationViewModel>().getUser();
+      if (!mounted) return;
       await context.read<ConsultationViewModel>().getTable();
     });
     super.initState();

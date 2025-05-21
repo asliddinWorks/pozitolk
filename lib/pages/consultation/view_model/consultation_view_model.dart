@@ -7,6 +7,8 @@ import 'package:pozitolk/constants/app_icons.dart';
 import 'package:pozitolk/core/data/data_source/local/app_local_data.dart';
 import 'package:pozitolk/di_service.dart';
 import 'package:pozitolk/pages/consultation/data/consultation_repo/consultation_repo.dart';
+import 'package:pozitolk/pages/consultation/data/models/notes_model.dart';
+import 'package:pozitolk/pages/consultation/pages/widgets/notes_dialog.dart';
 import 'package:pozitolk/pages/login/model/user_model.dart';
 import '../../../core/tools/toast_bar.dart';
 import '../../../router/router.dart';
@@ -99,6 +101,7 @@ class ConsultationViewModel extends ChangeNotifier {
   }
 
   void onDrawerSelected(BuildContext context, int index)async {
+    removePopup();
     drawerItem = List.generate(drawerItem.length, (index) => false);
     drawerItem[index] = true;
     // context.pop();
@@ -556,6 +559,7 @@ class ConsultationViewModel extends ChangeNotifier {
   }
   bool selectedSlot = false;
   SlotModel? slotModel;
+  SlotModel? slotModel2;
   DateTime slotDate = DateTime.now();
   bool clientAge = false;
   bool experienceWithIdentitySearch = false;
@@ -656,5 +660,63 @@ class ConsultationViewModel extends ChangeNotifier {
       print(e);
     }
 
+  }
+  final GlobalKey overlayKey = GlobalKey();
+  // final List<GlobalKey> cellKeys = List.generate(35, (_) => GlobalKey());
+  OverlayEntry? popupEntry;
+
+
+  void removePopup() {
+    popupEntry?.remove();
+    popupEntry = null;
+  }
+
+  void showPopup(BuildContext context, TapDownDetails details, String label) {
+    removePopup();
+    // final renderBox = context.findRenderObject() as RenderBox;
+    // final position = renderBox.localToGlobal(Offset.zero);
+
+    popupEntry = OverlayEntry(
+        builder: (context) => NotesDialog(details: details, label: label)
+    );
+
+    Overlay.of(context).insert(popupEntry!);
+  }
+
+  List<NotesModel> notes = [];
+  TextEditingController noteController = TextEditingController();
+
+  Future<void> getNotes()async{
+    try{
+      isLoading = true;
+      notifyListeners();
+      notes = await consultationRepo.getNotes(slotModel2!.clientId!);
+      notes = notes.reversed.toList();
+      print('notes: ${notes.length}');
+      isLoading = false;
+      notifyListeners();
+    }catch(e){
+      print(e);
+      isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  Future<void> postNote()async{
+    try{
+      if(noteController.text.isEmpty) return;
+      NotesModel notesModel = NotesModel(text: noteController.text, id: slotModel2!.clientId!);
+      isLoading = true;
+      notifyListeners();
+      await consultationRepo.postNotes(notesModel);
+      await getNotes();
+      isLoading = false;
+      noteController.clear();
+      notifyListeners();
+    }catch(e){
+      print(e);
+      isLoading = false;
+      notifyListeners();
+    }
   }
 }

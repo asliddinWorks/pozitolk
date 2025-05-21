@@ -747,19 +747,8 @@ class _SchedulePageState extends State<SchedulePage> {
                                                 );
 
                                                 if (model.clientId != null) {
-                                                  // if (consultationViewModel.tableSelect.any((model) => model.datetime == dateTime)) {
-                                                  //   final model = consultationViewModel.tableSelect.firstWhere((model) => model.datetime == dateTime,);
-                                                  //   print('darrrr ${read.slotModel2!.datetime} ${DateTime.now()}');
-                                                  //   if (model.datetime!.isBefore(DateTime.now())) {
-                                                  //     // final date = DateFormat('yyyy-MM-dd').format(read.slotModel2!.datetime!);
-                                                  //     // final time = DateFormat('HH:mm').format(read.slotModel2!.datetime!);
-                                                  //     // print('dattttttttt $date $time');
-                                                  //     read.slotModel = model;
-                                                  //     isSession = true;
-                                                  //   }
-                                                  // }
-                                                  // read.slotModel = model;
-                                                  // isSession = true;
+                                                  read.slotModel = model;
+                                                  isSession = true;
                                                   // print(
                                                   //     'modelll   ${model.clientName}');
                                                 }
@@ -860,40 +849,33 @@ class _SchedulePageState extends State<SchedulePage> {
                                                         child: Checkbox(
                                                           value: isChecked,
                                                           onChanged: (bool? value) {
-                                                            // if (consultationViewModel.tableSelect.any((model) => model.datetime == dateTime)) {
-                                                            //   final model = consultationViewModel.tableSelect.firstWhere((model) => model.datetime == dateTime,);
-                                                            //   print('darrrr ${read.slotModel2!.datetime} ${DateTime.now()}');
-                                                            //   if (model.datetime!.isBefore(DateTime.now())) {
-                                                            //     // final date = DateFormat('yyyy-MM-dd').format(read.slotModel2!.datetime!);
-                                                            //     // final time = DateFormat('HH:mm').format(read.slotModel2!.datetime!);
-                                                            //     // print('dattttttttt $date $time');
-                                                            //     return;
-                                                            //   }
-                                                            // }
+                                                            if (consultationViewModel.tableSelect.any((model) => model.datetime == dateTime)) {
+                                                              final model = consultationViewModel.tableSelect.firstWhere((model) => model.datetime == dateTime,);
+                                                              print('darrrr ${read.slotModel2!.datetime} ${DateTime.now()}');
+                                                              if (model.datetime!.isBefore(DateTime.now())) {
+                                                                // final date = DateFormat('yyyy-MM-dd').format(read.slotModel2!.datetime!);
+                                                                // final time = DateFormat('HH:mm').format(read.slotModel2!.datetime!);
+                                                                // print('dattttttttt $date $time');
+                                                                return;
+                                                              }
+                                                            }
                                                             if (value != null) {
                                                               if (!isChecked) {
-                                                                // if (consultationViewModel.tableSelect.any((model) => model.datetime == dateTime)) {
-                                                                //   final model = consultationViewModel.tableSelect.firstWhere((model) => model.datetime == dateTime,);
-                                                                //   print('darrrr ${read.slotModel2!.datetime} ${DateTime.now()}');
-                                                                //   if (dateTime.isBefore(DateTime.now())) {
-                                                                //     // final date = DateFormat('yyyy-MM-dd').format(read.slotModel2!.datetime!);
-                                                                //     // final time = DateFormat('HH:mm').format(read.slotModel2!.datetime!);
-                                                                //     // print('dattttttttt $date $time');
-                                                                //     return;
-                                                                //   }
-                                                                // }
-                                                                read.postSlot(dateTime.toString(), true);
+                                                                read.postSlot(
+                                                                    dateTime
+                                                                        .toString(),
+                                                                    true);
                                                               } else {
-                                                                // if (consultationViewModel.tableSelect.any((model) => model.datetime == dateTime)) {
-                                                                //   final model = consultationViewModel.tableSelect.firstWhere((model) => model.datetime == dateTime,);
-                                                                //   print('darrrr ${model.datetime} ${DateTime.now()}');
-                                                                //   if (model.datetime!.isBefore(DateTime.now())) {
-                                                                //     // final date = DateFormat('yyyy-MM-dd').format(read.slotModel2!.datetime!);
-                                                                //     // final time = DateFormat('HH:mm').format(read.slotModel2!.datetime!);
-                                                                //     // print('dattttttttt $date $time');
-                                                                //     return;
-                                                                //   }
-                                                                // }
+                                                                if (consultationViewModel.tableSelect.any((model) => model.datetime == dateTime)) {
+                                                                  final model = consultationViewModel.tableSelect.firstWhere((model) => model.datetime == dateTime,);
+                                                                  print('darrrr ${model.datetime} ${DateTime.now()}');
+                                                                  if (model.datetime!.isBefore(DateTime.now())) {
+                                                                    // final date = DateFormat('yyyy-MM-dd').format(read.slotModel2!.datetime!);
+                                                                    // final time = DateFormat('HH:mm').format(read.slotModel2!.datetime!);
+                                                                    // print('dattttttttt $date $time');
+                                                                    return;
+                                                                  }
+                                                                }
                                                                 read.postSlot(
                                                                     dateTime
                                                                         .toString(),

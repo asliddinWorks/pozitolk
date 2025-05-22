@@ -521,6 +521,7 @@ class _SchedulePageState extends State<SchedulePage> {
             return false;
           },
           child: ListView(
+            physics: AlwaysScrollableScrollPhysics(),
             controller: outerController,
             children: [
               Container(

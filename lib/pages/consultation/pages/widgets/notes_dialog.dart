@@ -33,7 +33,7 @@ class NotesDialog extends StatelessWidget {
               readChat.isMessageOpen = true;
               read.onSetState();
               await Navigator.push(context, MaterialPageRoute(builder: (context) => NotesPage()));
-              readChat.isMessageOpen = false;
+              // readChat.isMessageOpen = false;
               read.onSetState();
             },
             child: Container(

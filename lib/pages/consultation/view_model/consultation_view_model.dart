@@ -136,8 +136,8 @@ class ConsultationViewModel extends ChangeNotifier {
       // motionTabBarController?.index = 1;
     }
     if(index == 6) {
+      // readChat.isMessageOpen = true;
       context.go(RouteNames.consultationHelp);
-      readChat.isMessageOpen = true;
     }
     if(index == 7) {
       selectNavigation = "Настройки";

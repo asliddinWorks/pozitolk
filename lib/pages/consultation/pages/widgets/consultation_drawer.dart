@@ -102,6 +102,9 @@ class ConsultationDrawer extends StatelessWidget {
             child: ListView.builder(
               itemBuilder: (context, index) => GestureDetector(
                 onTap: () async {
+                  // if(index == 6) {
+                  //   readChat.isMessageOpen = true;
+                  // }
                   read.onDrawerSelected(context, index);
                   await Future.delayed(Duration(milliseconds: 400),);
                   if(index == 2) {

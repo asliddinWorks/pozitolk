@@ -307,6 +307,7 @@ class _SchedulePageState extends State<SchedulePage> {
 
   final Map<String, bool> selectedSlots = {};
   late List<DateTime> days;
+  bool isShow = false;
 
   @override
   void initState() {
@@ -324,6 +325,7 @@ class _SchedulePageState extends State<SchedulePage> {
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       // consultationViewModel.isLoading = true;
       await Future.delayed(Duration(milliseconds: 200));
+      isShow = true;
       setState(() {});
       await getSlot();
       consultationViewModel.key.currentState!.closeEndDrawer();
@@ -561,7 +563,7 @@ class _SchedulePageState extends State<SchedulePage> {
                   ],
                 ) : SizedBox.shrink(),
               ),
-              Container(
+              if(isShow) Container(
                 // padding: EdgeInsets.all(16),
                 height: context.height * .85,
                 margin: const EdgeInsets.only(top: 4),
@@ -736,13 +738,9 @@ class _SchedulePageState extends State<SchedulePage> {
                                               //     .any((model) =>
                                               //         model.clientId != null);
                                               bool isSession = false;
-                                              if (consultationViewModel.tableSelect
-                                                  .any((model) =>
+                                              if (consultationViewModel.tableSelect.any((model) =>
                                                       model.datetime == dateTime)) {
-                                                final model = consultationViewModel
-                                                    .tableSelect
-                                                    .firstWhere(
-                                                  (model) =>
+                                                final model = consultationViewModel.tableSelect.firstWhere((model) =>
                                                       model.datetime == dateTime,
                                                 );
 
@@ -753,8 +751,7 @@ class _SchedulePageState extends State<SchedulePage> {
                                                   //     'modelll   ${model.clientName}');
                                                 }
                                               }
-                                              final isChecked =
-                                                  consultationViewModel.tableSelect.any((model) => model.datetime == dateTime);
+                                              final isChecked = consultationViewModel.tableSelect.any((model) => model.datetime == dateTime);
                                               return Container(
                                                 padding: EdgeInsets.all(2),
                                                 width: 125,
@@ -771,19 +768,33 @@ class _SchedulePageState extends State<SchedulePage> {
                                                             context.color.base01),
                                                   ),
                                                 ),
+
                                                 child: isSession
-                                                    ? GestureDetector(
+                                                    ? dateTime.isBefore(DateTime.now())? Container(
+                                                  alignment: Alignment.center,
+                                                  padding: EdgeInsets.all(4),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(4),
+                                                    color: context.color.base01,
+                                                  ),
+                                                  child: Text(read.slotModel!.clientName!,
+                                                    style: context.textStyle
+                                                        .s14w500Manrope,
+                                                    overflow: TextOverflow
+                                                        .ellipsis,
+                                                  ),
+                                                ) : GestureDetector(
                                                         onTapDown: (details) {
-                                                          if (consultationViewModel.tableSelect.any((model) => model.datetime == dateTime)) {
-                                                            final model = consultationViewModel.tableSelect.firstWhere((model) => model.datetime == dateTime,);
-                                                          print('darrrr ${read.slotModel2!.datetime} ${DateTime.now()}');
-                                                          if (model.datetime!.isBefore(DateTime.now())) {
-                                                            // final date = DateFormat('yyyy-MM-dd').format(read.slotModel2!.datetime!);
-                                                            // final time = DateFormat('HH:mm').format(read.slotModel2!.datetime!);
-                                                            // print('dattttttttt $date $time');
-                                                            return;
-                                                          }
-                                                          }
+                                                          // if (consultationViewModel.tableSelect.any((model) => model.datetime == dateTime)) {
+                                                          //   final model = consultationViewModel.tableSelect.firstWhere((model) => model.datetime == dateTime,);
+                                                          // print('darrrr ${read.slotModel2!.datetime} ${DateTime.now()}');
+                                                          // if (model.datetime!.isBefore(DateTime.now())) {
+                                                          //   // final date = DateFormat('yyyy-MM-dd').format(read.slotModel2!.datetime!);
+                                                          //   // final time = DateFormat('HH:mm').format(read.slotModel2!.datetime!);
+                                                          //   // print('dattttttttt $date $time');
+                                                          //   return;
+                                                          // }
+                                                          // }
                                                           // final box = read.cellKeys[col].currentContext?.findRenderObject() as RenderBox?;
                                                           // if (box != null) {
                                                           //   final position = box.localToGlobal(Offset.zero);
@@ -813,15 +824,11 @@ class _SchedulePageState extends State<SchedulePage> {
                                                           setState(() {});
                                                         },
                                                         child: Container(
+                                                          padding: EdgeInsets.all(4),
                                                           // key: read.cellKeys[col],
-                                                          alignment:
-                                                              Alignment.center,
-                                                          decoration: BoxDecoration(
-                                                              border: Border
-                                                                  .all(color: context.color.primary, width: 2),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(4),
+                                                          alignment: Alignment.center, decoration: BoxDecoration(
+                                                              border: Border.all(color: context.color.primary, width: 2),
+                                                              borderRadius: BorderRadius.circular(4),
                                                               color: read.slotDate == read.slotModel!.datetime
                                                                   ? context.color.background2
                                                                   : context.color.primary,
@@ -836,50 +843,37 @@ class _SchedulePageState extends State<SchedulePage> {
                                                           ),
                                                         ),
                                                       )
-                                                    : Container(
+                                                    : dateTime.isBefore(DateTime.now())&& isChecked ? Container(
+                                                  alignment: Alignment.center,
+                                                  padding: EdgeInsets.all(4),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius: BorderRadius.circular(4),
+                                                    color: context.color.base01,
+                                                  ),
+                                                ) : Container(
                                                         alignment: Alignment.center,
                                                         decoration: BoxDecoration(
                                                             color: isChecked
-                                                                ? Color(0xFFDAF9DA)
-                                                                : Colors
-                                                                    .transparent,
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(4)),
+                                                                ? Color(0xFFDAF9DA) : Colors.transparent,
+                                                            borderRadius: BorderRadius.circular(4)),
                                                         child: Checkbox(
                                                           value: isChecked,
                                                           onChanged: (bool? value) {
-                                                            if (consultationViewModel.tableSelect.any((model) => model.datetime == dateTime)) {
-                                                              final model = consultationViewModel.tableSelect.firstWhere((model) => model.datetime == dateTime,);
-                                                              print('darrrr ${read.slotModel2!.datetime} ${DateTime.now()}');
-                                                              if (model.datetime!.isBefore(DateTime.now())) {
-                                                                // final date = DateFormat('yyyy-MM-dd').format(read.slotModel2!.datetime!);
-                                                                // final time = DateFormat('HH:mm').format(read.slotModel2!.datetime!);
-                                                                // print('dattttttttt $date $time');
-                                                                return;
-                                                              }
-                                                            }
+                                                            // if (consultationViewModel.tableSelect.any((model) => model.datetime == dateTime)) {
+                                                            //   final model = consultationViewModel.tableSelect.firstWhere((model) => model.datetime == dateTime,);
+                                                            //   print('darrrr ${read.slotModel2!.datetime} ${DateTime.now()}');
+                                                            //   if (model.datetime!.isBefore(DateTime.now())) {
+                                                            //     // final date = DateFormat('yyyy-MM-dd').format(read.slotModel2!.datetime!);
+                                                            //     // final time = DateFormat('HH:mm').format(read.slotModel2!.datetime!);
+                                                            //     // print('dattttttttt $date $time');
+                                                            //     return;
+                                                            //   }
+                                                            // }
                                                             if (value != null) {
                                                               if (!isChecked) {
-                                                                read.postSlot(
-                                                                    dateTime
-                                                                        .toString(),
-                                                                    true);
+                                                                read.postSlot(dateTime.toString(), true);
                                                               } else {
-                                                                if (consultationViewModel.tableSelect.any((model) => model.datetime == dateTime)) {
-                                                                  final model = consultationViewModel.tableSelect.firstWhere((model) => model.datetime == dateTime,);
-                                                                  print('darrrr ${model.datetime} ${DateTime.now()}');
-                                                                  if (model.datetime!.isBefore(DateTime.now())) {
-                                                                    // final date = DateFormat('yyyy-MM-dd').format(read.slotModel2!.datetime!);
-                                                                    // final time = DateFormat('HH:mm').format(read.slotModel2!.datetime!);
-                                                                    // print('dattttttttt $date $time');
-                                                                    return;
-                                                                  }
-                                                                }
-                                                                read.postSlot(
-                                                                    dateTime
-                                                                        .toString(),
-                                                                    false);
+                                                                read.postSlot(dateTime.toString(), false);
                                                               }
                                                               final model =
                                                                   SlotModel(
@@ -896,7 +890,7 @@ class _SchedulePageState extends State<SchedulePage> {
                                                             }
                                                           },
                                                         ),
-                                                      ),
+                                                      )
                                               );
                                             }),
                                           );
@@ -921,5 +915,6 @@ class _SchedulePageState extends State<SchedulePage> {
     );
   }
 }
+
 
 

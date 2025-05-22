@@ -4,7 +4,6 @@ import 'package:motion_tab_bar_v2/motion-tab-bar.dart';
 import 'package:motion_tab_bar_v2/motion-tab-controller.dart';
 import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
-import 'package:pozitolk/core/extension/widget_extension.dart';
 import 'package:provider/provider.dart';
 import '../../constants/app_icons.dart';
 import '../consultation/pages/widgets/consultation_drawer.dart';
@@ -268,25 +267,28 @@ class _AppBarCustomState extends State<AppBarCustom>
                 // await Future.delayed(Duration(milliseconds: (read.isLoading || readChat.isLoading) ? 500 : 0));
                 // if(read.isLoading || readChat.isLoading) return;
                 print(value);
+                if(read.isLoading || readChat.isLoading) return;
+                // if (read.motionTabBarController!.index == 2) {
 
-                read.motionTabBarController!.index = value;
-                if (read.motionTabBarController!.index == 0) {
-                  read.onDrawerSelected(context, 2);
-                }
-                if (read.motionTabBarController!.index == 1) {
-                  read.onDrawerSelected(context, 4);
-                }
-                if (read.motionTabBarController!.index == 2) {
+                // read.motionTabBarController!.index = value;
+                if (value == 2) {
                   read.onDrawerSelected(context, 0);
                 }
-                if (read.motionTabBarController!.index == 3) {
+                if (value == 0) {
+                  read.onDrawerSelected(context, 2);
+                }
+                if (value == 1) {
+                  read.onDrawerSelected(context, 4);
+                }
+
+                if (value == 3) {
                   // await readChat.getChatList();
                   //   context.go(RouteNames.consultationChat);
                   //   read.drawerItem = List.generate(8, (index) => false);
                   //   read.drawerItem[1] = true;
                   read.onDrawerSelected(context, 1);
                 }
-                if (read.motionTabBarController!.index == 4) {
+                if (value == 4) {
                   read.onDrawerSelected(context, 7);
                 }
 

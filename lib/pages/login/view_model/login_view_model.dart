@@ -73,7 +73,7 @@ class LoginViewModel extends ChangeNotifier {
       if (await registerRepo.confirm(context, userModel) == true ) {
         isConfirm = false;
         notifyListeners();
-        context.go(RouteNames.consultation);
+        context.go(RouteNames.splash);
       }
     }else{
       isConfirmError = true;

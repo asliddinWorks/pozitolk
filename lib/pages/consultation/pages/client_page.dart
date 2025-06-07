@@ -4,7 +4,6 @@ import 'package:pozitolk/core/extension/widget_extension.dart';
 import 'package:pozitolk/pages/consultation/pages/items/client_item.dart';
 import 'package:pozitolk/pages/consultation/view_model/client_view_model.dart';
 import 'package:provider/provider.dart';
-
 import '../view_model/chat_view_model.dart';
 import '../view_model/consultation_view_model.dart';
 

@@ -40,6 +40,10 @@ class AppIcons {
   static const icUsers = '${path}ic_users.svg';
   static const icContract1 = '${path}ic_contract1.svg';
   static const icContract2 = '${path}ic_contract2.svg';
+  static const icFaceSad = '${path}ic_face_sad.svg';
+  static const icHeart = '${path}ic_heart.svg';
+  static const icLife = '${path}ic_life.svg';
+  static const icWork = '${path}ic_work.svg';
 
 
 }

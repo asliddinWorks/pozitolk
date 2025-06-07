@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:pozitolk/pages/consultation/data/models/client_model.dart';
 import 'package:pozitolk/pages/consultation/data/models/message_model.dart';
 import 'package:pozitolk/pages/consultation/data/models/notes_model.dart';
 import 'package:pozitolk/pages/login/model/user_model.dart';
@@ -20,6 +21,7 @@ abstract class ConsultationRepo {
   Future<bool> postSlot(String dateTime, bool isAvailable);
   Future<List<NotesModel>> getNotes(int id);
   Future<bool> postNotes(NotesModel notesModel);
+  Future<List<ClientModel>> getClients();
 }
 
 class ConsultationImpl extends ConsultationRepo {
@@ -329,5 +331,31 @@ class ConsultationImpl extends ConsultationRepo {
       return false;
     } on DioException catch (_) {}
     return false;
+  }
+
+  @override
+  Future<List<ClientModel>> getClients() async {
+    try {
+      final token = await AppLocalData.getUserToken;
+      Response response = await dio.get(
+        'session/my_client/',
+        options: Options(
+          headers: headerWithAuth(token),
+        ),
+      );
+      if ((response.statusCode == 200) || (response.statusCode == 201)) {
+        List<ClientModel> list = [];
+        List list2 = [];
+        list2 = response.data;
+        for (var item in list2) {
+          final model = ClientModel.fromJson(item);
+          list.add(model);
+        }
+        return list;
+      }
+    } catch (e) {
+      return [];
+    }
+    return [];
   }
 }

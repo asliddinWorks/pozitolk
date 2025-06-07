@@ -312,7 +312,7 @@ class _SchedulePageState extends State<SchedulePage> {
               ),
               if(isShow) Container(
                 // padding: EdgeInsets.all(16),
-                height: 50 * 21,
+                height: 50 * 20,
                 margin: const EdgeInsets.only(top: 4),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.only(

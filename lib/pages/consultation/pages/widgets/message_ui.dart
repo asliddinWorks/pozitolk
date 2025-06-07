@@ -106,9 +106,12 @@ class _MessageUiState extends State<MessageUi> {
                     ),
                   ),
                   8.wGap,
-                  Text(
-                    widget.chatModel.clientNickname.toString(),
-                    style: context.textStyle.s20w600Manrope,
+                  SizedBox(
+                    width: context.width * .45,
+                    child: Text(
+                      widget.chatModel.clientNickname.toString(),
+                      style: context.textStyle.s20w600Manrope,
+                    ),
                   ),
                   Spacer(),
                   PopupMenuButton<String>(

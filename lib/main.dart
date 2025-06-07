@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:pozitolk/di_service.dart';
 import 'package:pozitolk/pages/consultation/view_model/chat_view_model.dart';
+import 'package:pozitolk/pages/consultation/view_model/client_view_model.dart';
 import 'package:pozitolk/pages/consultation/view_model/consultation_view_model.dart';
 import 'package:pozitolk/pages/home/view_model/home_view_model.dart';
 import 'package:pozitolk/pages/login/view_model/login_view_model.dart';
@@ -38,6 +39,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => ChatViewModel(getIt()),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => ClientViewModel(getIt()),
         ),
       ],
       builder: (context, viewModel) => MaterialApp.router(

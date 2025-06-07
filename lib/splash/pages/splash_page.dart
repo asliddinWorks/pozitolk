@@ -40,7 +40,7 @@ class _SplashPageState extends State<SplashPage> {
           if (value == null) {
             context.go(RouteNames.login);
           } else {
-            context.go(RouteNames.consultation);
+            context.go(RouteNames.client);
           }
         },
       );

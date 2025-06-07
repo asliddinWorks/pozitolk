@@ -1,29 +1,28 @@
 
 import 'package:hive/hive.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../pages/login/model/user_model.dart';
 
 class AppLocalData {
 
-  static Future<void> saveGridAxisCount(int gridCount) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('axisCount', gridCount);
-  }
-  static Future<int> getGridAxisCount() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getInt('axisCount') ?? 1;
-  }
-
-
-  static Future<void> saveStylistDesignSwitch(int filterIndex) async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.setInt('stylistDesignSwitch', filterIndex);
-  }
-  static Future<int> getStylistDesignSwitch() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getInt('stylistDesignSwitch') ?? 0;
-  }
+  // static Future<void> saveGridAxisCount(int gridCount) async {
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   await prefs.setInt('axisCount', gridCount);
+  // }
+  // static Future<int> getGridAxisCount() async {
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   return prefs.getInt('axisCount') ?? 1;
+  // }
+  //
+  //
+  // static Future<void> saveStylistDesignSwitch(int filterIndex) async {
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   await prefs.setInt('stylistDesignSwitch', filterIndex);
+  // }
+  // static Future<int> getStylistDesignSwitch() async {
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   return prefs.getInt('stylistDesignSwitch') ?? 0;
+  // }
 
 
   static Box<dynamic> box = Hive.box('appBox');

@@ -125,6 +125,7 @@ class ConsultationHelpUi extends StatefulWidget {
 class _ConsultationHelpUiState extends State<ConsultationHelpUi> {
   late ChatViewModel readChat;
   late ConsultationViewModel read;
+
   @override
   void initState() {
     read = context.read<ConsultationViewModel>();

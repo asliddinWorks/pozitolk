@@ -14,6 +14,7 @@ sealed class RouteNames {
   static const client = '/client';
   static const schedule = '/schedule';
   static const statistics = '/statistics';
+  static const payment = '/payment';
 
 }
 
@@ -73,6 +74,12 @@ GoRouter router = GoRouter(
           path: RouteNames.statistics,
           builder: (context, state) {
             return  StatisticsPage();
+          },
+        ),
+        GoRoute(
+          path: RouteNames.payment,
+          builder: (context, state) {
+            return  PaymentPage();
           },
         ),
       ],

@@ -128,6 +128,12 @@ class ConsultationViewModel extends ChangeNotifier {
       await Future.delayed(Duration(milliseconds: 50),);
       motionTabBarController?.index = 0;
     }
+    if(index == 3) {
+      // selectNavigation = "Клиенты";
+      context.go(RouteNames.payment);
+      // await Future.delayed(Duration(milliseconds: 50),);
+      // motionTabBarController?.index = 0;
+    }
     if(index == 4) {
       context.go(RouteNames.statistics);
       selectNavigation = "Статистика";

@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:pozitolk/pages/consultation/data/models/client_model.dart';
 import 'package:pozitolk/pages/consultation/data/models/message_model.dart';
 import 'package:pozitolk/pages/consultation/data/models/notes_model.dart';
+import 'package:pozitolk/pages/consultation/data/models/payment_model.dart';
 import 'package:pozitolk/pages/login/model/user_model.dart';
 import '../../../../core/data/data_source/local/app_local_data.dart';
 import '../../../../di_service.dart';
@@ -22,6 +23,7 @@ abstract class ConsultationRepo {
   Future<List<NotesModel>> getNotes(int id);
   Future<bool> postNotes(NotesModel notesModel);
   Future<List<ClientModel>> getClients();
+  Future<List<PaymentModel>> getPayments();
 }
 
 class ConsultationImpl extends ConsultationRepo {
@@ -358,4 +360,33 @@ class ConsultationImpl extends ConsultationRepo {
     }
     return [];
   }
+
+  @override
+  Future<List<PaymentModel>> getPayments() async {
+    try {
+      final token = await AppLocalData.getUserToken;
+      Response response = await dio.get(
+        'cabinet/my-transactions-psychologist/?user_type=psychologist',
+        options: Options(
+          headers: headerWithAuth(token),
+        ),
+      );
+      if ((response.statusCode == 200) || (response.statusCode == 201)) {
+        List<PaymentModel> list = [];
+        List list2 = [];
+        list2 = response.data;
+        for (var item in list2) {
+          final model = PaymentModel.fromJson(item);
+          list.add(model);
+        }
+        return list;
+      }
+    } catch (e) {
+      return [];
+    }
+    return [];
+  }
+
+
+
 }

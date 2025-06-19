@@ -67,76 +67,81 @@ class _ClientPageState extends State<ClientPage> {
               padding: const EdgeInsets.all(16),
               child: Text('Клиенты', style: context.textStyle.s20w600Manrope),
             ),
-            SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        width: 55,
-                        height: 56,
-                        child: Text('Фото:',
-                            style: context.textStyle.s14w400Manrope),
-                      ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        width: 220,
-                        height: 56,
-                        padding: EdgeInsets.only(left: 16),
-                        child: Text('Имя/Псевдоним',
-                            style: context.textStyle.s14w400Manrope),
-                      ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        width: 150,
-                        height: 56,
-                        padding: EdgeInsets.only(left: 16),
-                        child: Text(
-                          'Количество консультаций',
-                          style: context.textStyle.s14w400Manrope,
-                          maxLines: 2,
+            Expanded(
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          width: 55,
+                          height: 56,
+                          child: Text('Фото:',
+                              style: context.textStyle.s14w400Manrope),
+                        ),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          width: 220,
+                          height: 56,
+                          padding: EdgeInsets.only(left: 16),
+                          child: Text('Имя/Псевдоним',
+                              style: context.textStyle.s14w400Manrope),
+                        ),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          width: 150,
+                          height: 56,
+                          padding: EdgeInsets.only(left: 16),
+                          child: Text(
+                            'Количество консультаций',
+                            style: context.textStyle.s14w400Manrope,
+                            maxLines: 2,
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          width: 150,
+                          height: 56,
+                          padding: EdgeInsets.only(left: 16),
+                          child: Text(
+                            'Последняя консультация',
+                            style: context.textStyle.s14w400Manrope,
+                            maxLines: 2,
+                          ),
+                        ),
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          width: 150,
+                          height: 56,
+                          padding: EdgeInsets.only(left: 16),
+                          child: Text(
+                            'Следующая консультация',
+                            style: context.textStyle.s14w400Manrope,
+                            maxLines: 2,
+                          ),
+                        ),
+                      ],
+                    ).padding(EdgeInsets.symmetric(horizontal: 16)),
+                    Expanded(
+                      child: SizedBox(
+                        // height: context.height - 275,
+                        width: 757,
+                        child: ListView.builder(
+                          padding: EdgeInsets.only(bottom: 40),
+                          shrinkWrap: true,
+                          itemCount: read.clients.length,
+                          itemBuilder: (context, index) => ClientItem(
+                            clientModel: read.clients[index],
+                          )//.padding(EdgeInsets.only(bottom: read.clients.length - 1 == index ? 40 : 0)),
                         ),
                       ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        width: 150,
-                        height: 56,
-                        padding: EdgeInsets.only(left: 16),
-                        child: Text(
-                          'Последняя консультация',
-                          style: context.textStyle.s14w400Manrope,
-                          maxLines: 2,
-                        ),
-                      ),
-                      Container(
-                        alignment: Alignment.centerLeft,
-                        width: 150,
-                        height: 56,
-                        padding: EdgeInsets.only(left: 16),
-                        child: Text(
-                          'Следующая консультация',
-                          style: context.textStyle.s14w400Manrope,
-                          maxLines: 2,
-                        ),
-                      ),
-                    ],
-                  ).padding(EdgeInsets.symmetric(horizontal: 16)),
-                  SizedBox(
-                    height: context.height - 275,
-                    width: 757,
-                    child: ListView.builder(
-                      shrinkWrap: true,
-                      itemCount: read.clients.length,
-                      itemBuilder: (context, index) => ClientItem(
-                        clientModel: read.clients[index],
-                      ).padding(EdgeInsets.only(bottom: read.clients.length - 1 == index ? 40 : 0)),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ],

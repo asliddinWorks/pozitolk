@@ -101,6 +101,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
 
   @override
   Widget build(BuildContext context) {
+
     // final maxClients = sessionsDynamic.first.clients.toDouble();
     final int n = 12;
     final double w = 30; // ustun eni

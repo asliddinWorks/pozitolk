@@ -5,12 +5,16 @@ import 'package:pozitolk/pages/consultation/data/models/client_model.dart';
 import 'package:pozitolk/pages/consultation/data/models/payment_model.dart';
 import 'package:pozitolk/pages/consultation/data/models/statistics_model.dart';
 
+import '../data/models/event_model.dart';
+
 class ClientViewModel extends ChangeNotifier {
   ClientViewModel(this.consultationRepo);
   final ConsultationRepo consultationRepo;
 
   List<ClientModel> clients = [];
   List<PaymentModel> payments = [];
+  List<EventModel> eventsList = [];
+  List<EventVideoModel> eventsVideoList = [];
   StatisticsModel? statisticsModel;
   bool isLoading = false;
 
@@ -98,4 +102,19 @@ class ClientViewModel extends ChangeNotifier {
     SessionDynamic(sessions: 5, clients: 130, diff: "-20"),
   ];
 
+  Future<void> getEvents() async {
+    isLoading = true;
+    notifyListeners();
+    eventsList = await consultationRepo.getEvents();
+    isLoading = false;
+    notifyListeners();
+  }
+
+  Future<void> getEventsVideo() async {
+    isLoading = true;
+    notifyListeners();
+    eventsVideoList = await consultationRepo.getEventsVideo();
+    isLoading = false;
+    notifyListeners();
+  }
 }

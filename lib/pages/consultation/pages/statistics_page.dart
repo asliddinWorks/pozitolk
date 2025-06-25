@@ -162,8 +162,9 @@ class _StatisticsPageState extends State<StatisticsPage> {
                                   ),
                                   8.hGap,
                                   Text(
-                                    dateDifference(
-                                        read.statisticsModel!.onPozitalkSince),
+                                    read.statisticsModel?.onPozitalkSince != null
+                                        ? dateDifference(read.statisticsModel!.onPozitalkSince!)
+                                        : '-',
                                     style: context.textStyle.s20w600Manrope,
                                   ),
                                   8.hGap,

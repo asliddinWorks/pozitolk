@@ -199,4 +199,6 @@ class ChatViewModel extends ChangeNotifier {
     isLoading = false;
     notifyListeners();
   }
+
+
 }

@@ -13,6 +13,9 @@ import 'package:pozitolk/pages/consultation/pages/widgets/psychologist_settings_
 import 'package:pozitolk/pages/home/pages/home_page.dart';
 import 'package:pozitolk/splash/pages/splash_page.dart';
 
+import '../pages/consultation/data/models/event_model.dart';
+import '../pages/consultation/pages/event_item_page.dart';
+import '../pages/consultation/pages/events_page.dart';
 import '../pages/consultation/pages/widgets/message_ui.dart';
 import '../pages/login/pages/login_page.dart';
 

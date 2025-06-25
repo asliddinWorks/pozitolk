@@ -15,6 +15,8 @@ sealed class RouteNames {
   static const schedule = '/schedule';
   static const statistics = '/statistics';
   static const payment = '/payment';
+  static const events = '/events';
+  static const eventsItem = '/eventsItem';
 
 }
 
@@ -80,6 +82,19 @@ GoRouter router = GoRouter(
           path: RouteNames.payment,
           builder: (context, state) {
             return  PaymentPage();
+          },
+        ),
+        GoRoute(
+          path: RouteNames.events,
+          builder: (context, state) {
+            return  EventsPage();
+          },
+        ),
+        GoRoute(
+          path: RouteNames.eventsItem,
+          builder: (context, state) {
+            final EventModel eventModel = state.extra as EventModel;
+            return  EventItemPage(eventModel: eventModel);
           },
         ),
       ],

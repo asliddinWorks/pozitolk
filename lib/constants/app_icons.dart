@@ -44,6 +44,7 @@ class AppIcons {
   static const icHeart = '${path}ic_heart.svg';
   static const icLife = '${path}ic_life.svg';
   static const icWork = '${path}ic_work.svg';
+  static const icRightChevron = '${path}ic_right_chevron.svg';
 
 
 }

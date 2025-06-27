@@ -16,6 +16,7 @@ import 'package:pozitolk/splash/pages/splash_page.dart';
 import '../pages/consultation/data/models/event_model.dart';
 import '../pages/consultation/pages/event_item_page.dart';
 import '../pages/consultation/pages/events_page.dart';
+import '../pages/consultation/pages/items/full_you_tube.dart';
 import '../pages/consultation/pages/widgets/message_ui.dart';
 import '../pages/login/pages/login_page.dart';
 

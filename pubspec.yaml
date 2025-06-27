@@ -46,6 +46,7 @@ dependencies:
   web_socket_channel: ^3.0.3
   fl_chart: ^1.0.0
   syncfusion_flutter_charts: ^29.2.11
+  youtube_player_iframe: ^5.2.1
 #  motion_tab_bar: ^2.0.4
 
 dev_dependencies:

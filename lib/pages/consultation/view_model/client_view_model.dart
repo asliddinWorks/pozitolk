@@ -17,6 +17,7 @@ class ClientViewModel extends ChangeNotifier {
   List<EventVideoModel> eventsVideoList = [];
   StatisticsModel? statisticsModel;
   bool isLoading = false;
+  bool seeAll = false;
 
   Future<void> getClients() async {
     isLoading = true;

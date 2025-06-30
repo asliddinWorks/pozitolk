@@ -2,12 +2,12 @@ class StatisticsModel {
   final int allTimeSessions;
   final int totalClients;
   final int activeClients;
-  final DateTime onPozitalkSince;
+  final DateTime? onPozitalkSince;
   final int totalExperience;
   final List<MonthlySession> lastYearSessions;
   final int lastYearSessionsCount;
   final AverageSessionDuration avgDuration;
-  final List<SessionDynamic> sessionDynamics; // <-- dynamic emas!
+  final List<SessionDynamic> sessionDynamics;
 
   StatisticsModel({
     required this.allTimeSessions,
@@ -23,22 +23,29 @@ class StatisticsModel {
 
   factory StatisticsModel.fromJson(Map<String, dynamic> json) {
     return StatisticsModel(
-      allTimeSessions: json['all_time_sessions'],
-      totalClients: json['total_clients'],
-      activeClients: json['active_clients'],
-      onPozitalkSince: DateTime.parse(json['on_pozitalk_since']),
-      totalExperience: json['total_experience'],
-      lastYearSessions: (json['last_year_sessions'] as List)
-          .map((e) => MonthlySession.fromJson(e))
-          .toList(),
-      lastYearSessionsCount: json['last_year_sessions_count'],
-      avgDuration: AverageSessionDuration.fromJson(json['avg_duration']),
-      sessionDynamics: (json['dynamic'] as List)
-          .map((e) => SessionDynamic.fromJson(e))
-          .toList(),
+      allTimeSessions: json['all_time_sessions'] ?? 0,
+      totalClients: json['total_clients'] ?? 0,
+      activeClients: json['active_clients'] ?? 0,
+      onPozitalkSince: json['on_pozitalk_since'] != null
+          ? DateTime.tryParse(json['on_pozitalk_since'])
+          : null,
+      totalExperience: json['total_experience'] ?? 0,
+      lastYearSessions: (json['last_year_sessions'] as List?)
+          ?.map((e) => MonthlySession.fromJson(e))
+          .toList() ??
+          [],
+      lastYearSessionsCount: json['last_year_sessions_count'] ?? 0,
+      avgDuration: json['avg_duration'] != null
+          ? AverageSessionDuration.fromJson(json['avg_duration'])
+          : AverageSessionDuration(averageSessions: 0, longestSessions: 0),
+      sessionDynamics: (json['dynamic'] as List?)
+          ?.map((e) => SessionDynamic.fromJson(e))
+          .toList() ??
+          [],
     );
   }
 }
+
 
 class MonthlySession {
   final String month;

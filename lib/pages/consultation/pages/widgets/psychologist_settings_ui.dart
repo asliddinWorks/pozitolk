@@ -1144,6 +1144,6 @@ class _PsychologistSettingsUiState extends State<PsychologistSettingsUi> {
           ),
         ],
       ),
-    );
+    ).loadingView(watch.isLoading);
   }
 }

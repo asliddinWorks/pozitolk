@@ -15,6 +15,9 @@ sealed class RouteNames {
   static const schedule = '/schedule';
   static const statistics = '/statistics';
   static const payment = '/payment';
+  static const events = '/events';
+  static const eventsItem = '/eventsItem';
+  static const fullScreenVideoPage = '/fullScreenVideoPage';
 
 }
 
@@ -82,6 +85,19 @@ GoRouter router = GoRouter(
             return  PaymentPage();
           },
         ),
+        GoRoute(
+          path: RouteNames.events,
+          builder: (context, state) {
+            return  EventsPage();
+          },
+        ),
+        GoRoute(
+          path: RouteNames.eventsItem,
+          builder: (context, state) {
+            final EventModel eventModel = state.extra as EventModel;
+            return  EventItemPage(eventModel: eventModel);
+          },
+        ),
       ],
     ),
     GoRoute(
@@ -106,6 +122,13 @@ GoRouter router = GoRouter(
       path: RouteNames.splash,
       builder: (context, state) {
         return const SplashPage();
+      },
+    ),
+    GoRoute(
+      path: RouteNames.fullScreenVideoPage,
+      builder: (context, state) {
+        final String source = state.extra as String;
+        return  FullScreenVideoPage(source: source);
       },
     ),
   ],

@@ -54,57 +54,55 @@ class _PaymentPageState extends State<PaymentPage> {
             topRight: Radius.circular(16),
           ),
         ),
-        child: Expanded(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'История платежей',
-                style: context.textStyle.s20w600Manrope,
-              ),
-              16.hGap,
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 14),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: context.width * 0.29,
-                      child: Text(
-                        'Дата',
-                        style: context.textStyle.s14w400Manrope
-                            .copyWith(fontSize: 13, color: context.color.textGrey),
-                      ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'История платежей',
+              style: context.textStyle.s20w600Manrope,
+            ),
+            16.hGap,
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 14),
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: context.width * 0.29,
+                    child: Text(
+                      'Дата',
+                      style: context.textStyle.s14w400Manrope
+                          .copyWith(fontSize: 13, color: context.color.textGrey),
                     ),
-                    SizedBox(
-                      width: context.width * 0.29,
-                      child: Text(
-                        'Сумма',
-                        style: context.textStyle.s14w400Manrope
-                            .copyWith(fontSize: 13, color: context.color.textGrey),
-                      ).padding(EdgeInsets.only(left: 16)),
-                    ),
-                    SizedBox(
-                      width: context.width * 0.31,
-                      child: Text(
-                        'ID платежа',
-                        style: context.textStyle.s14w400Manrope
-                            .copyWith(fontSize: 13, color: context.color.textGrey),
-                      ).padding(EdgeInsets.only(left: 16)),
-                    ),
-                  ],
-                ),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) => PaymentItem(
-                    paymentModel: clientViewModel.payments[index],
                   ),
-                  itemCount: clientViewModel.payments.length,
+                  SizedBox(
+                    width: context.width * 0.29,
+                    child: Text(
+                      'Сумма',
+                      style: context.textStyle.s14w400Manrope
+                          .copyWith(fontSize: 13, color: context.color.textGrey),
+                    ).padding(EdgeInsets.only(left: 16)),
+                  ),
+                  SizedBox(
+                    width: context.width * 0.31,
+                    child: Text(
+                      'ID платежа',
+                      style: context.textStyle.s14w400Manrope
+                          .copyWith(fontSize: 13, color: context.color.textGrey),
+                    ).padding(EdgeInsets.only(left: 16)),
+                  ),
+                ],
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemBuilder: (context, index) => PaymentItem(
+                  paymentModel: clientViewModel.payments[index],
                 ),
-              )
-            ],
-          ),
+                itemCount: clientViewModel.payments.length,
+              ),
+            )
+          ],
         ),
       ),
     ).loadingView(watch.isLoading);

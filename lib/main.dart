@@ -8,13 +8,12 @@ import 'package:pozitolk/pages/home/view_model/home_view_model.dart';
 import 'package:pozitolk/pages/login/view_model/login_view_model.dart';
 import 'package:pozitolk/router/router.dart';
 import 'package:provider/provider.dart';
-
 import 'core/theme/light_theme.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  // await initializeDateFormatting('ru', 'Ru');
   await init();
+  // initializeDateFormatting();
   runApp(const MyApp());
 }
 

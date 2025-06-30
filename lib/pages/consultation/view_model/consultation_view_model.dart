@@ -141,6 +141,11 @@ class ConsultationViewModel extends ChangeNotifier {
       motionTabBarController?.index = 1;
       // motionTabBarController?.index = 1;
     }
+    if(index == 5) {
+      context.go(RouteNames.events);
+      // selectNavigation = "События";
+      // await Future.delayed(Duration(milliseconds: 50),);
+    }
     if(index == 6) {
       // readChat.isMessageOpen = true;
       context.go(RouteNames.consultationHelp);

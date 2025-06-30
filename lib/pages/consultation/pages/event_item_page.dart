@@ -18,16 +18,6 @@ class EventItemPage extends StatefulWidget {
 
 class _EventItemPageState extends State<EventItemPage> {
   @override
-/* <<<<<<<<<<<<<<  ✨ Windsurf Command ⭐ >>>>>>>>>>>>>>>> */
-  /// Builds the UI for the EventItemPage.
-  ///
-  /// This method returns a [Scaffold] widget with a specific background color.
-  /// The body of the scaffold contains a [ListView] with a [Container] at the top,
-  /// displaying a back navigation row with an arrow icon and a text label.
-  ///
-  /// The [context] parameter is used to retrieve theme and styling information.
-
-/* <<<<<<<<<<  a2829704-e8fb-4b08-b3e6-032ed579aa40  >>>>>>>>>>> */
   Widget build(BuildContext context) {
     final List<String> points = extractLiTexts(widget.eventModel.body);
     return Scaffold(

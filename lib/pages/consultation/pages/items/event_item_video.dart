@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:pozitolk/core/extension/context_extension.dart';
 import 'package:pozitolk/core/extension/num_extension.dart';
-import 'package:pozitolk/pages/consultation/pages/items/youtube_iframe_page.dart';
 import '../../../../router/router.dart';
 import '../../data/models/event_model.dart';
+import 'new_video.dart';
 
 class EventItemVideo extends StatelessWidget {
   const EventItemVideo({super.key, required this.eventVideoModel, this.height});
@@ -29,7 +29,8 @@ class EventItemVideo extends StatelessWidget {
                   borderRadius: BorderRadius.circular(7),
                   color: context.color.background1,
                 ),
-                child: YouTubeTestPage(source: eventVideoModel.source,),
+                child: YouTubePlayerPage(videoUrl: eventVideoModel.source,),
+                // child: YouTubeTestPage(source: eventVideoModel.source,),
               ),
               SizedBox(
                 height: 135,

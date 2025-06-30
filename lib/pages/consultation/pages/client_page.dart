@@ -131,13 +131,13 @@ class _ClientPageState extends State<ClientPage> {
                         // height: context.height - 275,
                         width: 757,
                         child: ListView.builder(
-                          padding: EdgeInsets.only(bottom: 40),
-                          shrinkWrap: true,
-                          itemCount: read.clients.length,
-                          itemBuilder: (context, index) => ClientItem(
-                            clientModel: read.clients[index],
-                          )//.padding(EdgeInsets.only(bottom: read.clients.length - 1 == index ? 40 : 0)),
-                        ),
+                            padding: EdgeInsets.only(bottom: 40),
+                            shrinkWrap: true,
+                            itemCount: read.clients.length,
+                            itemBuilder: (context, index) => ClientItem(
+                                  clientModel: read.clients[index],
+                                ) //.padding(EdgeInsets.only(bottom: read.clients.length - 1 == index ? 40 : 0)),
+                            ),
                       ),
                     ),
                   ],

@@ -432,23 +432,29 @@ class _PsychologistSettingsUiState extends State<PsychologistSettingsUi> {
                               dropdownValue: watch.selectLanguage.toString(),
                               items: ['Русский', 'Английский'],
                             ),
+                            // 24.hGap,
+                            // Text('О себе',
+                            //     style: context.textStyle.s14w400Manrope),
                             24.hGap,
-                            Text('О себе',
-                                style: context.textStyle.s14w400Manrope),
-                            24.hGap,
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 16, vertical: 12),
-                              decoration: BoxDecoration(
-                                  color: context.color.base03,
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Text(
-                                'Lorem Ipsum - это текст-"рыба", часто используемый в печати и '
-                                'вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для '
-                                'текстов на латинице с начала XVI века. ',
-                                style: context.textStyle.s14w400Manrope,
-                              ),
+                            AppTextField2(
+                              controller: read.descriptionController,
+                              height: 140,
+                              maxLines: 5,
+                              title: 'О себе',
                             ),
+                            // Container(
+                            //   padding: EdgeInsets.symmetric(
+                            //       horizontal: 16, vertical: 12),
+                            //   decoration: BoxDecoration(
+                            //       color: context.color.base03,
+                            //       borderRadius: BorderRadius.circular(10)),
+                            //   child: Text(
+                            //     'Lorem Ipsum - это текст-"рыба", часто используемый в печати и '
+                            //     'вэб-дизайне. Lorem Ipsum является стандартной "рыбой" для '
+                            //     'текстов на латинице с начала XVI века. ',
+                            //     style: context.textStyle.s14w400Manrope,
+                            //   ),
+                            // ),
                             25.hGap,
                             AppButton(
                               contentPadding: EdgeInsets.symmetric(

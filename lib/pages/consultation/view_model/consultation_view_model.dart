@@ -237,6 +237,7 @@ class ConsultationViewModel extends ChangeNotifier {
   TextEditingController phoneController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController workingMethodController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
   String? selectSex;
   String selectLanguage = 'Русский';
   List<String> sexItem = ['Мужской', 'Женский'];
@@ -262,6 +263,7 @@ class ConsultationViewModel extends ChangeNotifier {
         sex: selectSex == 'Мужской' ? 'man' : 'woman',
         // language: selectLanguage,
         phoneNumber: phoneController.text,
+        description: descriptionController.text,
         imageFile: multipartFile,
       );
       isLoading = true;
@@ -378,6 +380,7 @@ class ConsultationViewModel extends ChangeNotifier {
       dateController.text = userModel.dateOfBirth ?? '';
       selectLanguage = userModel.language ?? '';
       phoneController.text = userModel.phone ?? '';
+      descriptionController.text = userModel.description ?? '';
       emailController.text = userModel.email ?? '';
       selectSex = userModel.sex == 'man' ? 'Мужской' : 'Женский';
       imageUrl = userModel.photo;

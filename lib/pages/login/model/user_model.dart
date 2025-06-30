@@ -182,6 +182,7 @@ class UserModel {
         // 'language': language,
         'sex': sex,
         'date_of_birth': dateOfBirth,
+        'description': description,
         if (imageFile != null) 'photo': imageFile,
       });
 

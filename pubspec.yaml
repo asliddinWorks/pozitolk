@@ -2,7 +2,7 @@ name: pozitolk
 description: "A new Flutter project."
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
-version: 1.0.3+6
+version: 1.0.3+10
 
 environment:
   sdk: ^3.6.2
@@ -45,7 +45,7 @@ dependencies:
   infinite_scroll_pagination: ^4.1.0
   web_socket_channel: ^3.0.3
   fl_chart: ^1.0.0
-  syncfusion_flutter_charts: ^29.2.11
+  syncfusion_flutter_charts: any
   youtube_player_iframe: ^5.2.1
   youtube_player_flutter: ^9.1.1
 #  motion_tab_bar: ^2.0.4
